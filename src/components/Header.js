@@ -49,10 +49,6 @@ const Header = () => {
                   onMouseLeave={() => setLocationsOpen(false)}
                 >
                   <Link href="/locations/boro-park" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Boro Park</Link>
-                  <Link href="/locations/williamsburg" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Williamsburg</Link>
-                  <Link href="/locations/crown-heights" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Crown Heights</Link>
-                  <Link href="/locations/lakewood" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Lakewood</Link>
-                  <Link href="/locations/monsey" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Monsey</Link>
                   <Link href="/locations" className="block px-4 py-2 text-blue-600 font-medium hover:bg-blue-50">View All →</Link>
                 </div>
               )}

@@ -42,14 +42,6 @@ const SearchBar = () => {
           >
             <option value="">All Locations</option>
             <option value="boro-park">Boro Park, Brooklyn</option>
-            <option value="williamsburg">Williamsburg, Brooklyn</option>
-            <option value="crown-heights">Crown Heights, Brooklyn</option>
-            <option value="flatbush">Flatbush, Brooklyn</option>
-            <option value="monsey">Monsey, NY</option>
-            <option value="lakewood">Lakewood, NJ</option>
-            <option value="five-towns">Five Towns, NY</option>
-            <option value="manhattan">Manhattan, NY</option>
-            <option value="queens">Queens, NY</option>
           </select>
         </div>
         <button

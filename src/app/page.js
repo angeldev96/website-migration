@@ -37,7 +37,7 @@ const HomePage = () => {
               Yiddish Jobs - The largest Jewish Jobs website
             </h1>
             <p className="text-lg md:text-xl text-gray-200 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Find your dream job among thousands of available positions within the Jewish community in NYC, Brooklyn, Boro Park, Five Towns, Crown Heights, Manhattan, Monsey, Lakewood, Teaneck, and more!
+              Find your dream job among thousands of available positions within the Jewish community in Boro Park, Brooklyn.
             </p>
           </div>
 

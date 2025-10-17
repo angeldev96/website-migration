@@ -8,6 +8,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "Yiddish Jobs - Find Your Perfect Yiddish Job",
   description: "Discover thousands of yiddish opportunities and yid job positions from our extensive professional database. Connect with ambitious career opportunities today.",
+  icons: {
+    icon: "/favico.png",
+  },
 };
 
 export default function RootLayout({ children }) {

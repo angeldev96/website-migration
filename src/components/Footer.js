@@ -83,17 +83,6 @@ const Footer = () => {
           <h3 className="text-white font-semibold text-lg mb-4">Popular Locations</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 text-sm">
             <Link href="/locations/boro-park" className="hover:text-white transition-colors">Boro Park</Link>
-            <Link href="/locations/williamsburg" className="hover:text-white transition-colors">Williamsburg</Link>
-            <Link href="/locations/crown-heights" className="hover:text-white transition-colors">Crown Heights</Link>
-            <Link href="/locations/flatbush" className="hover:text-white transition-colors">Flatbush</Link>
-            <Link href="/locations/lakewood" className="hover:text-white transition-colors">Lakewood</Link>
-            <Link href="/locations/monsey" className="hover:text-white transition-colors">Monsey</Link>
-            <Link href="/locations/five-towns" className="hover:text-white transition-colors">Five Towns</Link>
-            <Link href="/locations/manhattan" className="hover:text-white transition-colors">Manhattan</Link>
-            <Link href="/locations/queens" className="hover:text-white transition-colors">Queens</Link>
-            <Link href="/locations/teaneck" className="hover:text-white transition-colors">Teaneck</Link>
-            <Link href="/locations/passaic" className="hover:text-white transition-colors">Passaic</Link>
-            <Link href="/locations/baltimore" className="hover:text-white transition-colors">Baltimore</Link>
           </div>
         </div>
 
