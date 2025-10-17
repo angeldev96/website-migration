@@ -1,0 +1,169 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
+model JobsSheet {
+  id                                                                        Int                  @id @default(autoincrement())
+  jobTitle                                                                  String               @map("job_title")
+  description                                                               String
+  category                                                                  String
+  emailInfo                                                                 String?              @map("email_info")
+  phoneNumber                                                               String?              @map("phone_number")
+  timeStamp                                                                 String?              @map("time_stamp")
+  aiTitle                                                                   String?              @map("ai_title")
+  aiDescription                                                             String?              @map("ai_description")
+  carrierPhone                                                              String?              @map("carrier_phone")
+  lineType                                                                  String?              @map("line_type")
+  smsFormat                                                                 String?              @map("sms_format")
+  publisher                                                                 Int?
+  jobDate                                                                   DateTime?            @map("job_date") @db.Date
+  whalesyncDate                                                             String?              @map("whalesync_date")
+  phoneProcessedAt                                                          DateTime?            @map("phone_processed_at") @db.Timestamp(6)
+  company                                                                   String?
+  titleYiddish                                                              String?              @map("title_yiddish")
+  descriptionYiddish                                                        String?              @map("description_yiddish")
+  companyVerified                                                           Boolean?             @map("company_verified")
+  genderCategory                                                            String?              @map("gender_category")
+  child                                                                     child[]
+  job_insertion_logs_job_insertion_logs_matched_original_job_idTojobs_sheet job_insertion_logs[] @relation("job_insertion_logs_matched_original_job_idTojobs_sheet")
+  job_insertion_logs_job_insertion_logs_newly_inserted_job_idTojobs_sheet   job_insertion_logs[] @relation("job_insertion_logs_newly_inserted_job_idTojobs_sheet")
+
+  @@map("jobs_sheet")
+}
+
+model api_config {
+  id         Int       @id @default(autoincrement())
+  api_name   String    @unique @db.VarChar(50)
+  api_key    String
+  base_url   String
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  updated_at DateTime? @default(now()) @db.Timestamp(6)
+}
+
+model api_request_queue {
+  id               Int       @id @default(autoincrement())
+  phone_number     String
+  normalized_phone String
+  job_id           Int?
+  status           String?   @default("PENDING")
+  request_url      String?
+  response_data    Json?
+  carrier          String?
+  line_type        String?
+  error_message    String?
+  created_at       DateTime? @default(now()) @db.Timestamp(6)
+  processed_at     DateTime? @db.Timestamp(6)
+  attempts         Int?      @default(0)
+
+  @@index([created_at], map: "idx_api_queue_created_at")
+  @@index([normalized_phone], map: "idx_api_queue_normalized_phone")
+  @@index([status], map: "idx_api_queue_status")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model carrier_update_tracker {
+  id                    Int       @id
+  last_processed_job_id Int       @default(0)
+  last_run_timestamp    DateTime? @db.Timestamptz(6)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model child {
+  id                          Int       @id @default(autoincrement())
+  original_job_id             Int
+  duplicate_attempt_timestamp DateTime? @default(now()) @db.Timestamptz(6)
+  jobs_sheet                  JobsSheet @relation(fields: [original_job_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_original_job")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model job_insertion_logs {
+  id                                                                BigInt         @id @default(autoincrement())
+  log_timestamp                                                     DateTime?      @default(now()) @db.Timestamptz(6)
+  status                                                            job_log_status
+  attempted_title                                                   String?
+  attempted_description                                             String?
+  newly_inserted_job_id                                             Int?
+  matched_original_job_id                                           Int?
+  jobs_sheet_job_insertion_logs_matched_original_job_idTojobs_sheet JobsSheet?     @relation("job_insertion_logs_matched_original_job_idTojobs_sheet", fields: [matched_original_job_id], references: [id], onUpdate: NoAction, map: "fk_matched_original_job")
+  jobs_sheet_job_insertion_logs_newly_inserted_job_idTojobs_sheet   JobsSheet?     @relation("job_insertion_logs_newly_inserted_job_idTojobs_sheet", fields: [newly_inserted_job_id], references: [id], onUpdate: NoAction, map: "fk_newly_inserted_job")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model messages {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  session_id String?   @db.Uuid
+  role       String
+  text       String
+  created_at DateTime? @default(now()) @db.Timestamptz(6)
+  sessions   sessions? @relation(fields: [session_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([session_id, created_at(sort: Desc)], map: "idx_messages_session_created")
+}
+
+model n8n_chat_histories {
+  id         Int    @id @default(autoincrement())
+  session_id String @db.VarChar(255)
+  message    Json
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model phone_carrier_cache {
+  normalized_phone_number String    @id
+  carrier                 String
+  line_type               String?
+  last_updated            DateTime? @default(now()) @db.Timestamptz(6)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model phone_processing_log {
+  id           Int       @id @default(autoincrement())
+  job_id       Int?
+  phone_number String?
+  carrier      String?
+  line_type    String?
+  source       String?
+  message      String?
+  processed_at DateTime? @default(now()) @db.Timestamp(6)
+
+  @@index([job_id], map: "idx_phone_processing_log_job_id")
+  @@index([processed_at], map: "idx_phone_processing_log_processed_at")
+}
+
+model sessions {
+  id            String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  client_id     String     @unique
+  first_seen_at DateTime?  @default(now()) @db.Timestamptz(6)
+  last_seen_at  DateTime?  @default(now()) @db.Timestamptz(6)
+  messages      messages[]
+}
+
+model sms_users {
+  phone_number  String    @id @db.VarChar(20)
+  message_count Int?      @default(0)
+  is_authorized Boolean?  @default(false)
+  created_at    DateTime? @default(now()) @db.Timestamp(6)
+  authorized_at DateTime? @db.Timestamp(6)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model website_bot_messages {
+  id         Int       @id @default(autoincrement())
+  session_id String    @db.VarChar(255)
+  role       String    @db.VarChar(20)
+  message    String
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+
+  @@index([created_at], map: "idx_created_at")
+  @@index([session_id], map: "idx_session_id")
+}
+
+enum job_log_status {
+  INSERTED_SUCCESSFULLY
+  DUPLICATE_BLOCKED
+}

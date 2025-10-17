@@ -1,36 +1,196 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Yiddish Jobs - Website Migration
 
-## Getting Started
+A modern job board platform built with Next.js 15, React 19, Tailwind CSS 4, and Prisma ORM, specifically designed for the Jewish community in Boro Park, Brooklyn, NY.
 
-First, run the development server:
+## 🚀 Tech Stack
+
+- **Framework:** Next.js 15.5.4 (App Router)
+- **UI Library:** React 19.1.0
+- **Styling:** Tailwind CSS v4
+- **Database:** PostgreSQL (Railway)
+- **ORM:** Prisma
+- **Deployment:** Vercel (recommended)
+
+## 📋 Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+- PostgreSQL database (Railway)
+
+## 🔧 Setup Instructions
+
+### 1. Clone the repository
+
+```bash
+git clone <your-repo-url>
+cd website-migration
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Environment Variables
+
+Create a `.env` file in the root directory:
+
+```bash
+cp .env.example .env
+```
+
+Add your database connection string:
+
+```env
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE"
+NEXT_PUBLIC_APP_URL="http://localhost:3000"
+```
+
+### 4. Generate Prisma Client
+
+```bash
+npx prisma generate
+```
+
+### 5. Sync with Database
+
+```bash
+npx prisma db pull
+```
+
+### 6. Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 📁 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+website-migration/
+├── src/
+│   ├── app/
+│   │   ├── api/              # API Routes
+│   │   │   ├── jobs/         # Jobs endpoints
+│   │   │   ├── categories/   # Categories endpoint
+│   │   │   ├── search/       # Search endpoint
+│   │   │   └── stats/        # Statistics endpoint
+│   │   ├── layout.js         # Root layout
+│   │   ├── page.js           # Homepage
+│   │   └── globals.css       # Global styles
+│   ├── components/           # React components
+│   │   ├── Header.js
+│   │   ├── Footer.js
+│   │   ├── SearchBar.js
+│   │   ├── Stats.js
+│   │   ├── PopularCategories.js
+│   │   └── FeaturedJobs.js
+│   └── lib/
+│       └── prisma.js         # Prisma client singleton
+├── prisma/
+│   └── schema.prisma         # Database schema
+└── public/                   # Static files
+```
 
-## Learn More
+## 🔌 API Endpoints
 
-To learn more about Next.js, take a look at the following resources:
+### Jobs
+- `GET /api/jobs` - Get all jobs with pagination and filters
+  - Query params: `page`, `limit`, `category`, `location`, `search`, `genderCategory`
+- `GET /api/jobs/[id]` - Get a specific job by ID
+- `GET /api/jobs/featured` - Get featured/recent jobs
+  - Query params: `limit` (default: 6)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Categories
+- `GET /api/categories` - Get all categories with job counts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Search
+- `POST /api/search` - Advanced job search
+  - Body: `{ keyword, location, category, genderCategory, page, limit }`
 
-## Deploy on Vercel
+### Statistics
+- `GET /api/stats` - Get website statistics
+  - Returns: total jobs, companies, recent jobs, category breakdown
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🗄️ Database Schema
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The main table is `jobs_sheet` with the following key fields:
+
+- `jobTitle` - Job title
+- `description` - Job description
+- `category` - Job category
+- `company` - Company name
+- `emailInfo` - Contact email
+- `phoneNumber` - Contact phone
+- `jobDate` - Date posted
+- `genderCategory` - Gender category filter
+- `companyVerified` - Verification status
+- And more...
+
+## 🎨 Features
+
+### Implemented
+- ✅ Modern, responsive homepage
+- ✅ Job search functionality
+- ✅ Category browsing
+- ✅ Statistics display
+- ✅ Featured jobs section
+- ✅ Full API backend with Prisma
+- ✅ PostgreSQL database integration
+
+### Coming Soon
+- 🔄 Dynamic job listing pages
+- 🔄 Individual job detail pages
+- 🔄 User authentication
+- 🔄 Job posting form for employers
+- 🔄 Advanced filters and sorting
+- 🔄 Job alerts system
+- 🔄 SEO optimization
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+1. Push your code to GitHub
+2. Import project in Vercel
+3. Add environment variables in Vercel dashboard
+4. Deploy!
+
+```bash
+npm run build
+```
+
+## 📝 Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm start` - Start production server
+- `npm run lint` - Run ESLint
+- `npx prisma studio` - Open Prisma Studio (database GUI)
+- `npx prisma generate` - Generate Prisma Client
+- `npx prisma db pull` - Pull schema from database
+
+## 🔐 Security
+
+- Never commit `.env` file
+- Keep database credentials secure
+- Use environment variables for sensitive data
+
+## 📚 Learn More
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Prisma Documentation](https://www.prisma.io/docs)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [Railway Documentation](https://docs.railway.app)
+
+## 👥 Contributing
+
+This is a private project for Yiddish Jobs migration. For questions or issues, contact the development team.
+
+## 📄 License
+
+Proprietary - Yiddish Jobs © 2025
+
