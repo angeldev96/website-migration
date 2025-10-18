@@ -66,10 +66,13 @@ export default function PostJobPage() {
                   <h1 className="text-3xl font-extrabold text-gray-900">Post a job</h1>
                   <p className="mt-2 text-sm text-gray-600">No account required — submit a job and it will be reviewed.</p>
                 </div>
-                <div className="flex items-center mt-4 sm:mt-0">
-                  <div className="text-xs text-gray-500">Estimated time</div>
-                  <div className="ml-3 rounded-full bg-blue-50 text-blue-700 px-3 py-1 text-sm font-semibold">2 min</div>
-                </div>
+              <div className="flex items-center text-center mt-4 sm:mt-0 ml-4">
+  <div className="text-sm text-gray-500 mr-2">Estimated time</div>
+  <div className="flex items-center justify-center h-10 w-10 rounded-full bg-blue-100 text-blue-700 text-lg font-bold">
+    2
+    <span className="text-sm font-semibold ml-1">min</span>
+  </div>
+</div>
               </div>
 
               {message && (
