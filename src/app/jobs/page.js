@@ -22,11 +22,11 @@ const JobsPage = () => {
   useEffect(() => {
     const pageTitle = selectedCategory 
       ? `${selectedCategory} Jobs in Boro Park - Jewish Employment | Yid Jobs`
-      : 'Browse All Jewish Jobs in Boro Park Brooklyn | Yid Jobs';
+      : 'Browse All Jewish Jobs in Boro Park | Yid Jobs';
     
     const pageDescription = selectedCategory
-      ? `Find ${selectedCategory} jobs in the Orthodox Jewish community of Boro Park, Brooklyn. Browse kosher ${selectedCategory} employment opportunities. Yiddish jobs available.`
-      : 'Browse thousands of Jewish job opportunities in Boro Park, Brooklyn. Find employment in the Orthodox community. Retail, healthcare, education, office and more kosher jobs available.';
+      ? `Find ${selectedCategory} jobs in the Orthodox Jewish community of Boro Park. Browse kosher ${selectedCategory} employment opportunities. Yiddish jobs available.`
+      : 'Browse thousands of Jewish job opportunities in Boro Park. Find employment in the Orthodox community. Retail, healthcare, education, office and more kosher jobs available.';
     
     document.title = pageTitle;
     
@@ -99,8 +99,8 @@ const JobsPage = () => {
   };
 
   const extractLocation = (description) => {
-    const locationMatches = description?.match(/\b(Brooklyn|Manhattan|Queens|Bronx|Staten Island|Boro Park|Williamsburg|Crown Heights|Flatbush|Monsey|Lakewood|New York|NY)\b/i);
-    return locationMatches ? locationMatches[0] : 'Brooklyn / New York';
+    // Always return Boro Park as the primary location
+    return 'Boro Park';
   };
 
   const getCategoryIcon = (category) => {

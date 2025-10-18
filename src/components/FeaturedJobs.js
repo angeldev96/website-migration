@@ -46,9 +46,8 @@ const FeaturedJobs = () => {
   };
 
   const extractLocation = (description) => {
-    // Try to extract location from description
-    const locationMatches = description?.match(/\b(Brooklyn|Manhattan|Queens|Bronx|Staten Island|Boro Park|Williamsburg|Crown Heights|Flatbush|Monsey|Lakewood|New York|NY)\b/i);
-    return locationMatches ? locationMatches[0] : 'Brooklyn / New York';
+    // Always return Boro Park as the primary location
+    return 'Boro Park';
   };
 
   const getCategoryIcon = (category) => {

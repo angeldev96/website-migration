@@ -6,11 +6,11 @@ import PopularCategories from '@/components/PopularCategories';
 import FeaturedJobs from '@/components/FeaturedJobs';
 
 export const metadata = {
-  title: "Yid Jobs - Jewish Jobs in Boro Park Brooklyn | Find Yiddish Employment Today",
-  description: "The #1 Jewish job board for Boro Park, Brooklyn. Find thousands of kosher job opportunities in the Orthodox Jewish community. Browse retail, healthcare, education, office, childcare and restaurant jobs. Join the largest Yiddish employment platform serving frum professionals.",
-  keywords: "Jewish jobs Boro Park, Yiddish jobs Brooklyn, Orthodox Jewish employment, kosher jobs, frum jobs, Shomer Shabbos jobs, Jewish community jobs, Boro Park employment, Williamsburg jobs, Flatbush jobs, Crown Heights jobs, Jewish job board, Yiddish career opportunities",
+  title: "Yid Jobs - Jewish Jobs in Boro Park | Find Yiddish Employment Today",
+  description: "The #1 Jewish job board for Boro Park. Find thousands of kosher job opportunities in the Orthodox Jewish community. Browse retail, healthcare, education, office, childcare and restaurant jobs. Join the largest Yiddish employment platform serving frum professionals.",
+  keywords: "Jewish jobs Boro Park, Yiddish jobs Boro Park, Orthodox Jewish employment, kosher jobs, frum jobs, Shomer Shabbos jobs, Jewish community jobs, Boro Park employment, Boro Park jobs, Jewish job board, Yiddish career opportunities",
   openGraph: {
-    title: "Yid Jobs - Jewish Jobs in Boro Park Brooklyn",
+    title: "Yid Jobs - Jewish Jobs in Boro Park",
     description: "Find thousands of kosher job opportunities in Boro Park and the Orthodox Jewish community. The largest Yiddish employment platform.",
     url: "https://yidjobs.com",
     type: "website",
@@ -33,7 +33,7 @@ const HomePage = () => {
     "@context": "https://schema.org",
     "@type": "JobPosting",
     "name": "Browse Jewish Jobs in Boro Park",
-    "description": "Find thousands of job opportunities in the Orthodox Jewish community of Boro Park, Brooklyn",
+    "description": "Find thousands of job opportunities in the Orthodox Jewish community of Boro Park",
     "hiringOrganization": {
       "@type": "Organization",
       "name": "Yid Jobs",
@@ -44,7 +44,7 @@ const HomePage = () => {
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Boro Park",
-        "addressLocality": "Brooklyn",
+        "addressLocality": "Boro Park",
         "addressRegion": "NY",
         "addressCountry": "US"
       }
@@ -86,10 +86,10 @@ const HomePage = () => {
         <section className="container mx-auto px-4 py-24 relative z-10">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              Jewish Jobs in Boro Park Brooklyn - Find Yiddish Employment Today
+              Jewish Jobs in Boro Park - Find Yiddish Employment Today
             </h1>
             <p className="text-lg md:text-xl text-gray-200 mb-12 max-w-3xl mx-auto leading-relaxed">
-              The #1 Orthodox Jewish job board for Boro Park, Williamsburg, Flatbush & Crown Heights. 
+              The #1 Orthodox Jewish job board for Boro Park. 
               Discover thousands of kosher career opportunities in the frum community. 
               Shomer Shabbos employers hiring now.
             </p>
@@ -141,27 +141,26 @@ const HomePage = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">
-              Your Trusted Jewish Job Board for Boro Park & Brooklyn
+              Your Trusted Jewish Job Board for Boro Park
             </h2>
             <div className="prose prose-lg max-w-none text-gray-700">
               <p className="mb-4">
-                <strong>Yid Jobs</strong> is the premier employment platform serving the Orthodox Jewish community 
-                in Boro Park, Brooklyn and surrounding neighborhoods including Williamsburg, Crown Heights, and Flatbush. 
-                We connect Jewish job seekers with kosher employers who value Shomer Shabbos workers and understand 
-                the unique needs of the frum community.
+                <strong>Yid Jobs</strong> is the premier employment platform serving the Orthodox Jewish community
+                in Boro Park. We connect Jewish job seekers with kosher employers who value Shomer Shabbos
+                workers and understand the unique needs of the frum community in Boro Park.
               </p>
               <p className="mb-4">
                 Our platform features thousands of Yiddish-friendly job opportunities across multiple industries:
               </p>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
                 <li>✓ Retail & Sales Jobs in Boro Park</li>
-                <li>✓ Healthcare & Medical Positions</li>
-                <li>✓ Education & Teaching Opportunities</li>
-                <li>✓ Office & Administrative Work</li>
-                <li>✓ Childcare & Babysitting Jobs</li>
-                <li>✓ Restaurant & Food Service</li>
-                <li>✓ Transportation & Delivery</li>
-                <li>✓ Technical & IT Positions</li>
+                <li>✓ Healthcare & Medical Positions in Boro Park</li>
+                <li>✓ Education & Teaching Opportunities in Boro Park</li>
+                <li>✓ Office & Administrative Work in Boro Park</li>
+                <li>✓ Childcare & Babysitting Jobs in Boro Park</li>
+                <li>✓ Restaurant & Food Service in Boro Park</li>
+                <li>✓ Transportation & Delivery in Boro Park</li>
+                <li>✓ Technical & IT Positions in Boro Park</li>
               </ul>
               <p className="mb-4">
                 Whether you&apos;re seeking full-time employment, part-time work, or flexible opportunities 
@@ -170,8 +169,7 @@ const HomePage = () => {
                 businesses within the Jewish community, ensuring a kosher work environment.
               </p>
               <p className="text-sm text-gray-600 italic">
-                Serving Boro Park, Williamsburg, Crown Heights, Flatbush, Monsey, Lakewood, and the 
-                greater New York Metropolitan area Jewish communities.
+                Proudly serving the Boro Park Orthodox Jewish community exclusively.
               </p>
             </div>
           </div>

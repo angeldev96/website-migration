@@ -54,7 +54,7 @@
 2. Create business listing:
    - **Business name**: Yid Jobs
    - **Category**: Employment Agency, Job Board
-   - **Service area**: Boro Park, Williamsburg, Crown Heights, Flatbush
+   - **Service area**: Boro Park, Brooklyn
    - **Description**: Use primary keywords from SEO strategy
 3. Verify the business
 4. Add photos and regular posts

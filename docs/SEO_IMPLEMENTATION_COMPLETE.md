@@ -161,13 +161,8 @@ Every job page gets unique SEO:
 
 ## 🎯 Target Audience & Keywords
 
-### Primary Geographic Targets
-1. **Boro Park** (Primary)
-2. Williamsburg
-3. Crown Heights
-4. Flatbush
-5. Brooklyn (general)
-6. Monsey, Lakewood (secondary)
+### Primary Geographic Target
+1. **Boro Park, Brooklyn** (Exclusive Focus)
 
 ### Community-Specific Terms
 - Orthodox Jewish

@@ -8,34 +8,31 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   metadataBase: new URL('https://yidjobs.com'),
   title: {
-    default: "Yid Jobs - Jewish Jobs in Boro Park Brooklyn | Yiddish Employment Opportunities",
+    default: "Yid Jobs - Jewish Jobs in Boro Park | Yiddish Employment Opportunities",
     template: "%s | Yid Jobs - Jewish Jobs in Boro Park"
   },
-  description: "Find Jewish jobs in Boro Park, Brooklyn. The largest Yiddish jobs website serving the Orthodox Jewish community. Thousands of kosher job opportunities in retail, healthcare, education, office work and more. Post and find jobs in the Jewish community today.",
+  description: "Find Jewish jobs in Boro Park. The largest Yiddish jobs website serving the Orthodox Jewish community. Thousands of kosher job opportunities in retail, healthcare, education, office work and more. Post and find jobs in the Jewish community today.",
   keywords: [
     "Jewish jobs",
     "Yiddish jobs", 
     "Boro Park jobs",
-    "Brooklyn Jewish employment",
     "Orthodox Jewish jobs",
     "kosher jobs",
     "Yid jobs",
     "frum jobs",
-    "Jewish community jobs Brooklyn",
+    "Jewish community jobs",
     "Boro Park employment",
-    "Williamsburg jobs",
-    "Crown Heights jobs",
-    "Flatbush jobs",
+    "Boro Park Jewish community",
     "Jewish job board",
     "Yiddish employment",
     "Orthodox community jobs",
     "Jewish career opportunities",
     "Shomer Shabbos jobs",
     "kosher workplace",
-    "Jewish retail jobs",
-    "Jewish healthcare jobs",
-    "Jewish education jobs",
-    "Jewish office jobs"
+    "Jewish retail jobs Boro Park",
+    "Jewish healthcare jobs Boro Park",
+    "Jewish education jobs Boro Park",
+    "Jewish office jobs Boro Park"
   ],
   authors: [{ name: "Yid Jobs" }],
   creator: "Yid Jobs",
@@ -55,20 +52,20 @@ export const metadata = {
     locale: "en_US",
     url: "https://yidjobs.com",
     siteName: "Yid Jobs - Jewish Jobs in Boro Park",
-    title: "Yid Jobs - Find Jewish Jobs in Boro Park Brooklyn | Yiddish Employment",
-    description: "The largest Jewish job board for Boro Park, Brooklyn. Find kosher job opportunities in the Orthodox Jewish community. Browse thousands of Yiddish jobs in retail, healthcare, education and more.",
+    title: "Yid Jobs - Find Jewish Jobs in Boro Park | Yiddish Employment",
+    description: "The largest Jewish job board for Boro Park. Find kosher job opportunities in the Orthodox Jewish community. Browse thousands of Yiddish jobs in retail, healthcare, education and more.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Yid Jobs - Jewish Jobs in Boro Park Brooklyn"
+        alt: "Yid Jobs - Jewish Jobs in Boro Park"
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Yid Jobs - Jewish Jobs in Boro Park Brooklyn",
+    title: "Yid Jobs - Jewish Jobs in Boro Park",
     description: "Find kosher job opportunities in the Orthodox Jewish community. The largest Yiddish job board for Boro Park.",
     images: ["/og-image.png"],
     creator: "@yidjobs"
@@ -101,7 +98,7 @@ export default function RootLayout({ children }) {
     "name": "Yid Jobs",
     "alternateName": "Yiddish Jobs Boro Park",
     "url": "https://yidjobs.com",
-    "description": "The largest Jewish job board serving Boro Park, Brooklyn and the Orthodox Jewish community",
+    "description": "The largest Jewish job board serving Boro Park and the Orthodox Jewish community",
     "potentialAction": {
       "@type": "SearchAction",
       "target": {
@@ -123,18 +120,20 @@ export default function RootLayout({ children }) {
         "https://twitter.com/yidjobs"
       ],
       "areaServed": {
-        "@type": "City",
-        "name": "Brooklyn",
-        "containedIn": {
-          "@type": "State",
-          "name": "New York"
+        "@type": "Place",
+        "name": "Boro Park",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Boro Park",
+          "addressRegion": "NY",
+          "addressCountry": "US"
         }
       },
       "knowsAbout": [
         "Jewish Employment",
         "Yiddish Jobs",
         "Orthodox Jewish Community",
-        "Boro Park Brooklyn",
+        "Boro Park",
         "Kosher Workplace"
       ]
     }

@@ -41,7 +41,7 @@ const SearchBar = () => {
             }}
           >
             <option value="">All Locations</option>
-            <option value="boro-park">Boro Park, Brooklyn</option>
+            <option value="boro-park">Boro Park</option>
           </select>
         </div>
         <button

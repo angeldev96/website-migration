@@ -15,7 +15,7 @@ export async function generateMetadata({ params }) {
     if (!job) {
       return {
         title: 'Job Not Found - Yid Jobs - Jewish Jobs in Boro Park',
-        description: 'This job listing is no longer available. Browse thousands of other Jewish job opportunities in Boro Park, Brooklyn.',
+        description: 'This job listing is no longer available. Browse thousands of other Jewish job opportunities in Boro Park.',
       };
     }
 
@@ -23,9 +23,8 @@ export async function generateMetadata({ params }) {
     const jobDesc = job.aiDescription || job.description;
     const truncatedDesc = jobDesc.substring(0, 155) + (jobDesc.length > 155 ? '...' : '');
     
-    // Extract location for better SEO
-    const locationMatch = jobDesc?.match(/\b(Brooklyn|Manhattan|Queens|Bronx|Staten Island|Boro Park|Williamsburg|Crown Heights|Flatbush|Monsey|Lakewood|New York|NY)\b/i);
-    const location = locationMatch ? locationMatch[0] : 'Boro Park, Brooklyn';
+    // Always use Boro Park as the location
+    const location = 'Boro Park';
 
     return {
       title: `${jobTitle} - Jewish Jobs in ${location} | Yid Jobs`,
@@ -101,8 +100,8 @@ export default async function JobDetailPage({ params }) {
   };
 
   const extractLocation = (description) => {
-    const locationMatches = description?.match(/\b(Brooklyn|Manhattan|Queens|Bronx|Staten Island|Boro Park|Williamsburg|Crown Heights|Flatbush|Monsey|Lakewood|New York|NY)\b/i);
-    return locationMatches ? locationMatches[0] : 'Brooklyn / New York';
+    // Always return Boro Park, Brooklyn as the primary location
+    return 'Boro Park, Brooklyn';
   };
 
   const getCategoryIcon = (category) => {
@@ -172,15 +171,15 @@ export default async function JobDetailPage({ params }) {
       "@type": "Place",
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": location.includes('Brooklyn') || location.includes('Boro Park') ? "Brooklyn" : location,
-        "addressRegion": "NY",
+        "addressLocality": "Boro Park",
+        "addressRegion": "Brooklyn, NY",
         "addressCountry": "US",
-        "streetAddress": location
+        "streetAddress": "Boro Park"
       }
     },
     "applicantLocationRequirements": {
-      "@type": "City",
-      "name": "Brooklyn"
+      "@type": "Place",
+      "name": "Boro Park, Brooklyn"
     },
     "jobLocationType": "TELECOMMUTE",
     "industry": "Jewish Community Services",

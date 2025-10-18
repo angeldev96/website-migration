@@ -16,9 +16,8 @@ This document outlines the comprehensive SEO strategy implemented for Yid Jobs, 
 ### Secondary Keywords
 - Shomer Shabbos jobs
 - Jewish community jobs Brooklyn
-- Williamsburg jobs
-- Crown Heights jobs
-- Flatbush jobs
+- Boro Park Brooklyn jobs
+- Boro Park Jewish employment
 - Jewish job board
 - Yiddish employment
 - Orthodox community jobs
@@ -70,7 +69,7 @@ To maximize local visibility, create and optimize a Google Business Profile:
 
 1. **Business Name**: Yid Jobs - Jewish Jobs in Boro Park
 2. **Category**: Employment Agency, Job Board
-3. **Service Area**: Boro Park, Williamsburg, Crown Heights, Flatbush, Brooklyn
+3. **Service Area**: Boro Park, Brooklyn
 4. **Description**: Include primary keywords naturally
 5. **Posts**: Regular updates about new job categories and features
 
@@ -102,9 +101,8 @@ List the business on:
 
 ### Landing Pages (Future Implementation)
 Create dedicated pages for:
-- Each neighborhood (Boro Park, Williamsburg, etc.)
-- Each major job category
-- Shomer Shabbos jobs
+- Each major job category in Boro Park
+- Shomer Shabbos jobs in Boro Park
 - Part-time vs Full-time positions
 - Gender-specific opportunities (following community norms)
 
@@ -156,8 +154,8 @@ Create dedicated pages for:
 
 ### Long-term (Months 2-6)
 1. [ ] Build authority with regular blog content
-2. [ ] Expand to other Jewish communities (Monsey, Lakewood)
-3. [ ] Partner with local Jewish organizations
+2. [ ] Deepen presence in Boro Park community
+3. [ ] Partner with local Jewish organizations in Boro Park
 4. [ ] Implement user reviews and ratings
 5. [ ] Create mobile app for better engagement
 
