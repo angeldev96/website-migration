@@ -63,7 +63,7 @@ export async function generateMetadata({ params }) {
     };
   } catch (error) {
     return {
-      title: 'Job Details - Yid Jobs - Jewish Jobs in Boro Park Brooklyn',
+      title: 'Job Details - Yid Jobs - Jewish Jobs in Boro Park',
       description: 'View job details and apply for positions in the Orthodox Jewish community of Boro Park.',
     };
   }
@@ -100,8 +100,8 @@ export default async function JobDetailPage({ params }) {
   };
 
   const extractLocation = (description) => {
-    // Always return Boro Park, Brooklyn as the primary location
-    return 'Boro Park, Brooklyn';
+    // Always return Boro Park as the primary location
+    return 'Boro Park';
   };
 
   const getCategoryIcon = (category) => {
@@ -172,14 +172,14 @@ export default async function JobDetailPage({ params }) {
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Boro Park",
-        "addressRegion": "Brooklyn, NY",
+        "addressRegion": "NY",
         "addressCountry": "US",
         "streetAddress": "Boro Park"
       }
     },
     "applicantLocationRequirements": {
       "@type": "Place",
-      "name": "Boro Park, Brooklyn"
+      "name": "Boro Park"
     },
     "jobLocationType": "TELECOMMUTE",
     "industry": "Jewish Community Services",

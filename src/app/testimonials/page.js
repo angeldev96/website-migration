@@ -9,32 +9,32 @@ const TESTIMONIALS = [
   {
     quote: 'I always thought you had to know someone to get a good job. This site proves you can become a macher without protekzia. It\'s straightforward, respectful, and built for us.',
     name: 'Shmuli Lustigman',
-    location: 'Boro Park, Brooklyn',
+    location: 'Boro Park',
   },
   {
     quote: 'Other job boards felt like they didn\'t get us. Here, I felt like I was already in the room. The jobs are real, the people are respectful, and now I\'m on track to becoming an influencer in my industry.',
     name: 'Shlomy Katz',
-    location: 'Boro Park, Brooklyn',
+    location: 'Boro Park',
   },
   {
     quote: 'I thought I\'d be stuck in dead-end warehouse jobs forever. Yiddish Jobs showed me that even someone like me can become a macher if you find the right fit.',
     name: 'Yehudah Lev',
-    location: 'Boro Park, Brooklyn',
+    location: 'Boro Park',
   },
   {
     quote: 'Fast, honest listings and no spam — exactly what our community needed.',
     name: 'Rivka Stern',
-    location: 'Boro Park, Brooklyn',
+    location: 'Boro Park',
   },
   {
     quote: 'I found a steady part-time job that lets me care for my family and still earn a decent wage. Thank you!',
     name: 'Moshe Green',
-    location: 'Boro Park, Brooklyn',
+    location: 'Boro Park',
   },
   {
     quote: 'Great platform — real people, real jobs. Highly recommend.',
     name: 'Leah Katz',
-    location: 'Boro Park, Brooklyn',
+    location: 'Boro Park',
   }
 ];
 
