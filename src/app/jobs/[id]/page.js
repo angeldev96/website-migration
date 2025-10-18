@@ -128,22 +128,22 @@ export default async function JobDetailPage({ params }) {
           {/* Main Job Card */}
           <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
             {/* Header Section */}
-            <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-8 text-white">
-              <div className="flex items-start gap-6">
+            <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-6 sm:p-8 text-white">
+              <div className="flex flex-col sm:flex-row items-start gap-6">
                 {/* Icon */}
                 <div className="flex-shrink-0">
-                  <div className="w-20 h-20 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-4xl border-2 border-white/30">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-3xl sm:text-4xl border-2 border-white/30">
                     {getCategoryIcon(job.category)}
                   </div>
                 </div>
 
                 {/* Title and Company */}
                 <div className="flex-1">
-                  <h1 className="text-3xl md:text-4xl font-bold mb-3">
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
                     {job.aiTitle || job.jobTitle}
                   </h1>
                   {job.company && (
-                    <div className="flex items-center gap-2 text-xl mb-4">
+                    <div className="flex items-center gap-2 text-lg sm:text-xl mb-4">
                       <span>{job.company}</span>
                       {job.companyVerified && (
                         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
@@ -154,7 +154,7 @@ export default async function JobDetailPage({ params }) {
                   )}
 
                   {/* Meta Info */}
-                  <div className="flex flex-wrap gap-4 text-white/90">
+                  <div className="flex flex-wrap gap-3 text-white/90 text-sm">
                     <div className="flex items-center gap-2">
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />

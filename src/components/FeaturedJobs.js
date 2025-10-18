@@ -156,7 +156,7 @@ const FeaturedJobs = () => {
               className="block bg-white rounded-xl border border-gray-200 hover:border-blue-400 hover:shadow-lg transition-all duration-300 group"
             >
               <div className="p-6">
-                <div className="flex items-start justify-between gap-4">
+                <div className="flex flex-col md:flex-row items-start justify-between gap-4">
                   {/* Left side - Job Info */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start gap-4">
@@ -229,11 +229,11 @@ const FeaturedJobs = () => {
                   </div>
 
                   {/* Right side - Date & Action */}
-                  <div className="flex flex-col items-end justify-between flex-shrink-0 ml-4">
-                    <div className="text-sm text-gray-500 mb-3 whitespace-nowrap">
+                  <div className="mt-4 md:mt-0 flex items-center md:flex-col md:items-end justify-between flex-shrink-0 ml-0 md:ml-4 gap-3 w-full md:w-auto">
+                    <div className="text-sm text-gray-500 mb-0 md:mb-3">
                       {formatDate(job.jobDate)}
                     </div>
-                    <button className="px-6 py-2.5 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-sm hover:shadow-md whitespace-nowrap">
+                    <button className="w-full md:w-auto px-4 py-2.5 md:px-6 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-sm hover:shadow-md whitespace-nowrap text-center">
                       View Details
                     </button>
                   </div>

@@ -21,9 +21,10 @@ const Header = () => {
               <Image 
                 src="https://cdn.prod.website-files.com/67f2f66843f44cc07e764676/68b9a60095ee55fe840f7e34_New%20Yiddish%20Jobs%20Logo.png" 
                 alt="Yiddish Jobs Logo" 
-                width={150} 
-                height={40}
-                className="h-10 w-auto"
+                width={300} 
+                height={100}
+                className="h-20 w-auto brightness-0"
+                style={{ filter: 'brightness(0) saturate(100%)' }}
               />
             </Link>
           </div>
