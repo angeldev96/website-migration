@@ -14,7 +14,7 @@ const Header = () => {
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3">
-        <div className="flex justify-between items-center">
+  <div className="flex justify-center md:justify-between items-center">
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/">
@@ -23,7 +23,7 @@ const Header = () => {
                 alt="Yiddish Jobs Logo" 
                 width={300} 
                 height={100}
-                className="h-20 w-auto brightness-0"
+                className="h-24 md:h-28 w-auto brightness-0"
                 style={{ filter: 'brightness(0) saturate(100%)' }}
               />
             </Link>
@@ -139,10 +139,10 @@ const Header = () => {
           {/* Right Side Buttons */}
           <div className="hidden md:flex items-center space-x-3">
             <Link 
-              href="/post-ad" 
+              href="/post-job" 
               className="bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700 transition-colors font-medium shadow-sm"
             >
-              Post Your Ad +
+              Post a job
             </Link>
             <Link 
               href="/login" 
@@ -157,7 +157,7 @@ const Header = () => {
 
           {/* Mobile Menu Button */}
           <button 
-            className="md:hidden text-gray-700"
+            className="md:hidden absolute right-4 text-gray-700"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -174,7 +174,7 @@ const Header = () => {
               <Link href="/categories" className="text-gray-700 hover:text-blue-600 font-medium">Categories</Link>
               <Link href="/candidates" className="text-gray-700 hover:text-blue-600 font-medium">For Candidates</Link>
               <Link href="/employers" className="text-gray-700 hover:text-blue-600 font-medium">For Employers</Link>
-              <Link href="/post-ad" className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-center">Post Your Ad</Link>
+              <Link href="/post-job" className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-center">Post a job</Link>
               <Link href="/login" className="text-gray-700 hover:text-blue-600 font-medium">Log In</Link>
             </nav>
           </div>

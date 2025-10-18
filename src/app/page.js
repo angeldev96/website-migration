@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import SearchBar from '@/components/SearchBar';
 import Stats from '@/components/Stats';
 import PopularCategories from '@/components/PopularCategories';
@@ -65,18 +66,18 @@ const HomePage = () => {
             Join thousands of professionals in the Jewish community finding meaningful careers
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a 
+            <Link 
               href="/jobs" 
               className="bg-white text-blue-600 px-8 py-3 rounded-md hover:bg-gray-100 transition-colors font-semibold text-lg shadow-lg inline-block"
             >
               Browse All Jobs
-            </a>
-            <a 
-              href="/post-ad" 
+            </Link>
+            <Link 
+              href="/post-job" 
               className="bg-blue-800 text-white px-8 py-3 rounded-md hover:bg-blue-900 transition-colors font-semibold text-lg shadow-lg inline-block"
             >
               Post a Job
-            </a>
+            </Link>
           </div>
         </div>
       </section>
