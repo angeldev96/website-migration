@@ -4,6 +4,9 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
+// Note: Since this is a client component, we'll handle SEO through dynamic head updates
+// For better SEO, consider moving this to a server component in the future
+
 const JobsPage = () => {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category');
@@ -14,6 +17,40 @@ const JobsPage = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState(categoryParam || '');
   const jobsPerPage = 20;
+
+  // Dynamic page title based on category
+  useEffect(() => {
+    const pageTitle = selectedCategory 
+      ? `${selectedCategory} Jobs in Boro Park - Jewish Employment | Yid Jobs`
+      : 'Browse All Jewish Jobs in Boro Park Brooklyn | Yid Jobs';
+    
+    const pageDescription = selectedCategory
+      ? `Find ${selectedCategory} jobs in the Orthodox Jewish community of Boro Park, Brooklyn. Browse kosher ${selectedCategory} employment opportunities. Yiddish jobs available.`
+      : 'Browse thousands of Jewish job opportunities in Boro Park, Brooklyn. Find employment in the Orthodox community. Retail, healthcare, education, office and more kosher jobs available.';
+    
+    document.title = pageTitle;
+    
+    // Update meta description
+    let metaDescription = document.querySelector('meta[name="description"]');
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta');
+      metaDescription.name = 'description';
+      document.head.appendChild(metaDescription);
+    }
+    metaDescription.content = pageDescription;
+
+    // Update canonical URL
+    let linkCanonical = document.querySelector('link[rel="canonical"]');
+    if (!linkCanonical) {
+      linkCanonical = document.createElement('link');
+      linkCanonical.rel = 'canonical';
+      document.head.appendChild(linkCanonical);
+    }
+    const canonicalUrl = selectedCategory 
+      ? `https://yidjobs.com/jobs?category=${encodeURIComponent(selectedCategory)}`
+      : 'https://yidjobs.com/jobs';
+    linkCanonical.href = canonicalUrl;
+  }, [selectedCategory]);
 
   useEffect(() => {
     setSelectedCategory(categoryParam || '');

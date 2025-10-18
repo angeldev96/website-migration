@@ -14,17 +14,58 @@ export async function generateMetadata({ params }) {
 
     if (!job) {
       return {
-        title: 'Job Not Found - Yiddish Jobs',
+        title: 'Job Not Found - Yid Jobs - Jewish Jobs in Boro Park',
+        description: 'This job listing is no longer available. Browse thousands of other Jewish job opportunities in Boro Park, Brooklyn.',
       };
     }
 
+    const jobTitle = job.aiTitle || job.jobTitle;
+    const jobDesc = job.aiDescription || job.description;
+    const truncatedDesc = jobDesc.substring(0, 155) + (jobDesc.length > 155 ? '...' : '');
+    
+    // Extract location for better SEO
+    const locationMatch = jobDesc?.match(/\b(Brooklyn|Manhattan|Queens|Bronx|Staten Island|Boro Park|Williamsburg|Crown Heights|Flatbush|Monsey|Lakewood|New York|NY)\b/i);
+    const location = locationMatch ? locationMatch[0] : 'Boro Park, Brooklyn';
+
     return {
-      title: `${job.aiTitle || job.jobTitle} - Yiddish Jobs`,
-      description: job.aiDescription || job.description.substring(0, 160),
+      title: `${jobTitle} - Jewish Jobs in ${location} | Yid Jobs`,
+      description: `${truncatedDesc} Apply now for this ${job.category} position in the Orthodox Jewish community. ${job.company ? `Hiring at ${job.company}. ` : ''}Kosher workplace environment.`,
+      keywords: `${jobTitle}, Jewish jobs ${location}, Yiddish jobs, ${job.category} jobs, Orthodox Jewish employment, kosher jobs, frum jobs, Boro Park jobs, Shomer Shabbos jobs`,
+      openGraph: {
+        title: `${jobTitle} - Jewish Jobs in ${location}`,
+        description: truncatedDesc,
+        url: `https://yidjobs.com/jobs/${jobId}`,
+        type: 'article',
+        publishedTime: job.jobDate?.toISOString(),
+        modifiedTime: job.updatedAt?.toISOString(),
+        images: [
+          {
+            url: '/og-image.png',
+            width: 1200,
+            height: 630,
+            alt: `${jobTitle} - Yid Jobs`
+          }
+        ]
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${jobTitle} - Jewish Jobs`,
+        description: truncatedDesc,
+        images: ['/og-image.png']
+      },
+      alternates: {
+        canonical: `https://yidjobs.com/jobs/${jobId}`
+      },
+      other: {
+        'job-category': job.category,
+        'job-location': location,
+        'job-type': job.genderCategory || 'Any',
+      }
     };
   } catch (error) {
     return {
-      title: 'Job Details - Yiddish Jobs',
+      title: 'Job Details - Yid Jobs - Jewish Jobs in Boro Park Brooklyn',
+      description: 'View job details and apply for positions in the Orthodox Jewish community of Boro Park.',
     };
   }
 }
@@ -97,8 +138,104 @@ export default async function JobDetailPage({ params }) {
     return 'Full Time';
   };
 
+  // Extract salary information if available
+  const extractSalary = (description) => {
+    const salaryMatch = description?.match(/\$[\d,]+(?:\s*-\s*\$[\d,]+)?(?:\s*(?:per|\/)\s*(?:hour|hr|year|yr|annually))?/i);
+    return salaryMatch ? salaryMatch[0] : null;
+  };
+
+  const salary = extractSalary(job.description);
+  const location = extractLocation(job.description);
+  const jobType = getJobType(job.description);
+
+  // JSON-LD Schema for JobPosting
+  const jobPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "JobPosting",
+    "title": job.aiTitle || job.jobTitle,
+    "description": job.aiDescription || job.description,
+    "identifier": {
+      "@type": "PropertyValue",
+      "name": "Yid Jobs",
+      "value": job.id.toString()
+    },
+    "datePosted": job.jobDate?.toISOString() || new Date().toISOString(),
+    "validThrough": new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(), // 90 days from now
+    "employmentType": jobType === 'Full Time' ? 'FULL_TIME' : 'PART_TIME',
+    "hiringOrganization": {
+      "@type": "Organization",
+      "name": job.company || "Yid Jobs",
+      "sameAs": "https://yidjobs.com",
+      "logo": "https://yidjobs.com/favico.png"
+    },
+    "jobLocation": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": location.includes('Brooklyn') || location.includes('Boro Park') ? "Brooklyn" : location,
+        "addressRegion": "NY",
+        "addressCountry": "US",
+        "streetAddress": location
+      }
+    },
+    "applicantLocationRequirements": {
+      "@type": "City",
+      "name": "Brooklyn"
+    },
+    "jobLocationType": "TELECOMMUTE",
+    "industry": "Jewish Community Services",
+    "occupationalCategory": job.category,
+    ...(salary && {
+      "baseSalary": {
+        "@type": "MonetaryAmount",
+        "currency": "USD",
+        "value": {
+          "@type": "QuantitativeValue",
+          "value": salary,
+          "unitText": "HOUR"
+        }
+      }
+    })
+  };
+
+  // BreadcrumbList Schema
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://yidjobs.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Jobs",
+        "item": "https://yidjobs.com/jobs"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": job.aiTitle || job.jobTitle,
+        "item": `https://yidjobs.com/jobs/${job.id}`
+      }
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      
       {/* Breadcrumb */}
       <div className="bg-white border-b border-gray-200">
         <div className="container mx-auto px-4 py-4">

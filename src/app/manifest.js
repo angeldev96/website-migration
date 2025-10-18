@@ -1,0 +1,32 @@
+export default function manifest() {
+  return {
+    name: 'Yid Jobs - Jewish Jobs in Boro Park Brooklyn',
+    short_name: 'Yid Jobs',
+    description: 'Find Jewish jobs in Boro Park, Brooklyn. The largest Yiddish jobs website serving the Orthodox Jewish community.',
+    start_url: '/',
+    display: 'standalone',
+    background_color: '#ffffff',
+    theme_color: '#2563eb',
+    orientation: 'portrait',
+    icons: [
+      {
+        src: '/favico.png',
+        sizes: 'any',
+        type: 'image/png',
+      },
+      {
+        src: '/favico.png',
+        sizes: '192x192',
+        type: 'image/png',
+      },
+      {
+        src: '/favico.png',
+        sizes: '512x512',
+        type: 'image/png',
+      },
+    ],
+    categories: ['business', 'employment', 'productivity'],
+    lang: 'en-US',
+    dir: 'ltr',
+  };
+}
