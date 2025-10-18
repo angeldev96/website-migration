@@ -253,7 +253,7 @@ export default async function JobDetailPage({ params }) {
           {/* Back Button */}
           <Link 
             href="/"
-            className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors"
+            className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-all duration-300 animate-fade-in"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -262,19 +262,19 @@ export default async function JobDetailPage({ params }) {
           </Link>
 
           {/* Main Job Card */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+          <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden animate-fade-in-up animation-delay-200">
             {/* Header Section */}
             <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-6 sm:p-8 text-white">
               <div className="flex flex-col sm:flex-row items-start gap-6">
                 {/* Icon */}
-                <div className="flex-shrink-0">
+                <div className="flex-shrink-0 animate-fade-in-up animation-delay-300">
                   <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-3xl sm:text-4xl border-2 border-white/30">
                     {getCategoryIcon(job.category)}
                   </div>
                 </div>
 
                 {/* Title and Company */}
-                <div className="flex-1">
+                <div className="flex-1 animate-fade-in-up animation-delay-400">
                   <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
                     {job.aiTitle || job.jobTitle}
                   </h1>
@@ -290,7 +290,7 @@ export default async function JobDetailPage({ params }) {
                   )}
 
                   {/* Meta Info */}
-                  <div className="flex flex-wrap gap-3 text-white/90 text-sm">
+                  <div className="flex flex-wrap gap-3 text-white/90 text-sm animate-fade-in-up animation-delay-500">
                     <div className="flex items-center gap-2">
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -316,12 +316,12 @@ export default async function JobDetailPage({ params }) {
             </div>
 
             {/* Content Section */}
-            <div className="p-8">
+            <div className="p-8 animate-fade-in-up animation-delay-600">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Main Content */}
                 <div className="lg:col-span-2 space-y-8">
                   {/* Job Description */}
-                  <div>
+                  <div className="animate-fade-in-up animation-delay-700">
                     <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                       <span className="text-blue-600">📄</span>
                       Job Description
@@ -335,7 +335,7 @@ export default async function JobDetailPage({ params }) {
 
                   {/* Yiddish Translation if available */}
                   {(job.titleYiddish || job.descriptionYiddish) && (
-                    <div className="border-t border-gray-200 pt-8">
+                    <div className="border-t border-gray-200 pt-8 animate-fade-in-up animation-delay-800">
                       <h2 className="text-2xl font-bold text-gray-900 mb-4">
                         יידיש (Yiddish)
                       </h2>
@@ -354,7 +354,7 @@ export default async function JobDetailPage({ params }) {
                 </div>
 
                 {/* Sidebar */}
-                <div className="space-y-6">
+                <div className="space-y-6 animate-fade-in-up animation-delay-900">
                   {/* Apply Card */}
                   <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 border border-blue-200 sticky top-6">
                     <h3 className="text-lg font-bold text-gray-900 mb-4">Apply for this position</h3>
@@ -433,7 +433,7 @@ export default async function JobDetailPage({ params }) {
           </div>
 
           {/* Related Jobs - Coming Soon */}
-          <div className="mt-12">
+          <div className="mt-12 animate-fade-in-up animation-delay-1000">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Similar Opportunities</h2>
             <div className="bg-white rounded-xl p-8 text-center border border-gray-200">
               <div className="text-5xl mb-4">🔍</div>

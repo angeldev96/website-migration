@@ -152,7 +152,7 @@ const FeaturedJobs = () => {
             <Link 
               href={`/jobs/${job.id}`}
               key={job.id}
-              className="block bg-white rounded-xl border border-gray-200 hover:border-blue-400 hover:shadow-lg transition-all duration-300 group"
+              className="block bg-white rounded-xl border border-gray-200 hover:border-blue-400 hover:shadow-lg transition-all duration-300 group hover:scale-[1.02] active:scale-[0.98]"
             >
               <div className="p-6">
                 <div className="flex flex-col md:flex-row items-start justify-between gap-4">
@@ -232,7 +232,7 @@ const FeaturedJobs = () => {
                     <div className="text-sm text-gray-500 mb-0 md:mb-3">
                       {formatDate(job.jobDate)}
                     </div>
-                    <button className="w-full md:w-auto px-4 py-2.5 md:px-6 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-sm hover:shadow-md whitespace-nowrap text-center">
+                    <button className="w-full md:w-auto px-4 py-2.5 md:px-6 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105 active:scale-95">
                       View Details
                     </button>
                   </div>
