@@ -30,7 +30,6 @@ export default async function sitemap() {
     const jobs = await prisma.jobsSheet.findMany({
       select: {
         id: true,
-        updatedAt: true,
         jobDate: true,
       },
       orderBy: {
@@ -40,7 +39,7 @@ export default async function sitemap() {
 
     const jobPages = jobs.map((job) => ({
       url: `${baseUrl}/jobs/${job.id}`,
-      lastModified: job.updatedAt || job.jobDate || new Date(),
+  lastModified: job.jobDate || new Date(),
       changeFrequency: 'weekly',
       priority: 0.7,
     }));
