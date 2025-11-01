@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import prisma from '@/lib/prisma';
 
 // Generate metadata for SEO
@@ -137,6 +138,59 @@ export default async function JobDetailPage({ params }) {
     return 'Full Time';
   };
 
+  // Map carrier strings to a small display object (initials + friendly name)
+  const getCarrierInfo = (carrierString) => {
+    if (!carrierString) return null;
+    const s = carrierString.trim();
+    const lower = s.toLowerCase();
+
+    const map = [
+      {
+        key: 'verizon',
+        name: 'Verizon',
+        initials: 'VZ',
+        // Provided by user
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Verizon_2024.svg/1200px-Verizon_2024.svg.png'
+      },
+      {
+        key: 't-mobile',
+        name: 'T-Mobile',
+        initials: 'TM',
+        imageUrl: 'https://icons.iconarchive.com/icons/martz90/circle-addon1/512/t-mobile-icon.png'
+      },
+      {
+        key: 'att',
+        name: "AT&T",
+        initials: 'AT',
+        imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa_TW8c50QW6VMUAsHEsrXkVQIjtq4LqiXQw&s'
+      },
+      { key: 'google', name: 'Google (Grand Central)', initials: 'G' },
+      { key: 'twilio', name: 'Twilio', initials: 'TW' },
+      { key: 'bandwidth', name: 'Bandwidth', initials: 'BW' },
+      { key: 'onvoy', name: 'Onvoy', initials: 'ON' },
+      { key: 'telnyx', name: 'Telnyx', initials: 'TX' },
+      { key: 'peerless', name: 'Peerless Network', initials: 'PN' },
+      { key: 'charter', name: 'Charter / Cablevision', initials: 'CH' },
+      { key: 'numberbarn', name: 'NumberBarn', initials: 'NB' },
+      { key: 'xchange', name: 'Xchange Telecom', initials: 'XC' },
+    ];
+
+    for (const m of map) {
+      if (lower.includes(m.key)) {
+        return {
+          displayName: m.name,
+          initials: m.initials,
+          imageUrl: m.imageUrl,
+        };
+      }
+    }
+
+    // Fallback: try to extract a short friendly name
+    const fallbackName = s.replace(/\s*\/.+$/, '').trim();
+    const initials = fallbackName.split(/\s+/).slice(0,2).map(w => w[0]).join('').toUpperCase() || 'CP';
+    return { displayName: fallbackName, initials };
+  };
+
   // Extract salary information if available
   const extractSalary = (description) => {
     const salaryMatch = description?.match(/\$[\d,]+(?:\s*-\s*\$[\d,]+)?(?:\s*(?:per|\/)\s*(?:hour|hr|year|yr|annually))?/i);
@@ -146,6 +200,7 @@ export default async function JobDetailPage({ params }) {
   const salary = extractSalary(job.description);
   const location = extractLocation(job.description);
   const jobType = getJobType(job.description);
+  const carrierInfo = getCarrierInfo(job.carrierPhone);
 
   // JSON-LD Schema for JobPosting
   const jobPostingSchema = {
@@ -393,6 +448,30 @@ export default async function JobDetailPage({ params }) {
                             <div className="text-sm text-gray-900 font-semibold">{job.phoneNumber}</div>
                           </div>
                         </a>
+                      )}
+                      {/* Carrier display (icon/initials + name) */}
+                      {carrierInfo && (
+                        <div className="flex items-center gap-3 p-3 bg-white rounded-lg transition-all">
+                          {/* Show logo image if available, otherwise initials fallback */}
+                          {carrierInfo.imageUrl ? (
+                            <Image
+                              src={carrierInfo.imageUrl}
+                              alt={carrierInfo.displayName}
+                              width={56}
+                              height={56}
+                              unoptimized
+                              className="w-14 h-14 rounded-full object-contain bg-white p-1"
+                            />
+                          ) : (
+                            <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center text-lg font-bold text-gray-700">
+                              {carrierInfo.initials}
+                            </div>
+                          )}
+                          <div className="flex-1 min-w-0">
+                            <div className="text-xs text-gray-600 font-medium">Carrier</div>
+                            <div className="text-sm text-gray-900 font-semibold truncate">{carrierInfo.displayName}</div>
+                          </div>
+                        </div>
                       )}
                     </div>
 
