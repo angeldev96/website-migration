@@ -20,6 +20,16 @@ export async function POST(request) {
       return NextResponse.json({ success: false, error: 'Email and password required' }, { status: 400 });
     }
 
+    // Quick runtime checks (helpful for production debugging)
+    try {
+      console.error('DEBUG: JWT_SECRET present?', !!JWT_SECRET);
+      // simple DB ping to reveal connection problems early
+      await prisma.$queryRaw`SELECT 1`;
+    } catch (pingErr) {
+      console.error('DEBUG: DB ping failed:', pingErr && pingErr.message);
+      return NextResponse.json({ success: false, error: 'Database connection failed', message: pingErr?.message }, { status: 500 });
+    }
+
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) return NextResponse.json({ success: false, error: 'Invalid credentials' }, { status: 401 });
 
@@ -32,7 +42,7 @@ export async function POST(request) {
     res.headers.set('Set-Cookie', createCookie(token));
     return res;
   } catch (err) {
-    console.error('Login error', err);
-    return NextResponse.json({ success: false, error: 'Login failed', message: err.message }, { status: 500 });
+    console.error('Login error', err && err.stack ? err.stack : err);
+    return NextResponse.json({ success: false, error: 'Login failed', message: err?.message || String(err) }, { status: 500 });
   }
 }
