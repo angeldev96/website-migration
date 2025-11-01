@@ -475,25 +475,27 @@ export default async function JobDetailPage({ params }) {
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="text-xs text-gray-600 font-medium">Phone</div>
-                            <div className="text-sm text-gray-900 font-semibold">{job.phoneNumber}</div>
+                            <div className="text-sm text-gray-900 font-semibold break-all whitespace-normal">{job.phoneNumber}</div>
                           </div>
                         </a>
                       )}
                       {/* Carrier display (icon/initials + name) */}
                       {carrierInfo && (
-                        <div className="flex items-center gap-3 p-3 bg-white rounded-lg transition-all">
-                          {/* Show logo image if available, otherwise initials fallback */}
+                        <div className="flex items-center gap-4 p-3 bg-white rounded-lg transition-all">
+                          {/* Show rectangular logo image if available, otherwise initials fallback */}
                           {carrierInfo.imageUrl ? (
-                            <Image
-                              src={carrierInfo.imageUrl}
-                              alt={carrierInfo.displayName}
-                              width={56}
-                              height={56}
-                              unoptimized
-                              className="w-14 h-14 rounded-full object-contain bg-white p-1"
-                            />
+                            <div className="w-24 flex items-center justify-start">
+                              <Image
+                                src={carrierInfo.imageUrl}
+                                alt={carrierInfo.displayName}
+                                width={96}
+                                height={32}
+                                unoptimized
+                                className="w-20 max-h-10 object-contain"
+                              />
+                            </div>
                           ) : (
-                            <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center text-lg font-bold text-gray-700">
+                            <div className="w-20 h-10 bg-gray-100 rounded-md flex items-center justify-center text-lg font-bold text-gray-700">
                               {carrierInfo.initials}
                             </div>
                           )}
