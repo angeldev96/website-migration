@@ -21,18 +21,41 @@ export async function generateMetadata({ params }) {
     }
 
     const jobTitle = job.aiTitle || job.jobTitle;
-    const jobDesc = job.aiDescription || job.description;
-    const truncatedDesc = jobDesc.substring(0, 155) + (jobDesc.length > 155 ? '...' : '');
-    
-    // Always use Boro Park as the location
-    const location = 'Boro Park';
+    const jobDesc = job.aiDescription || job.description || '';
+    const location = 'Boro Park'; // site focuses on Boro Park
+
+    // Build a focused, readable meta description (<= 155 chars when possible)
+    const pieces = [];
+    if (job.company) pieces.push(`Hiring: ${job.company}`);
+    if (job.category) pieces.push(job.category);
+    if (job.jobDate) pieces.push(`Posted ${new Date(job.jobDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`);
+    if (job.description) pieces.push(excerpt(job.description, 80));
+
+    const baseDesc = `${jobTitle} — ${pieces.filter(Boolean).join(' • ')}`;
+    const truncatedDesc = baseDesc.length > 155 ? baseDesc.substring(0, 152).trim() + '...' : baseDesc;
+
+    // Keywords array (helpful but Google ignores meta keywords mostly). Keep it targeted.
+    const keywordsArr = [jobTitle, job.company, job.category, location, job.genderCategory].filter(Boolean).slice(0, 12);
 
     return {
-      title: `${jobTitle} - Jewish Jobs in ${location} | Yid Jobs`,
-      description: `${truncatedDesc} Apply now for this ${job.category} position in the Orthodox Jewish community. ${job.company ? `Hiring at ${job.company}. ` : ''}Kosher workplace environment.`,
-      keywords: `${jobTitle}, Jewish jobs ${location}, Yiddish jobs, ${job.category} jobs, Orthodox Jewish employment, kosher jobs, frum jobs, Boro Park jobs, Shomer Shabbos jobs`,
+      title: `${jobTitle} — ${job.company ? job.company + ' | ' : ''}Jobs in ${location} | Yid Jobs`,
+      description: truncatedDesc,
+      keywords: keywordsArr.join(', '),
+      robots: {
+        index: true,
+        follow: true,
+        nocache: false,
+        googleBot: {
+          index: true,
+          follow: true,
+          'max-video-preview': -1,
+          'max-image-preview': 'large',
+          'max-snippet': -1
+        }
+      },
+      authors: job.company ? [{ name: job.company }] : [{ name: 'Yid Jobs' }],
       openGraph: {
-        title: `${jobTitle} - Jewish Jobs in ${location}`,
+        title: `${jobTitle} - Jobs in ${location}`,
         description: truncatedDesc,
         url: `https://yidjobs.com/jobs/${jobId}`,
         type: 'article',
@@ -68,6 +91,13 @@ export async function generateMetadata({ params }) {
       description: 'View job details and apply for positions in the Orthodox Jewish community of Boro Park.',
     };
   }
+}
+
+// Small helper to create short excerpts for metadata
+function excerpt(text, maxLen = 120) {
+  const plain = (text || '').replace(/\s+/g, ' ').trim();
+  if (plain.length <= maxLen) return plain;
+  return plain.substring(0, maxLen - 1).trim() + '…';
 }
 
 async function getJob(id) {
