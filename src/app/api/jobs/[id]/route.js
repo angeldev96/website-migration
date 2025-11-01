@@ -50,3 +50,44 @@ export async function GET(request, { params }) {
     );
   }
 }
+
+// DELETE /api/jobs/[id] - Delete a job by ID
+export async function DELETE(request, { params }) {
+  try {
+    const { id } = await params;
+    const jobId = parseInt(id);
+
+    if (isNaN(jobId)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Invalid job ID'
+        },
+        { status: 400 }
+      );
+    }
+
+    // Attempt to delete the job
+    const deleted = await prisma.jobsSheet.delete({
+      where: { id: jobId }
+    });
+
+    return NextResponse.json({
+      success: true,
+      data: { id: deleted.id }
+    });
+  } catch (error) {
+    console.error('Error deleting job:', error);
+    // If record not found, prisma throws an error - return 404
+    if (error.code === 'P2025') {
+      return NextResponse.json(
+        { success: false, error: 'Job not found' },
+        { status: 404 }
+      );
+    }
+    return NextResponse.json(
+      { success: false, error: 'Failed to delete job', message: error.message },
+      { status: 500 }
+    );
+  }
+}
