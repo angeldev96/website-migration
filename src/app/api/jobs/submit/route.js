@@ -11,22 +11,22 @@ export async function POST(request) {
       return NextResponse.json({ success: false, error: 'Missing required fields' }, { status: 400 });
     }
 
-    const newJob = await prisma.jobsSheet.create({
-      data: {
-        jobTitle,
-        description,
-  // prefer explicit `category` sent from the form; fall back to legacy `role` then 'Other'
-  category: category || role || 'Other',
-        company: company || null,
-        emailInfo: email || null,
-        phoneNumber: phoneNumber || null,
-        jobDate: new Date(),
-        genderCategory: null,
-        companyVerified: false,
-      }
-    });
+    // prefer explicit `category` sent from the form; fall back to legacy `role` then 'Other'
+    const categoryValue = category || role || 'Other';
+    const jobDate = new Date();
 
-    return NextResponse.json({ success: true, data: { id: newJob.id } });
+    // Use a parameterized raw query to ensure `job_type` column is written even if Prisma client/schema
+    // was not regenerated after adding the column directly in the DB.
+    const inserted = await prisma.$queryRaw`
+      INSERT INTO public.jobs_sheet
+        ("job_title","description","category","email_info","phone_number","job_date","company","company_verified","gender_category","job_type")
+      VALUES
+        (${jobTitle}, ${description}, ${categoryValue}, ${email || null}, ${phoneNumber || null}, ${jobDate}, ${company || null}, false, ${null}, ${jobType || null})
+      RETURNING id;
+    `;
+
+    const newId = Array.isArray(inserted) && inserted[0] ? inserted[0].id : (inserted && inserted.id);
+    return NextResponse.json({ success: true, data: { id: newId } });
   } catch (error) {
     console.error('Error creating job:', error);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });

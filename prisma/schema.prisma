@@ -18,6 +18,7 @@ model JobsSheet {
   timeStamp                                                                 String?              @map("time_stamp")
   aiTitle                                                                   String?              @map("ai_title")
   aiDescription                                                             String?              @map("ai_description")
+  jobType                                                                   String?              @map("job_type")
   carrierPhone                                                              String?              @map("carrier_phone")
   lineType                                                                  String?              @map("line_type")
   smsFormat                                                                 String?              @map("sms_format")
