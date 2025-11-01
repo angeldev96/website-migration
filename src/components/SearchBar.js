@@ -24,7 +24,15 @@ const SearchBar = () => {
       if (!res.ok) throw new Error('Failed to fetch jobs');
       const json = await res.json();
       if (json && json.success) {
-        setResults(json.data || []);
+        // Ensure newest results appear first: prefer jobDate desc, fallback to id desc
+        const items = (json.data || []).slice();
+        items.sort((a, b) => {
+          if (a.jobDate && b.jobDate) {
+            return new Date(b.jobDate) - new Date(a.jobDate);
+          }
+          return (b.id || 0) - (a.id || 0);
+        });
+        setResults(items);
       } else {
         setResults([]);
         setError(json?.error || 'No results');
