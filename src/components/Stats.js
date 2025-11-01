@@ -1,8 +1,20 @@
 import React from 'react';
+import prisma from '@/lib/prisma';
 
-const Stats = () => {
+// Server component: fetch counts from the database
+const Stats = async () => {
+  // Get real count of job listings
+  let jobsCount = 0;
+  try {
+    jobsCount = await prisma.jobsSheet.count();
+  } catch (err) {
+    // If DB fails, keep a sensible fallback and log server-side
+    console.error('Error fetching jobs count for Stats:', err);
+    jobsCount = 0;
+  }
+
   const stats = [
-    { number: '473', label: 'Jobs Listings' },
+    { number: jobsCount.toLocaleString(), label: 'Jobs Listings' },
     { number: '75K', label: 'Total Job Views' },
     { number: '142', label: 'Active Employers' }
   ];
