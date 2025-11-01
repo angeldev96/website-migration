@@ -1,15 +1,40 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 
 const SearchBar = () => {
   const [keyword, setKeyword] = useState('');
   const [location, setLocation] = useState('');
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
-    // TODO: Implement search functionality
-    console.log('Searching for:', { keyword, location });
+    setError(null);
+    setLoading(true);
+    try {
+      const params = new URLSearchParams();
+      if (keyword) params.set('search', keyword);
+      if (location) params.set('location', location);
+      params.set('limit', '12');
+
+      const res = await fetch(`/api/jobs?${params.toString()}`);
+      if (!res.ok) throw new Error('Failed to fetch jobs');
+      const json = await res.json();
+      if (json && json.success) {
+        setResults(json.data || []);
+      } else {
+        setResults([]);
+        setError(json?.error || 'No results');
+      }
+    } catch (err) {
+      setError(err.message || 'Search failed');
+      setResults([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -17,6 +42,7 @@ const SearchBar = () => {
       <div className="mb-6">
         <h2 className="text-blue-600 font-semibold text-lg mb-2">What job do you want?</h2>
       </div>
+
       <form onSubmit={handleSearch} className="bg-white rounded-lg shadow-lg p-2 flex flex-col md:flex-row gap-2">
         <div className="flex-1">
           <input
@@ -51,6 +77,38 @@ const SearchBar = () => {
           Search
         </button>
       </form>
+
+      {/* Results area */}
+      <div className="mt-6 bg-white rounded-lg shadow p-4">
+        {loading && <p className="text-gray-600">Searching...</p>}
+        {error && <p className="text-red-600">{error}</p>}
+
+        {!loading && results.length === 0 && (
+          <p className="text-gray-600">No jobs found. Try different keywords.</p>
+        )}
+
+        {!loading && results.length > 0 && (
+          <ul className="space-y-4">
+            {results.map((job) => (
+              <li key={job.id} className="border border-gray-100 rounded-md p-4 hover:shadow-md transition-shadow">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+                  <div>
+                    <Link href={`/jobs/${job.id}`} className="text-lg font-semibold text-blue-600 hover:underline">
+                      {job.jobTitle || job.aiTitle || 'Untitled Job'}
+                    </Link>
+                    <p className="text-sm text-gray-600">{job.company || ''}</p>
+                    <p className="mt-2 text-gray-700">{(job.aiDescription || job.description || '').slice(0, 180)}{(job.aiDescription || job.description || '').length > 180 ? '...' : ''}</p>
+                  </div>
+                  <div className="text-sm text-gray-500 md:text-right">
+                    <div>{job.category}</div>
+                    <div className="mt-2">{job.jobDate ? new Date(job.jobDate).toLocaleDateString() : ''}</div>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 };
