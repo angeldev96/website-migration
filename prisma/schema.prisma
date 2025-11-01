@@ -168,3 +168,19 @@ enum job_log_status {
   INSERTED_SUCCESSFULLY
   DUPLICATE_BLOCKED
 }
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  role      Role     @default(USER)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
