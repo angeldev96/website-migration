@@ -10,7 +10,7 @@ export default function PostJobPage() {
     jobTitle: '',
     description: '',
     location: '',
-    role: '',
+    category: '',
     jobType: '',
     phoneNumber: ''
   });
@@ -43,7 +43,7 @@ export default function PostJobPage() {
       const data = await res.json();
       if (data.success) {
         setMessage({ type: 'success', text: 'Job posted successfully. It may take a minute to appear.' });
-        setForm({ name: '', email: '', company: '', jobTitle: '', description: '', location: '', role: '', jobType: '', phoneNumber: '' });
+        setForm({ name: '', email: '', company: '', jobTitle: '', description: '', location: '', category: '', jobType: '', phoneNumber: '' });
       } else {
         setMessage({ type: 'error', text: data.error || 'Failed to post job.' });
       }
@@ -117,14 +117,25 @@ export default function PostJobPage() {
                     <input name="location" value={form.location} onChange={handleChange} className="mt-2 block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-900 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Boro Park" />
                   </label>
 
+
                   <label className="block">
-                    <span className="text-sm font-medium text-gray-700">Role</span>
-                    <select name="role" value={form.role} onChange={handleChange} className="mt-2 block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                      <option value="">Choose a role...</option>
-                      <option>Manager</option>
-                      <option>Sales</option>
+                    <span className="text-sm font-medium text-gray-700">Category</span>
+                    <select name="category" value={form.category} onChange={handleChange} className="mt-2 block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                      <option value="">Choose a category...</option>
+                      <option>Childcare</option>
                       <option>Driver</option>
+                      <option>Education</option>
+                      <option>Finance</option>
+                      <option>Healthcare</option>
+                      <option>Marketing</option>
+                      <option>Office</option>
                       <option>Other</option>
+                      <option>Restaurant</option>
+                      <option>Retail</option>
+                      <option>Sales</option>
+                      <option>Technical</option>
+                      <option>Technology</option>
+                      <option>Transportation</option>
                     </select>
                   </label>
 
