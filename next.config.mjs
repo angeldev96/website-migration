@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
+// Use an environment variable to control the mount path so local dev doesn't break.
+// Set `NEXT_PUBLIC_BASE_PATH` to "/app" (or your mount path) in production/environment
+// where the app is hosted under a subpath (e.g., Webflow Cloud). Leave unset for local dev.
+const mountPath = process.env.NEXT_PUBLIC_BASE_PATH || undefined;
 const nextConfig = {
-  // IMPORTANT: set `basePath` and `assetPrefix` to the mount path
-  // you will configure in Webflow Cloud for this environment.
-  // Example: if you mount the app at `/app` in Webflow Cloud, set both to '/app'
-  // Replace '/app' below with your actual mount path before deploying.
-  basePath: '/app',
-  assetPrefix: '/app',
+  basePath: mountPath,
+  assetPrefix: mountPath,
   experimental: {
     viewTransition: true,
   },
