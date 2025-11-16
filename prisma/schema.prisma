@@ -18,7 +18,6 @@ model JobsSheet {
   timeStamp                                                                 String?              @map("time_stamp")
   aiTitle                                                                   String?              @map("ai_title")
   aiDescription                                                             String?              @map("ai_description")
-  jobType                                                                   String?              @map("job_type")
   carrierPhone                                                              String?              @map("carrier_phone")
   lineType                                                                  String?              @map("line_type")
   smsFormat                                                                 String?              @map("sms_format")
@@ -31,6 +30,7 @@ model JobsSheet {
   descriptionYiddish                                                        String?              @map("description_yiddish")
   companyVerified                                                           Boolean?             @map("company_verified")
   genderCategory                                                            String?              @map("gender_category")
+  jobType                                                                   String?              @map("job_type")
   child                                                                     child[]
   job_insertion_logs_job_insertion_logs_matched_original_job_idTojobs_sheet job_insertion_logs[] @relation("job_insertion_logs_matched_original_job_idTojobs_sheet")
   job_insertion_logs_job_insertion_logs_newly_inserted_job_idTojobs_sheet   job_insertion_logs[] @relation("job_insertion_logs_newly_inserted_job_idTojobs_sheet")
@@ -164,16 +164,6 @@ model website_bot_messages {
   @@index([session_id], map: "idx_session_id")
 }
 
-enum job_log_status {
-  INSERTED_SUCCESSFULLY
-  DUPLICATE_BLOCKED
-}
-
-enum Role {
-  USER
-  ADMIN
-}
-
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
@@ -183,4 +173,14 @@ model User {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("users")
+}
+
+enum job_log_status {
+  INSERTED_SUCCESSFULLY
+  DUPLICATE_BLOCKED
+}
+
+enum Role {
+  USER
+  ADMIN
 }
