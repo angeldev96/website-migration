@@ -6,8 +6,15 @@ import { PrismaClient } from '@prisma/client';
 
 const globalForPrisma = global;
 
+// Webflow Cloud environment variables are available at runtime
+// Handle cases where DATABASE_URL might not be available during build
 export const prisma = globalForPrisma.prisma || new PrismaClient({
   log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+  datasources: {
+    db: {
+      url: process.env.DATABASE_URL || 'postgresql://placeholder',
+    },
+  },
 });
 
 if (process.env.NODE_ENV !== 'production') {
