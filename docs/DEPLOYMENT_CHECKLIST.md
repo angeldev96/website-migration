@@ -11,8 +11,14 @@
 - [x] `next.config.mjs` tiene `basePath: '/app'` y `assetPrefix: '/app'`
 - [x] Helper `src/lib/apiUrl.js` creado
 - [x] Todos los componentes actualizados para usar `apiUrl()`
+- [x] Favicon configurado con basePath correcto
 
-### 3. Archivos Actualizados con apiUrl()
+### 3. Configuración de Prisma para Webflow Cloud
+- [x] `prisma/schema.prisma` tiene `binaryTargets` configurados
+- [x] Todas las APIs que usan Prisma especifican `runtime = 'nodejs'`
+- [x] Cliente de Prisma regenerado con `npx prisma generate`
+
+### 4. Archivos Actualizados con apiUrl()
 - [x] `src/app/jobs/JobsClient.js`
 - [x] `src/components/FeaturedJobs.js`
 - [x] `src/components/SearchBar.js`
@@ -21,7 +27,18 @@
 - [x] `src/app/post-ad/page.js`
 - [x] `src/app/admin/page.js`
 
-### 4. Configuración de Base de Datos
+### 5. APIs con Node.js Runtime
+- [x] `src/app/api/jobs/route.js`
+- [x] `src/app/api/jobs/[id]/route.js`
+- [x] `src/app/api/jobs/featured/route.js`
+- [x] `src/app/api/jobs/submit/route.js`
+- [x] `src/app/api/categories/route.js`
+- [x] `src/app/api/search/route.js`
+- [x] `src/app/api/stats/route.js`
+- [x] `src/app/api/auth/login/route.js`
+- [x] `src/app/api/auth/me/route.js`
+
+### 6. Configuración de Base de Datos
 - [x] Prisma Client configurado con fallback para build time
 - [x] `DATABASE_URL` disponible en runtime
 
@@ -121,6 +138,7 @@ npx prisma generate
 
 - `docs/WEBFLOW_ENV_SETUP.md` - Configuración de variables de entorno
 - `docs/BASEPATH_CONFIGURATION.md` - Explicación del basePath
+- `docs/WEBFLOW_PRISMA_CONFIG.md` - Configuración de Prisma para Webflow Cloud
 - `docs/API.md` - Documentación de la API
 - `docs/SETUP_COMPLETE.md` - Setup inicial del proyecto
 

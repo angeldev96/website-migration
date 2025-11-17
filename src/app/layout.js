@@ -43,9 +43,9 @@ export const metadata = {
     telephone: false,
   },
   icons: {
-    icon: "/favico.png",
-    shortcut: "/favico.png",
-    apple: "/favico.png",
+    icon: "/app/favico.png",
+    shortcut: "/app/favico.png",
+    apple: "/app/favico.png",
   },
   openGraph: {
     type: "website",

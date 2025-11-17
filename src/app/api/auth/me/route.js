@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import jwt from 'jsonwebtoken';
 
+// Force Node.js runtime (required for Prisma and JWT)
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 const JWT_SECRET = process.env.JWT_SECRET || 'change-me';
 
 function parseCookie(cookieHeader) {

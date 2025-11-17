@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
+// Force Node.js runtime (required for Prisma)
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 // GET /api/jobs - Get all jobs with pagination and filters
 export async function GET(request) {
   try {
