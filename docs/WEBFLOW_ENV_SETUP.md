@@ -6,19 +6,19 @@ Debes configurar las siguientes variables de entorno en Webflow Cloud:
 
 ### 1. DATABASE_URL
 - **Nombre**: `DATABASE_URL`
-- **Valor**: `postgresql://postgres:bwzjcOzqyGMudkikmtujZqxRYeMRTePZ@nozomi.proxy.rlwy.net:41536/railway`
+- **Valor**: `postgresql://user:password@host:port/database`
 - **Secret**: ✅ Sí (marcar como "Secret")
 - **Descripción**: URL de conexión a PostgreSQL en Railway
 
 ### 2. WEBFLOW_SITE_ID
 - **Nombre**: `WEBFLOW_SITE_ID`
-- **Valor**: `6919d6bd62dfb2e1c479c569`
+- **Valor**: `tu-webflow-site-id`
 - **Secret**: ❌ No
 - **Descripción**: ID del sitio de Webflow
 
 ### 3. WEBFLOW_SITE_API_TOKEN
 - **Nombre**: `WEBFLOW_SITE_API_TOKEN`
-- **Valor**: `84c090509a6e97230fb5d61678370436b506e2958e700c81eed68cdc29e31b07`
+- **Valor**: `tu-webflow-api-token`
 - **Secret**: ✅ Sí (marcar como "Secret")
 - **Descripción**: Token de API de Webflow
 
