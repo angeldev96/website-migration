@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { apiUrl } from '@/lib/apiUrl';
 
 const FeaturedJobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -17,7 +18,7 @@ const FeaturedJobs = () => {
   const fetchJobs = async (page) => {
     try {
       setLoading(true);
-      const response = await fetch(`/api/jobs?page=${page}&limit=${jobsPerPage}`);
+      const response = await fetch(apiUrl(`/api/jobs?page=${page}&limit=${jobsPerPage}`));
       const data = await response.json();
       
       if (data.success) {

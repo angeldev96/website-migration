@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { apiUrl } from '@/lib/apiUrl';
 
 const SearchBar = () => {
   const [keyword, setKeyword] = useState('');
@@ -20,7 +21,7 @@ const SearchBar = () => {
       if (location) params.set('location', location);
       params.set('limit', '12');
 
-      const res = await fetch(`/api/jobs?${params.toString()}`);
+      const res = await fetch(apiUrl(`/api/jobs?${params.toString()}`));
       if (!res.ok) throw new Error('Failed to fetch jobs');
       const json = await res.json();
       if (json && json.success) {

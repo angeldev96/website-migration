@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import { apiUrl } from '@/lib/apiUrl';
 
 const JobsClient = () => {
   const searchParams = useSearchParams();
@@ -29,7 +30,7 @@ const JobsClient = () => {
       setLoading(true);
       let url = `/api/jobs?page=${page}&limit=${jobsPerPage}`;
       if (category) url += `&category=${encodeURIComponent(category)}`;
-      const response = await fetch(url);
+      const response = await fetch(apiUrl(url));
       const data = await response.json();
       if (data.success) {
         setJobs(data.data);

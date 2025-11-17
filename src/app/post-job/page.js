@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { apiUrl } from '@/lib/apiUrl';
 
 export default function PostJobPage() {
   const [form, setForm] = useState({
@@ -34,7 +35,7 @@ export default function PostJobPage() {
     }
 
     try {
-      const res = await fetch('/api/jobs/submit', {
+      const res = await fetch(apiUrl('/api/jobs/submit'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { apiUrl } from '@/lib/apiUrl';
 
 // Define the specific categories we want to show
 const TARGET_CATEGORIES = [
@@ -26,7 +27,7 @@ const PopularCategories = () => {
     const fetchCategories = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/api/categories');
+        const response = await fetch(apiUrl('/api/categories'));
         const data = await response.json();
         
         if (data.success) {

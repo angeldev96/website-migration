@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { apiUrl } from '@/lib/apiUrl';
 
 const AdminPage = () => {
   const [idInput, setIdInput] = useState('');
@@ -28,7 +29,7 @@ const AdminPage = () => {
 
     setLoading(true);
     try {
-      const res = await fetch(`/api/jobs/${id}`);
+      const res = await fetch(apiUrl(`/api/jobs/${id}`));
       const json = await res.json();
       if (!res.ok) {
         setError(json?.error || 'Error fetching job');
@@ -48,7 +49,7 @@ const AdminPage = () => {
     let mounted = true;
     (async () => {
       try {
-        const res = await fetch('/api/auth/me');
+        const res = await fetch(apiUrl('/api/auth/me'));
         const json = await res.json();
         if (res.ok && json.success && mounted) setCurrentUser(json.data);
       } catch (err) {
@@ -63,7 +64,7 @@ const AdminPage = () => {
     setAuthError(null);
     setAuthLoading(true);
     try {
-      const res = await fetch('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
+      const res = await fetch(apiUrl('/api/auth/login'), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
       const json = await res.json();
       if (!res.ok) {
         setAuthError(json?.error || 'Login failed');
@@ -92,7 +93,7 @@ const AdminPage = () => {
     setError(null);
     setMessage(null);
     try {
-      const res = await fetch(`/api/jobs/${job.id}`, { method: 'DELETE' });
+      const res = await fetch(apiUrl(`/api/jobs/${job.id}`), { method: 'DELETE' });
       const json = await res.json();
       if (!res.ok) {
         setError(json?.error || 'Error deleting');
@@ -129,7 +130,7 @@ const AdminPage = () => {
         <div className="mb-4">
           <div className="text-sm text-gray-700">Signed in as <strong>{currentUser.email}</strong> ({currentUser.role})</div>
           <div className="mt-2">
-            <button className="bg-gray-200 px-3 py-1 rounded text-sm" onClick={async () => { await fetch('/api/auth/logout', { method: 'POST' }); setCurrentUser(null); }}>Logout</button>
+            <button className="bg-gray-200 px-3 py-1 rounded text-sm" onClick={async () => { await fetch(apiUrl('/api/auth/logout'), { method: 'POST' }); setCurrentUser(null); }}>Logout</button>
           </div>
         </div>
       )}
