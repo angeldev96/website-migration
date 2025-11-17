@@ -3,8 +3,7 @@ import prisma from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-// Force Node.js runtime (required for Prisma and bcrypt)
-export const runtime = 'nodejs';
+// Force dynamic rendering for Webflow Cloud
 export const dynamic = 'force-dynamic';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'change-me';
