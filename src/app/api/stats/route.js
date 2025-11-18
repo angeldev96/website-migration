@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
+import db from '@/lib/db';
 
 // Force dynamic rendering for Webflow Cloud
 export const dynamic = 'force-dynamic';
@@ -8,57 +8,19 @@ export const dynamic = 'force-dynamic';
 export async function GET(request) {
   try {
     // Get total jobs count
-    const totalJobs = await prisma.jobsSheet.count();
-    
+    const totalJobs = await db.countAllJobs();
+
     // Get total companies (unique companies)
-    const uniqueCompanies = await prisma.jobsSheet.groupBy({
-      by: ['company'],
-      where: {
-        company: {
-          not: null
-        }
-      }
-    });
-    
-    const totalCompanies = uniqueCompanies.length;
-    
+    const totalCompanies = await db.countDistinctCompanies();
+
     // Get jobs posted in the last 30 days
-    const thirtyDaysAgo = new Date();
-    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-    
-    const recentJobs = await prisma.jobsSheet.count({
-      where: {
-        jobDate: {
-          gte: thirtyDaysAgo
-        }
-      }
-    });
-    
-    // Get category breakdown
-    const categoryStats = await prisma.jobsSheet.groupBy({
-      by: ['category'],
-      _count: {
-        id: true
-      },
-      orderBy: {
-        _count: {
-          id: 'desc'
-        }
-      },
-      take: 10
-    });
-    
+    const recentJobs = await db.countJobsSince(30);
+
+    // Get category breakdown (top 10)
+    const categoryStats = await db.getCategoriesWithCounts(10);
+
     // Get recent jobs (last 7 days)
-    const sevenDaysAgo = new Date();
-    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-    
-    const jobsThisWeek = await prisma.jobsSheet.count({
-      where: {
-        jobDate: {
-          gte: sevenDaysAgo
-        }
-      }
-    });
+    const jobsThisWeek = await db.countJobsSince(7);
     
     return NextResponse.json({
       success: true,
@@ -69,7 +31,7 @@ export async function GET(request) {
         jobsThisWeek,
         categoryBreakdown: categoryStats.map(cat => ({
           category: cat.category,
-          count: cat._count.id
+          count: cat.count
         }))
       }
     });
