@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import db from '@/lib/db';
+import prisma from '@/lib/prisma';
 
 // Force dynamic rendering for Webflow Cloud
 export const dynamic = 'force-dynamic';
@@ -80,10 +80,18 @@ export async function POST(request) {
       };
     }
     
-    // Basic search fallback: use the standard paginated listing for now.
-    // Advanced search with full-text/ILIKE filters can be implemented later.
-    const total = await db.countAllJobs();
-    const jobs = await db.findJobsBasic({ skip, take: limit });
+    // Execute queries in parallel
+    const [total, jobs] = await Promise.all([
+      prisma.jobsSheet.count({ where }),
+      prisma.jobsSheet.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: {
+          id: 'desc'
+        }
+      })
+    ]);
     
     return NextResponse.json({
       success: true,

@@ -1,4 +1,4 @@
-import db from '@/lib/db';
+import prisma from '@/lib/prisma';
 
 export default async function sitemap() {
   const baseUrl = 'https://yidjobs.com';
@@ -27,7 +27,15 @@ export default async function sitemap() {
 
   try {
     // Fetch all jobs for dynamic URLs
-    const jobs = await db.getJobsForSitemap();
+    const jobs = await prisma.jobsSheet.findMany({
+      select: {
+        id: true,
+        jobDate: true
+      },
+      orderBy: {
+        jobDate: 'desc'
+      }
+    });
 
     const jobPages = jobs.map((job) => ({
       url: `${baseUrl}/jobs/${job.id}`,
@@ -37,7 +45,17 @@ export default async function sitemap() {
     }));
 
     // Fetch unique categories for category pages
-    const categories = await db.getDistinctCategories();
+    const categories = await prisma.jobsSheet.findMany({
+      distinct: ['category'],
+      select: {
+        category: true
+      },
+      where: {
+        category: {
+          not: null
+        }
+      }
+    });
 
     const categoryPages = categories
       .filter(cat => cat.category)

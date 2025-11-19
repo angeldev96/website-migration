@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import db from '@/lib/db';
+import prisma from '@/lib/prisma';
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }) {
@@ -102,7 +102,9 @@ function excerpt(text, maxLen = 120) {
 
 async function getJob(id) {
   try {
-    const job = await db.getJobById(id);
+    const job = await prisma.jobsSheet.findUnique({
+      where: { id: parseInt(id) }
+    });
     return job;
   } catch (error) {
     console.error('Error fetching job:', error);

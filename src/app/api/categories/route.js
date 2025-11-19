@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import db from '@/lib/db';
+import prisma from '@/lib/prisma';
 
 // Force dynamic rendering for Webflow Cloud
 export const dynamic = 'force-dynamic';
@@ -8,12 +8,28 @@ export const dynamic = 'force-dynamic';
 export async function GET(request) {
   try {
     // Get categories with counts
-    const categories = await db.getCategoriesWithCounts(1000);
+    const categories = await prisma.jobsSheet.groupBy({
+      by: ['category'],
+      _count: {
+        id: true
+      },
+      where: {
+        category: {
+          not: null
+        }
+      },
+      orderBy: {
+        _count: {
+          id: 'desc'
+        }
+      },
+      take: 1000
+    });
 
     // Format the response
     const formattedCategories = categories.map(cat => ({
       name: cat.category,
-      count: cat.count,
+      count: cat._count.id,
       slug: cat.category.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')
     }));
     

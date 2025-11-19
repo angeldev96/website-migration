@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import db from '@/lib/db';
+import prisma from '@/lib/prisma';
 
 // Force dynamic rendering for Webflow Cloud
 export const dynamic = 'force-dynamic';
@@ -7,20 +7,66 @@ export const dynamic = 'force-dynamic';
 // GET /api/stats - Get website statistics
 export async function GET(request) {
   try {
+    const now = new Date();
+    const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+    const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+
     // Get total jobs count
-    const totalJobs = await db.countAllJobs();
+    const totalJobs = await prisma.jobsSheet.count();
 
     // Get total companies (unique companies)
-    const totalCompanies = await db.countDistinctCompanies();
+    // Prisma doesn't have a direct countDistinct, so we use groupBy or findMany with distinct
+    const uniqueCompanies = await prisma.jobsSheet.groupBy({
+      by: ['company'],
+      where: {
+        company: {
+          not: null
+        }
+      }
+    });
+    const totalCompanies = uniqueCompanies.length;
 
     // Get jobs posted in the last 30 days
-    const recentJobs = await db.countJobsSince(30);
+    const recentJobs = await prisma.jobsSheet.count({
+      where: {
+        jobDate: {
+          gte: thirtyDaysAgo
+        }
+      }
+    });
 
     // Get category breakdown (top 10)
-    const categoryStats = await db.getCategoriesWithCounts(10);
+    const categoryStatsRaw = await prisma.jobsSheet.groupBy({
+      by: ['category'],
+      _count: {
+        id: true
+      },
+      where: {
+        category: {
+          not: null
+        }
+      },
+      orderBy: {
+        _count: {
+          id: 'desc'
+        }
+      },
+      take: 10
+    });
+
+    const categoryStats = categoryStatsRaw.map(cat => ({
+      category: cat.category,
+      count: cat._count.id
+    }));
 
     // Get recent jobs (last 7 days)
-    const jobsThisWeek = await db.countJobsSince(7);
+    const jobsThisWeek = await prisma.jobsSheet.count({
+      where: {
+        jobDate: {
+          gte: sevenDaysAgo
+        }
+      }
+    });
     
     return NextResponse.json({
       success: true,
@@ -29,10 +75,7 @@ export async function GET(request) {
         totalCompanies,
         recentJobs,
         jobsThisWeek,
-        categoryBreakdown: categoryStats.map(cat => ({
-          category: cat.category,
-          count: cat.count
-        }))
+        categoryBreakdown: categoryStats
       }
     });
     
