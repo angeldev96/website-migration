@@ -49,11 +49,6 @@ export default async function sitemap() {
       distinct: ['category'],
       select: {
         category: true
-      },
-      where: {
-        category: {
-          not: null
-        }
       }
     });
 

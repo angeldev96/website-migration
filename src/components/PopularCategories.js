@@ -7,13 +7,16 @@ import { apiUrl } from '@/lib/apiUrl';
 // Define the specific categories we want to show (normalized)
 const TARGET_CATEGORIES = [
   'Other',
+  'Finance',
   'Retail',
   'Sales',
   'Transportation',
   'Healthcare',
   'Restaurant',
   'Technical',
+  'Technology',
   'Office',
+  'Marketing',
   'Childcare',
   'Education'
 ];

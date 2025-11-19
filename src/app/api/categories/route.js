@@ -13,11 +13,6 @@ export async function GET(request) {
       _count: {
         id: true
       },
-      where: {
-        category: {
-          not: null
-        }
-      },
       orderBy: {
         _count: {
           id: 'desc'
