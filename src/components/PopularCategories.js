@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { apiUrl } from '@/lib/apiUrl';
 
-// Define the specific categories we want to show
+// Define the specific categories we want to show (normalized)
 const TARGET_CATEGORIES = [
   'Other',
   'Retail',
@@ -12,7 +12,6 @@ const TARGET_CATEGORIES = [
   'Transportation',
   'Healthcare',
   'Restaurant',
-  'Childchildcare',
   'Technical',
   'Office',
   'Childcare',
@@ -31,18 +30,25 @@ const PopularCategories = () => {
         const data = await response.json();
         
         if (data.success) {
-          // Filter to only show our target categories
-          const filteredCategories = data.data.filter(cat => 
-            TARGET_CATEGORIES.includes(cat.name)
-          );
-          
-          // Sort by the order in TARGET_CATEGORIES array
-          const sortedCategories = TARGET_CATEGORIES
-            .map(targetName => 
-              filteredCategories.find(cat => cat.name === targetName)
-            )
-            .filter(cat => cat !== undefined); // Remove undefined (categories not found)
-          
+          // Normalize incoming category names (trim + lowercase)
+          const normalizedTargets = TARGET_CATEGORIES.map(t => t.trim().toLowerCase());
+
+          // Create a map for quick lookup by normalized name
+          const catMap = new Map();
+          data.data.forEach(cat => {
+            const key = (cat.name || '').toString().trim().toLowerCase();
+            if (!key) return;
+            // prefer existing entry if present, but keep first seen
+            if (!catMap.has(key)) {
+              catMap.set(key, { name: (cat.name || '').toString().trim(), count: cat.count || 0, slug: cat.slug });
+            }
+          });
+
+          // Build sorted array following TARGET_CATEGORIES order, using normalized matching
+          const sortedCategories = normalizedTargets
+            .map(targetKey => catMap.get(targetKey))
+            .filter(Boolean);
+
           setCategories(sortedCategories);
         }
       } catch (error) {
