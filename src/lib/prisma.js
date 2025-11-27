@@ -6,7 +6,8 @@ const globalForPrisma = globalThis;
 
 function getPrismaClient() {
   return new PrismaClient({
-    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+    // Only log errors, not queries
+    log: ['error'],
   });
 }
 

@@ -27,12 +27,10 @@ async function main() {
       where: { email },
       data: { password: hashed, role }
     });
-    console.log('Updated user password:', { id: updated.id, email: updated.email, role: updated.role });
     process.exit(0);
   }
 
   const user = await prisma.user.create({ data: { email, password: hashed, role } });
-  console.log('Created user:', { id: user.id, email: user.email, role: user.role });
 }
 
 main()

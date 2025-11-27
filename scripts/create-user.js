@@ -16,7 +16,6 @@ async function main() {
 
   const existing = await prisma.user.findUnique({ where: { email } });
   if (existing) {
-    console.log('User already exists:', existing.email, 'id=', existing.id);
     process.exit(0);
   }
 
@@ -30,7 +29,6 @@ async function main() {
     }
   });
 
-  console.log('Created user:', { id: user.id, email: user.email, role: user.role });
 }
 
 main()

@@ -11,7 +11,6 @@ const prisma = new PrismaClient({
 
 async function main() {
   try {
-    console.log('Testing categories query...');
     const categories = await prisma.jobsSheet.groupBy({
       by: ['category'],
       _count: {
@@ -24,8 +23,7 @@ async function main() {
       },
       take: 1000
     });
-    console.log('Success!');
-    console.log(categories);
+
   } catch (error) {
     console.error('Error:', error);
   } finally {

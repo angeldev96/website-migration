@@ -23,6 +23,7 @@ const Header = () => {
                 alt="Yiddish Jobs Logo" 
                 width={300} 
                 height={100}
+                priority
                 className="h-24 md:h-28 w-auto brightness-0"
                 style={{ filter: 'brightness(0) saturate(100%)' }}
               />

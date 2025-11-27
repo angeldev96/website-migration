@@ -96,7 +96,6 @@ export default async function sitemap() {
       }));
     } catch (e) {
       // Blog table might not exist yet
-      console.log('Blog sitemap skipped:', e.message);
     }
 
     return [...staticPages, ...categoryPages, ...jobPages, ...blogPages];
