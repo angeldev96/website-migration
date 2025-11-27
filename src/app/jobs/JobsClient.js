@@ -45,27 +45,30 @@ const JobsClient = () => {
 
   const formatDate = (dateString) => {
     if (!dateString) return 'Recently';
-    const date = new Date(dateString);
-    // Get current time in New York timezone
+    
     const nyTimeZone = 'America/New_York';
-    const now = new Date();
     
-    // Get the date parts in NY timezone for comparison
-    const dateInNY = new Date(date.toLocaleString('en-US', { timeZone: nyTimeZone }));
-    const nowInNY = new Date(now.toLocaleString('en-US', { timeZone: nyTimeZone }));
+    // Get today's date in NY timezone as YYYY-MM-DD
+    const nowInNY = new Date().toLocaleDateString('en-CA', { timeZone: nyTimeZone }); // en-CA gives YYYY-MM-DD format
     
-    // Reset times to midnight for day comparison
-    const dateDay = new Date(dateInNY.getFullYear(), dateInNY.getMonth(), dateInNY.getDate());
-    const nowDay = new Date(nowInNY.getFullYear(), nowInNY.getMonth(), nowInNY.getDate());
+    // Get the job date in NY timezone as YYYY-MM-DD
+    const jobDate = new Date(dateString);
+    const jobDateInNY = jobDate.toLocaleDateString('en-CA', { timeZone: nyTimeZone });
     
-    const diffTime = nowDay - dateDay;
-    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+    // Parse dates for comparison (using UTC to avoid timezone issues in calculation)
+    const [nowYear, nowMonth, nowDay] = nowInNY.split('-').map(Number);
+    const [jobYear, jobMonth, jobDay] = jobDateInNY.split('-').map(Number);
+    
+    const nowDateUTC = Date.UTC(nowYear, nowMonth - 1, nowDay);
+    const jobDateUTC = Date.UTC(jobYear, jobMonth - 1, jobDay);
+    
+    const diffDays = Math.floor((nowDateUTC - jobDateUTC) / (1000 * 60 * 60 * 24));
     
     if (diffDays === 0) return 'Today';
     if (diffDays === 1) return 'Yesterday';
     if (diffDays < 7) return `${diffDays} days ago`;
     if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: nyTimeZone });
+    return jobDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: nyTimeZone });
   };
 
   const extractLocation = () => 'Boro Park';
