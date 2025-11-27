@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { apiUrl } from '@/lib/apiUrl';
+import { formatRelativeDate } from '@/lib/dateUtils';
 
 const FeaturedJobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -30,34 +31,6 @@ const FeaturedJobs = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const formatDate = (dateString) => {
-    if (!dateString) return 'Recently';
-    
-    const nyTimeZone = 'America/New_York';
-    
-    // Get today's date in NY timezone as YYYY-MM-DD
-    const nowInNY = new Date().toLocaleDateString('en-CA', { timeZone: nyTimeZone }); // en-CA gives YYYY-MM-DD format
-    
-    // Get the job date in NY timezone as YYYY-MM-DD
-    const jobDate = new Date(dateString);
-    const jobDateInNY = jobDate.toLocaleDateString('en-CA', { timeZone: nyTimeZone });
-    
-    // Parse dates for comparison (using UTC to avoid timezone issues in calculation)
-    const [nowYear, nowMonth, nowDay] = nowInNY.split('-').map(Number);
-    const [jobYear, jobMonth, jobDay] = jobDateInNY.split('-').map(Number);
-    
-    const nowDateUTC = Date.UTC(nowYear, nowMonth - 1, nowDay);
-    const jobDateUTC = Date.UTC(jobYear, jobMonth - 1, jobDay);
-    
-    const diffDays = Math.floor((nowDateUTC - jobDateUTC) / (1000 * 60 * 60 * 24));
-    
-    if (diffDays === 0) return 'Today';
-    if (diffDays === 1) return 'Yesterday';
-    if (diffDays < 7) return `${diffDays} days ago`;
-    if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-    return jobDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: nyTimeZone });
   };
 
   const extractLocation = (description) => {
@@ -245,7 +218,7 @@ const FeaturedJobs = () => {
                   {/* Right side - Date & Action */}
                   <div className="mt-4 md:mt-0 flex items-center md:flex-col md:items-end justify-between flex-shrink-0 ml-0 md:ml-4 gap-3 w-full md:w-auto">
                     <div className="text-sm text-gray-500 mb-0 md:mb-3">
-                      {formatDate(job.jobDate)}
+                      {formatRelativeDate(job.jobDate)}
                     </div>
                     <button className="w-full md:w-auto px-4 py-2.5 md:px-6 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105 active:scale-95">
                       View Details

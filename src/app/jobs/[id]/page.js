@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import prisma from '@/lib/prisma';
+import { formatFullDate } from '@/lib/dateUtils';
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }) {
@@ -119,17 +120,6 @@ export default async function JobDetailPage({ params }) {
   if (!job) {
     notFound();
   }
-
-  const formatDate = (dateString) => {
-    if (!dateString) return 'Recently posted';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      month: 'long', 
-      day: 'numeric', 
-      year: 'numeric',
-      timeZone: 'America/New_York'
-    });
-  };
 
   const extractLocation = (description) => {
     // Always return Boro Park as the primary location
@@ -394,7 +384,7 @@ export default async function JobDetailPage({ params }) {
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
-                      <span>Posted {formatDate(job.jobDate)}</span>
+                      <span>Posted {formatFullDate(job.jobDate)}</span>
                     </div>
                   </div>
                 </div>

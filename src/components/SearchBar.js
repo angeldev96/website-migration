@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { apiUrl } from '@/lib/apiUrl';
+import { formatShortDate } from '@/lib/dateUtils';
 
 const SearchBar = () => {
   const [keyword, setKeyword] = useState('');
@@ -110,7 +111,7 @@ const SearchBar = () => {
                   </div>
                   <div className="text-sm text-gray-500 md:text-right">
                     <div>{job.category}</div>
-                    <div className="mt-2">{job.jobDate ? new Date(job.jobDate).toLocaleDateString('en-US', { timeZone: 'America/New_York' }) : ''}</div>
+                    <div className="mt-2">{formatShortDate(job.jobDate)}</div>
                   </div>
                 </div>
               </li>
