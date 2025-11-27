@@ -90,20 +90,25 @@ export const getCachedJob = unstable_cache(
  */
 export const getCachedCategories = unstable_cache(
   async () => {
+    // Filter out null and empty categories
     const categories = await prisma.jobsSheet.findMany({
       distinct: ['category'],
       select: { category: true },
       where: {
-        category: { not: null },
+        category: { 
+          not: '',
+        },
       },
     });
     
-    // Count jobs per category
+    // Count jobs per category (excluding null/empty)
     const categoryCounts = await prisma.jobsSheet.groupBy({
       by: ['category'],
       _count: { category: true },
       where: {
-        category: { not: null },
+        category: { 
+          not: '',
+        },
       },
     });
 

@@ -1,8 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { formatFullDate } from '@/lib/dateUtils';
 
 // Enable ISR - revalidate every 2 minutes
@@ -61,8 +59,6 @@ export default async function BlogPostPage({ params }) {
   
   return (
     <div className="min-h-screen flex flex-col bg-white">
-      <Header />
-      
       <main className="flex-1">
         {/* Hero / Cover Image */}
         {blog.coverImage ? (
@@ -170,8 +166,6 @@ export default async function BlogPostPage({ params }) {
         {/* Spacer */}
         <div className="h-16" />
       </main>
-
-      <Footer />
     </div>
   );
 }

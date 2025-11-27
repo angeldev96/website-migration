@@ -1,7 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { formatShortDate } from '@/lib/dateUtils';
 
 // Enable ISR - revalidate every 2 minutes
@@ -43,8 +41,6 @@ export default async function BlogPage() {
   
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      <Header />
-      
       <main className="flex-1">
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 py-16 md:py-24">
@@ -134,8 +130,6 @@ export default async function BlogPage() {
           </div>
         </section>
       </main>
-
-      <Footer />
     </div>
   );
 }
