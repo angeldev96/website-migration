@@ -12,9 +12,5 @@
     },
     "observability": {
         "enabled": true
-    },
-    // Performance limits - adjust based on your plan
-    "limits": {
-        "cpu_ms": 50
     }
 }

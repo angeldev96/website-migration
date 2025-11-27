@@ -4,28 +4,6 @@ import Image from 'next/image';
 import prisma from '@/lib/prisma';
 import { formatFullDate, formatShortDate } from '@/lib/dateUtils';
 
-// Enable ISR - revalidate every 5 minutes
-export const revalidate = 300;
-
-// Generate static params for popular jobs (optional - for pre-rendering)
-export async function generateStaticParams() {
-  try {
-    // Pre-render the 100 most recent jobs
-    const jobs = await prisma.jobsSheet.findMany({
-      select: { id: true },
-      orderBy: { id: 'desc' },
-      take: 100,
-    });
-    
-    return jobs.map((job) => ({
-      id: job.id.toString(),
-    }));
-  } catch (error) {
-    console.error('Error generating static params:', error);
-    return [];
-  }
-}
-
 // Generate metadata for SEO
 export async function generateMetadata({ params }) {
   const { id } = await params;

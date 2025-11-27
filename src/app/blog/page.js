@@ -1,21 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import { formatShortDate } from '@/lib/dateUtils';
-
-// Enable ISR - revalidate every 2 minutes
-export const revalidate = 120;
 
 export const metadata = {
   title: 'Blog | Latest News and Tips',
-  description: 'Read our latest blog posts with tips, news, and insights for job seekers in Boro Park.',
-  openGraph: {
-    title: 'Blog | Yid Jobs',
-    description: 'Read our latest blog posts with tips, news, and insights for job seekers in Boro Park.',
-    type: 'website',
-  },
-  alternates: {
-    canonical: 'https://yidjobs.com/blog',
-  },
+  description: 'Read our latest blog posts with tips, news, and insights.',
 };
 
 async function getBlogs() {
@@ -41,6 +32,8 @@ export default async function BlogPage() {
   
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
+      <Header />
+      
       <main className="flex-1">
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 py-16 md:py-24">
@@ -130,6 +123,8 @@ export default async function BlogPage() {
           </div>
         </section>
       </main>
+
+      <Footer />
     </div>
   );
 }

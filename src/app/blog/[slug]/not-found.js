@@ -1,8 +1,12 @@
 import Link from 'next/link';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 export default function BlogNotFound() {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
+      <Header />
+      
       <main className="flex-1 flex items-center justify-center p-4">
         <div className="text-center max-w-md">
           <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -25,6 +29,8 @@ export default function BlogNotFound() {
           </Link>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 }
