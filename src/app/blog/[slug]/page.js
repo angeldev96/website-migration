@@ -5,6 +5,9 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { formatFullDate } from '@/lib/dateUtils';
 
+// Enable ISR - revalidate every 2 minutes
+export const revalidate = 120;
+
 async function getBlog(slug) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
   

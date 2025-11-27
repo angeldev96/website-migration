@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Link from 'next/link';
 import SearchBar from '@/components/SearchBar';
-import Stats from '@/components/Stats';
-import PopularCategories from '@/components/PopularCategories';
-import FeaturedJobs from '@/components/FeaturedJobs';
+import StatsServer from '@/components/StatsServer';
+import PopularCategoriesServer from '@/components/PopularCategoriesServer';
+import FeaturedJobsServer from '@/components/FeaturedJobsServer';
 import NewsletterSection from '@/components/NewsletterSection';
+
+// Enable ISR with 60 second revalidation for homepage
+export const revalidate = 60;
 
 export const metadata = {
   title: "Yid Jobs - Jewish Jobs in Boro Park | Find Yiddish Employment Today",
@@ -29,7 +32,11 @@ export const metadata = {
   }
 };
 
-const HomePage = () => {
+// Async Server Component for Next.js 15
+const HomePage = async ({ searchParams }) => {
+  const params = await searchParams;
+  const page = parseInt(params?.page) || 1;
+  
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "JobPosting",
@@ -100,15 +107,21 @@ const HomePage = () => {
           <SearchBar />
 
           {/* Stats Section */}
-          <Stats />
+          <Suspense fallback={<div className="text-center py-8">Loading stats...</div>}>
+            <StatsServer />
+          </Suspense>
         </section>
       </div>
 
       {/* Popular Categories Section */}
-      <PopularCategories />
+      <Suspense fallback={<div className="py-16 text-center">Loading categories...</div>}>
+        <PopularCategoriesServer />
+      </Suspense>
 
       {/* Featured Jobs Section */}
-      <FeaturedJobs />
+      <Suspense fallback={<div className="py-16 text-center">Loading jobs...</div>}>
+        <FeaturedJobsServer page={page} />
+      </Suspense>
 
       {/* Call to Action Section */}
       <section className="bg-gradient-to-r from-blue-600 to-blue-700 py-16">

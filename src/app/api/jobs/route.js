@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
-// Force dynamic rendering for Webflow Cloud
+// Force dynamic rendering for Cloudflare Workers
 export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
 
 // GET /api/jobs - Get all jobs with pagination and filters
 export async function GET(request) {
@@ -82,7 +83,7 @@ export async function GET(request) {
       })
     ]);
     
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       data: jobs,
       pagination: {
@@ -92,6 +93,11 @@ export async function GET(request) {
         totalPages: Math.ceil(total / limit)
       }
     });
+
+    // Add cache headers for Cloudflare CDN
+    response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=120');
+    
+    return response;
     
   } catch (error) {
     console.error('Error fetching jobs:', error);

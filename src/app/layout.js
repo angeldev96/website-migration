@@ -143,6 +143,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* Preconnect to external resources for faster loading */}
+        <link rel="preconnect" href="https://cdn.prod.website-files.com" />
+        <link rel="dns-prefetch" href="https://cdn.prod.website-files.com" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

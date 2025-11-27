@@ -4,9 +4,20 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { formatShortDate } from '@/lib/dateUtils';
 
+// Enable ISR - revalidate every 2 minutes
+export const revalidate = 120;
+
 export const metadata = {
   title: 'Blog | Latest News and Tips',
-  description: 'Read our latest blog posts with tips, news, and insights.',
+  description: 'Read our latest blog posts with tips, news, and insights for job seekers in Boro Park.',
+  openGraph: {
+    title: 'Blog | Yid Jobs',
+    description: 'Read our latest blog posts with tips, news, and insights for job seekers in Boro Park.',
+    type: 'website',
+  },
+  alternates: {
+    canonical: 'https://yidjobs.com/blog',
+  },
 };
 
 async function getBlogs() {
