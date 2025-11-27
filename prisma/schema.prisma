@@ -167,14 +167,35 @@ model website_bot_messages {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
   password  String
-  role      Role     @default(USER)
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  role      Role       @default(USER)
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+  blogPosts BlogPost[]
 
   @@map("users")
+}
+
+model BlogPost {
+  id          Int       @id @default(autoincrement())
+  title       String
+  slug        String    @unique
+  content     String
+  excerpt     String?
+  coverImage  String?   @map("cover_image")
+  authorId    Int       @map("author_id")
+  author      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  published   Boolean   @default(false)
+  publishedAt DateTime? @map("published_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  @@index([slug])
+  @@index([published])
+  @@index([publishedAt])
+  @@map("blog_posts")
 }
 
 enum job_log_status {

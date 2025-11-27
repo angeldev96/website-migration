@@ -4,6 +4,7 @@ import SearchBar from '@/components/SearchBar';
 import Stats from '@/components/Stats';
 import PopularCategories from '@/components/PopularCategories';
 import FeaturedJobs from '@/components/FeaturedJobs';
+import NewsletterSection from '@/components/NewsletterSection';
 
 export const metadata = {
   title: "Yid Jobs - Jewish Jobs in Boro Park | Find Yiddish Employment Today",
@@ -135,6 +136,9 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+
+      {/* Newsletter Section */}
+      <NewsletterSection />
 
       {/* SEO Content Section - Hidden but crawlable */}
       <section className="bg-gray-100 py-12">
