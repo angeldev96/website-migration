@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import prisma from '@/lib/prisma';
-import { formatFullDate } from '@/lib/dateUtils';
+import { formatFullDate, formatShortDate } from '@/lib/dateUtils';
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }) {
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }) {
     const pieces = [];
     if (job.company) pieces.push(`Hiring: ${job.company}`);
     if (job.category) pieces.push(job.category);
-    if (job.jobDate) pieces.push(`Posted ${new Date(job.jobDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`);
+    if (job.jobDate) pieces.push(`Posted ${formatShortDate(job.jobDate)}`);
     if (job.description) pieces.push(excerpt(job.description, 80));
 
     const baseDesc = `${jobTitle} — ${pieces.filter(Boolean).join(' • ')}`;

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { apiUrl } from '@/lib/apiUrl';
+import { formatShortDate } from '@/lib/dateUtils';
 
 const AdminPage = () => {
   const [idInput, setIdInput] = useState('');
@@ -176,7 +177,7 @@ const AdminPage = () => {
             </div>
             <div className="text-right text-sm text-gray-500">
               <div>ID: {job.id}</div>
-              <div>{job.jobDate ? new Date(job.jobDate).toLocaleString() : ''}</div>
+              <div>{formatShortDate(job.jobDate)}</div>
             </div>
           </div>
 
