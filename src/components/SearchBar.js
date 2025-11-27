@@ -110,7 +110,7 @@ const SearchBar = () => {
                   </div>
                   <div className="text-sm text-gray-500 md:text-right">
                     <div>{job.category}</div>
-                    <div className="mt-2">{job.jobDate ? new Date(job.jobDate).toLocaleDateString() : ''}</div>
+                    <div className="mt-2">{job.jobDate ? new Date(job.jobDate).toLocaleDateString('en-US', { timeZone: 'America/New_York' }) : ''}</div>
                   </div>
                 </div>
               </li>

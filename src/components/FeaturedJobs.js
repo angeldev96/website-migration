@@ -35,15 +35,26 @@ const FeaturedJobs = () => {
   const formatDate = (dateString) => {
     if (!dateString) return 'Recently';
     const date = new Date(dateString);
+    // Get current time in New York timezone
+    const nyTimeZone = 'America/New_York';
     const now = new Date();
-    const diffTime = Math.abs(now - date);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    // Get the date parts in NY timezone for comparison
+    const dateInNY = new Date(date.toLocaleString('en-US', { timeZone: nyTimeZone }));
+    const nowInNY = new Date(now.toLocaleString('en-US', { timeZone: nyTimeZone }));
+    
+    // Reset times to midnight for day comparison
+    const dateDay = new Date(dateInNY.getFullYear(), dateInNY.getMonth(), dateInNY.getDate());
+    const nowDay = new Date(nowInNY.getFullYear(), nowInNY.getMonth(), nowInNY.getDate());
+    
+    const diffTime = nowDay - dateDay;
+    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
     
     if (diffDays === 0) return 'Today';
     if (diffDays === 1) return 'Yesterday';
     if (diffDays < 7) return `${diffDays} days ago`;
     if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: nyTimeZone });
   };
 
   const extractLocation = (description) => {
