@@ -13,6 +13,7 @@ const DEFAULT_TIMEZONE = 'America/New_York';
  * Parse a date string and return a dayjs object in NY timezone
  * Handles various date formats from the database:
  * - ISO string with timezone: "2025-11-26T07:18:34.726-05:00"
+ * - Date only (from Prisma @db.Date): "2025-11-26T00:00:00.000Z"
  * - Date only: "2025-11-26"
  * - Date object from Prisma
  */
@@ -22,7 +23,19 @@ export function parseDate(dateValue) {
   // If it's already a dayjs object, return it
   if (dayjs.isDayjs(dateValue)) return dateValue;
   
-  // Parse the date - dayjs handles ISO strings correctly
+  const dateStr = String(dateValue);
+  
+  // Check if it's a date-only format from Prisma (ends with T00:00:00.000Z)
+  // This happens when Prisma serializes a @db.Date field
+  // In this case, we want to treat it as a local date, not UTC
+  if (dateStr.endsWith('T00:00:00.000Z') || dateStr.match(/^\d{4}-\d{2}-\d{2}$/)) {
+    // Extract just the date part (YYYY-MM-DD)
+    const datePart = dateStr.substring(0, 10);
+    // Parse as local date in NY timezone (without UTC conversion)
+    return dayjs.tz(datePart, DEFAULT_TIMEZONE);
+  }
+  
+  // For full timestamps with time info, parse normally and convert to NY
   return dayjs(dateValue).tz(DEFAULT_TIMEZONE);
 }
 
@@ -38,7 +51,7 @@ export function getTodayInNY() {
  * @param {string|Date} dateValue - The date to format
  * @returns {string} Formatted date string
  */
-export function formatRelativeDate(dateValue) {
+export function formatRelativeDate(dateValue, debug = false) {
   if (!dateValue) return 'Recently';
   
   const date = parseDate(dateValue);
@@ -48,6 +61,20 @@ export function formatRelativeDate(dateValue) {
   const jobDate = date.startOf('day');
   
   const diffDays = today.diff(jobDate, 'day');
+  
+  // Debug logging
+  if (debug || typeof window !== 'undefined') {
+    console.log('=== DATE DEBUG ===');
+    console.log('Raw dateValue received:', dateValue);
+    console.log('Type of dateValue:', typeof dateValue);
+    console.log('Parsed date (dayjs):', date.format('YYYY-MM-DD HH:mm:ss Z'));
+    console.log('Job date (start of day):', jobDate.format('YYYY-MM-DD'));
+    console.log('Today in NY:', today.format('YYYY-MM-DD'));
+    console.log('Diff in days:', diffDays);
+    console.log('Browser timezone:', Intl.DateTimeFormat().resolvedOptions().timeZone);
+    console.log('Current time (local):', new Date().toString());
+    console.log('==================');
+  }
   
   if (diffDays === 0) return 'Today';
   if (diffDays === 1) return 'Yesterday';
