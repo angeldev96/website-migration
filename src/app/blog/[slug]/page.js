@@ -69,10 +69,10 @@ export default async function BlogPostPage({ params }) {
               alt={blog.title}
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
           </div>
         ) : (
-          <div className="w-full h-48 md:h-64 bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900" />
+          <div className="w-full h-48 md:h-64 bg-linear-to-br from-blue-900 via-blue-800 to-indigo-900" />
         )}
 
         {/* Article Content */}
