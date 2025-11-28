@@ -9,11 +9,11 @@ export const dynamic = 'force-dynamic';
 async function verifyAdmin(request) {
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get('auth_token')?.value;
+    const token = cookieStore.get('token')?.value;
     
     if (!token) return null;
     
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'change-me');
     const user = await prisma.user.findUnique({
       where: { id: decoded.userId }
     });

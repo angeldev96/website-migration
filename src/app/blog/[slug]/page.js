@@ -1,16 +1,16 @@
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { formatFullDate } from '@/lib/dateUtils';
+import { getBasePath } from '@/lib/apiUrl';
 
 async function getBlog(slug) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  const basePath = getBasePath();
   
   try {
-    const res = await fetch(`${baseUrl}/api/blogs/${slug}`, {
-      next: { revalidate: 60 }
+    const res = await fetch(`${baseUrl}${basePath}/api/blogs/${slug}`, {
+      cache: 'no-store'
     });
     
     if (!res.ok) return null;
@@ -58,7 +58,6 @@ export default async function BlogPostPage({ params }) {
   
   return (
     <div className="min-h-screen flex flex-col bg-white">
-      <Header />
       
       <main className="flex-1">
         {/* Hero / Cover Image */}
@@ -168,7 +167,6 @@ export default async function BlogPostPage({ params }) {
         <div className="h-16" />
       </main>
 
-      <Footer />
     </div>
   );
 }

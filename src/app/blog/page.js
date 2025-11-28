@@ -1,8 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { formatShortDate } from '@/lib/dateUtils';
+import { getBasePath } from '@/lib/apiUrl';
 
 export const metadata = {
   title: 'Blog | Latest News and Tips',
@@ -11,10 +10,11 @@ export const metadata = {
 
 async function getBlogs() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  const basePath = getBasePath();
   
   try {
-    const res = await fetch(`${baseUrl}/api/blogs?limit=50`, {
-      next: { revalidate: 60 } // Revalidate every 60 seconds
+    const res = await fetch(`${baseUrl}${basePath}/api/blogs?limit=50`, {
+      cache: 'no-store'
     });
     
     if (!res.ok) return [];
@@ -32,11 +32,10 @@ export default async function BlogPage() {
   
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      <Header />
       
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 py-16 md:py-24">
+        <section className="bg-linear-to-br from-blue-900 via-blue-800 to-indigo-900 py-16 md:py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Our Blog
@@ -69,7 +68,7 @@ export default async function BlogPage() {
                   >
                     {/* Cover Image */}
                     {blog.coverImage ? (
-                      <div className="aspect-[16/9] overflow-hidden">
+                      <div className="aspect-video overflow-hidden">
                         <img 
                           src={blog.coverImage} 
                           alt={blog.title}
@@ -77,7 +76,7 @@ export default async function BlogPage() {
                         />
                       </div>
                     ) : (
-                      <div className="aspect-[16/9] bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+                      <div className="aspect-video bg-linear-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
                         <svg className="w-16 h-16 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                         </svg>
@@ -124,7 +123,6 @@ export default async function BlogPage() {
         </section>
       </main>
 
-      <Footer />
     </div>
   );
 }
