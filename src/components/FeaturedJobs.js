@@ -148,8 +148,8 @@ const FeaturedJobs = () => {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start gap-4">
                       {/* Icon/Logo */}
-                      <div className="flex-shrink-0">
-                        <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center text-2xl border border-blue-200">
+                      <div className="shrink-0">
+                        <div className="w-14 h-14 rounded-lg bg-linear-to-br from-blue-50 to-blue-100 flex items-center justify-center text-2xl border border-blue-200">
                           {getCategoryIcon(job.category)}
                         </div>
                       </div>
@@ -216,7 +216,7 @@ const FeaturedJobs = () => {
                   </div>
 
                   {/* Right side - Date & Action */}
-                  <div className="mt-4 md:mt-0 flex items-center md:flex-col md:items-end justify-between flex-shrink-0 ml-0 md:ml-4 gap-3 w-full md:w-auto">
+                  <div className="mt-4 md:mt-0 flex items-center md:flex-col md:items-end justify-between shrink-0 ml-0 md:ml-4 gap-3 w-full md:w-auto">
                     <div className="text-sm text-gray-500 mb-0 md:mb-3">
                       {formatRelativeDate(job.jobDate)}
                     </div>

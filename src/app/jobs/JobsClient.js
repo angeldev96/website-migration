@@ -93,8 +93,8 @@ const JobsClient = () => {
                   <div className="flex flex-col md:flex-row items-start justify-between gap-4">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start gap-4">
-                        <div className="flex-shrink-0">
-                          <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center text-2xl border border-blue-200">{getCategoryIcon(job.category)}</div>
+                        <div className="shrink-0">
+                          <div className="w-14 h-14 rounded-lg bg-linear-to-br from-blue-50 to-blue-100 flex items-center justify-center text-2xl border border-blue-200">{getCategoryIcon(job.category)}</div>
                         </div>
                         <div className="flex-1 min-w-0">
                           <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors line-clamp-1">{job.aiTitle || job.jobTitle}</h3>
@@ -107,7 +107,7 @@ const JobsClient = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="mt-4 md:mt-0 flex items-center md:flex-col md:items-end justify-between flex-shrink-0 ml-0 md:ml-4 gap-3 w-full md:w-auto">
+                    <div className="mt-4 md:mt-0 flex items-center md:flex-col md:items-end justify-between shrink-0 ml-0 md:ml-4 gap-3 w-full md:w-auto">
                       <div className="text-sm text-gray-500 mb-0 md:mb-3">{formatRelativeDate(job.jobDate)}</div>
                       <button className="w-full md:w-auto px-4 py-2.5 md:px-6 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap text-center">View Details</button>
                     </div>

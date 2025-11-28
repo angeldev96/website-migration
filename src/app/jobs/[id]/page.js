@@ -340,10 +340,10 @@ export default async function JobDetailPage({ params }) {
           {/* Main Job Card */}
           <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden animate-fade-in-up animation-delay-200">
             {/* Header Section */}
-            <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-6 sm:p-8 text-white">
+            <div className="bg-linear-to-r from-blue-600 to-blue-700 p-6 sm:p-8 text-white">
               <div className="flex flex-col sm:flex-row items-start gap-6">
                 {/* Icon */}
-                <div className="flex-shrink-0 animate-fade-in-up animation-delay-300">
+                <div className="shrink-0 animate-fade-in-up animation-delay-300">
                   <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-3xl sm:text-4xl border-2 border-white/30">
                     {getCategoryIcon(job.category)}
                   </div>
@@ -432,7 +432,7 @@ export default async function JobDetailPage({ params }) {
                 {/* Sidebar */}
                 <div className="space-y-6 animate-fade-in-up animation-delay-900">
                   {/* Apply Card */}
-                  <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 border border-blue-200 sticky top-6">
+                  <div className="bg-linear-to-br from-blue-50 to-blue-100 rounded-xl p-6 border border-blue-200 sticky top-6">
                     <h3 className="text-lg font-bold text-gray-900 mb-4">Apply for this position</h3>
                     
                     {/* Contact Info */}

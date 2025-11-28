@@ -9,7 +9,7 @@ const DashboardTab = ({ stats }) => (
   <div className="space-y-6">
     <h2 className="text-2xl font-bold text-gray-900">Dashboard Overview</h2>
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white shadow-lg">
+      <div className="bg-linear-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white shadow-lg">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-blue-100 text-sm font-medium">Total Jobs</p>
@@ -22,7 +22,7 @@ const DashboardTab = ({ stats }) => (
           </div>
         </div>
       </div>
-      <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white shadow-lg">
+      <div className="bg-linear-to-br from-green-500 to-green-600 rounded-xl p-6 text-white shadow-lg">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-green-100 text-sm font-medium">Published Blogs</p>
@@ -35,7 +35,7 @@ const DashboardTab = ({ stats }) => (
           </div>
         </div>
       </div>
-      <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-6 text-white shadow-lg">
+      <div className="bg-linear-to-br from-purple-500 to-purple-600 rounded-xl p-6 text-white shadow-lg">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-purple-100 text-sm font-medium">Draft Blogs</p>
@@ -139,7 +139,7 @@ const JobsManagementTab = ({ onMessage }) => {
       {/* Job Details */}
       {job && (
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-          <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 border-b border-gray-200">
+          <div className="bg-linear-to-r from-gray-50 to-gray-100 px-6 py-4 border-b border-gray-200">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-xl font-bold text-gray-900">{job.aiTitle || job.jobTitle || 'Untitled'}</h3>
@@ -632,7 +632,7 @@ const AdminPage = () => {
   // Login form
   if (!currentUser) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
         <div className="w-full max-w-md">
           <div className="bg-white rounded-2xl shadow-2xl p-8">
             <div className="text-center mb-8">

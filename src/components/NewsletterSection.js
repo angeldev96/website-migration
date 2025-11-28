@@ -39,7 +39,7 @@ const NewsletterSection = () => {
   };
 
   return (
-    <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-16 md:py-20 relative overflow-hidden">
+    <section className="bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 py-16 md:py-20 relative overflow-hidden">
       {/* Background decorations */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 left-0 w-72 h-72 bg-blue-500 rounded-full filter blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
@@ -87,7 +87,7 @@ const NewsletterSection = () => {
                   <button
                     type="submit"
                     disabled={status === 'loading' || status === 'success'}
-                    className="w-full px-6 py-4 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold rounded-xl
+                    className="w-full px-6 py-4 bg-linear-to-r from-blue-600 to-blue-500 text-white font-semibold rounded-xl
                       hover:from-blue-700 hover:to-blue-600 
                       focus:outline-none focus:ring-4 focus:ring-blue-500/30
                       disabled:opacity-60 disabled:cursor-not-allowed

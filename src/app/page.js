@@ -61,7 +61,7 @@ const HomePage = () => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       {/* Hero Section with Background */}
-      <div className="relative min-h-[600px] bg-gradient-to-br from-gray-700 via-gray-600 to-gray-500 text-white overflow-hidden">
+      <div className="relative min-h-[600px] bg-linear-to-br from-gray-700 via-gray-600 to-gray-500 text-white overflow-hidden">
         {/* Background Pattern */}
         <div 
           className="absolute inset-0 opacity-10"
@@ -82,7 +82,7 @@ const HomePage = () => {
           </svg>
         </div>
 
-        <div className="absolute inset-0 bg-gradient-to-r from-gray-900/30 to-transparent"></div>
+        <div className="absolute inset-0 bg-linear-to-r from-gray-900/30 to-transparent"></div>
         
         <section className="container mx-auto px-4 py-24 relative z-10">
           <div className="max-w-4xl mx-auto text-center mb-12">
@@ -111,7 +111,7 @@ const HomePage = () => {
       <FeaturedJobs />
 
       {/* Call to Action Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-700 py-16">
+      <section className="bg-linear-to-r from-blue-600 to-blue-700 py-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Join Thousands of Jewish Professionals in Boro Park
