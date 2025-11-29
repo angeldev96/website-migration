@@ -7,6 +7,8 @@ import { buildServerUrl } from '@/lib/serverUrl';
 async function getBlog(slug) {
   try {
     const url = buildServerUrl(`/api/blogs/${slug}`);
+    console.log('📡 Fetching blog from:', url);
+    
     const res = await fetch(url, {
       cache: 'no-store',
       headers: {
@@ -14,12 +16,19 @@ async function getBlog(slug) {
       }
     });
     
-    if (!res.ok) return null;
+    console.log('📡 Response status:', res.status);
+    
+    if (!res.ok) {
+      console.error('❌ Error: Response not OK', res.status, res.statusText);
+      return null;
+    }
     
     const json = await res.json();
+    console.log('✅ Blog fetched successfully:', json);
     return json.success ? json.data : null;
   } catch (error) {
-    console.error('Error fetching blog:', error);
+    console.error('❌ Error fetching blog:', error);
+    console.error('Stack:', error.stack);
     return null;
   }
 }

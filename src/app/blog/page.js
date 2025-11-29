@@ -11,6 +11,8 @@ export const metadata = {
 async function getBlogs() {
   try {
     const url = buildServerUrl('/api/blogs?limit=50');
+    console.log('📡 Fetching blogs from:', url);
+    
     const res = await fetch(url, {
       cache: 'no-store',
       headers: {
@@ -18,12 +20,19 @@ async function getBlogs() {
       }
     });
     
-    if (!res.ok) return [];
+    console.log('📡 Response status:', res.status);
+    
+    if (!res.ok) {
+      console.error('❌ Error: Response not OK', res.status, res.statusText);
+      return [];
+    }
     
     const json = await res.json();
+    console.log('✅ Blogs fetched successfully:', json);
     return json.success ? json.data : [];
   } catch (error) {
-    console.error('Error fetching blogs:', error);
+    console.error('❌ Error fetching blogs:', error);
+    console.error('Stack:', error.stack);
     return [];
   }
 }
