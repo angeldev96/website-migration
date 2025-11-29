@@ -2,30 +2,18 @@ import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { formatFullDate } from '@/lib/dateUtils';
-import { buildServerUrl } from '@/lib/serverUrl';
+import { getPublishedBlogBySlug } from '@/lib/blogDb';
 
 async function getBlog(slug) {
   try {
-    const url = buildServerUrl(`/api/blogs/${slug}`);
-    console.log('📡 Fetching blog from:', url);
-    
-    const res = await fetch(url, {
-      cache: 'no-store',
-      headers: {
-        'Accept': 'application/json',
-      }
-    });
-    
-    console.log('📡 Response status:', res.status);
-    
-    if (!res.ok) {
-      console.error('❌ Error: Response not OK', res.status, res.statusText);
-      return null;
+    console.log('📡 Fetching blog from database:', slug);
+    const blog = await getPublishedBlogBySlug(slug);
+    if (blog) {
+      console.log('✅ Blog found:', blog.title);
+    } else {
+      console.log('❌ Blog not found or not published');
     }
-    
-    const json = await res.json();
-    console.log('✅ Blog fetched successfully:', json);
-    return json.success ? json.data : null;
+    return blog;
   } catch (error) {
     console.error('❌ Error fetching blog:', error);
     console.error('Stack:', error.stack);

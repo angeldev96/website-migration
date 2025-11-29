@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { formatShortDate } from '@/lib/dateUtils';
-import { buildServerUrl } from '@/lib/serverUrl';
+import { getPublishedBlogs } from '@/lib/blogDb';
 
 export const metadata = {
   title: 'Blog | Latest News and Tips',
@@ -10,29 +10,12 @@ export const metadata = {
 
 async function getBlogs() {
   try {
-    const url = buildServerUrl('/api/blogs?limit=50');
-    console.log('📡 Fetching blogs from:', url);
-    
-    const res = await fetch(url, {
-      cache: 'no-store',
-      headers: {
-        'Accept': 'application/json',
-      }
-    });
-    
-    console.log('📡 Response status:', res.status);
-    
-    if (!res.ok) {
-      console.error('❌ Error: Response not OK', res.status, res.statusText);
-      return [];
-    }
-    
-    const json = await res.json();
-    console.log('✅ Blogs fetched successfully:', json);
-    return json.success ? json.data : [];
+    console.log('📡 Fetching blogs from database...');
+    const blogs = await getPublishedBlogs(50);
+    console.log(`✅ Found ${blogs.length} blogs`);
+    return blogs;
   } catch (error) {
     console.error('❌ Error fetching blogs:', error);
-    console.error('Stack:', error.stack);
     return [];
   }
 }
