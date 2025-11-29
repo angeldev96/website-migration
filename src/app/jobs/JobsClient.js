@@ -37,8 +37,6 @@ const JobsClient = () => {
         setJobs(data.data);
         setTotalPages(data.pagination.totalPages);
       }
-    } catch (error) {
-      console.error('Error fetching jobs:', error);
     } finally {
       setLoading(false);
     }

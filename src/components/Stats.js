@@ -8,8 +8,7 @@ const Stats = async () => {
   try {
     jobsCount = await prisma.jobsSheet.count();
   } catch (err) {
-    // If DB fails, keep a sensible fallback and log server-side
-    console.error('Error fetching jobs count for Stats:', err);
+    // If DB fails, keep a sensible fallback
     jobsCount = 0;
   }
 

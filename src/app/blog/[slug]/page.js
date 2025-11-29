@@ -6,17 +6,9 @@ import { getPublishedBlogBySlug } from '@/lib/blogDb';
 
 async function getBlog(slug) {
   try {
-    console.log('📡 Fetching blog from database:', slug);
     const blog = await getPublishedBlogBySlug(slug);
-    if (blog) {
-      console.log('✅ Blog found:', blog.title);
-    } else {
-      console.log('❌ Blog not found or not published');
-    }
     return blog;
   } catch (error) {
-    console.error('❌ Error fetching blog:', error);
-    console.error('Stack:', error.stack);
     return null;
   }
 }
@@ -99,14 +91,6 @@ export default async function BlogPostPage({ params }) {
                 </svg>
                 <span>{formatFullDate(blog.publishedAt || blog.createdAt)}</span>
               </div>
-              {blog.author && (
-                <div className="flex items-center gap-2">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                  <span>{blog.author.name || blog.author.email}</span>
-                </div>
-              )}
             </div>
 
             {/* Content */}

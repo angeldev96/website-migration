@@ -10,12 +10,9 @@ export const metadata = {
 
 async function getBlogs() {
   try {
-    console.log('📡 Fetching blogs from database...');
     const blogs = await getPublishedBlogs(50);
-    console.log(`✅ Found ${blogs.length} blogs`);
     return blogs;
   } catch (error) {
-    console.error('❌ Error fetching blogs:', error);
     return [];
   }
 }
@@ -80,12 +77,6 @@ export default async function BlogPage() {
                     <div className="p-6 flex flex-col flex-1">
                       <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
                         <span>{formatShortDate(blog.publishedAt || blog.createdAt)}</span>
-                        {blog.author && (
-                          <>
-                            <span>•</span>
-                            <span>{blog.author.name || blog.author.email}</span>
-                          </>
-                        )}
                       </div>
 
                       <h2 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-blue-600 transition-colors">

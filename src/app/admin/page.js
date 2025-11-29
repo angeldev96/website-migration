@@ -215,8 +215,6 @@ const BlogManagementTab = ({ onMessage, onRefreshStats }) => {
       const res = await fetch(apiUrl('/api/blogs?all=true&limit=50'));
       const json = await res.json();
       if (json?.success) setBlogs(json.data);
-    } catch (err) {
-      console.error('Error fetching blogs:', err);
     } finally {
       setLoading(false);
     }
@@ -289,7 +287,7 @@ const BlogManagementTab = ({ onMessage, onRefreshStats }) => {
         onRefreshStats();
       }
     } catch (err) {
-      console.error('Error deleting blog:', err);
+      // Silent fail
     }
   };
 
@@ -307,7 +305,7 @@ const BlogManagementTab = ({ onMessage, onRefreshStats }) => {
         onRefreshStats();
       }
     } catch (err) {
-      console.error('Error toggling publish:', err);
+      // Silent fail
     }
   };
 
@@ -563,7 +561,7 @@ const AdminPage = () => {
         draftBlogs: draft
       });
     } catch (err) {
-      console.error('Error fetching stats:', err);
+      // Silent fail
     }
   };
 
@@ -576,8 +574,6 @@ const AdminPage = () => {
           setCurrentUser(json.data);
           fetchStats();
         }
-      } catch (err) {
-        console.error('Auth check failed:', err);
       } finally {
         setAuthLoading(false);
       }

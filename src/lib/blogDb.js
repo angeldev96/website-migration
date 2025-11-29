@@ -12,17 +12,11 @@ export async function getPublishedBlogs(limit = 50, page = 1) {
       where: { published: true },
       skip,
       take: limit,
-      orderBy: { createdAt: 'desc' },
-      include: {
-        author: {
-          select: { id: true, email: true }
-        }
-      }
+      orderBy: { createdAt: 'desc' }
     });
 
     return posts;
   } catch (error) {
-    console.error('❌ Error fetching blogs from database:', error);
     return [];
   }
 }
@@ -33,12 +27,7 @@ export async function getPublishedBlogs(limit = 50, page = 1) {
 export async function getPublishedBlogBySlug(slug) {
   try {
     const post = await prisma.blogPost.findUnique({
-      where: { slug },
-      include: {
-        author: {
-          select: { id: true, email: true }
-        }
-      }
+      where: { slug }
     });
 
     // Only return if published
@@ -48,7 +37,6 @@ export async function getPublishedBlogBySlug(slug) {
 
     return post;
   } catch (error) {
-    console.error('❌ Error fetching blog from database:', error);
     return null;
   }
 }

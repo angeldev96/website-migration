@@ -54,8 +54,6 @@ const PopularCategories = () => {
 
           setCategories(sortedCategories);
         }
-      } catch (error) {
-        console.error('Error fetching categories:', error);
       } finally {
         setLoading(false);
       }
