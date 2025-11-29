@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { formatShortDate } from '@/lib/dateUtils';
-import { getBasePath } from '@/lib/apiUrl';
+import { buildServerUrl } from '@/lib/serverUrl';
 
 export const metadata = {
   title: 'Blog | Latest News and Tips',
@@ -9,12 +9,13 @@ export const metadata = {
 };
 
 async function getBlogs() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-  const basePath = getBasePath();
-  
   try {
-    const res = await fetch(`${baseUrl}${basePath}/api/blogs?limit=50`, {
-      cache: 'no-store'
+    const url = buildServerUrl('/api/blogs?limit=50');
+    const res = await fetch(url, {
+      cache: 'no-store',
+      headers: {
+        'Accept': 'application/json',
+      }
     });
     
     if (!res.ok) return [];
