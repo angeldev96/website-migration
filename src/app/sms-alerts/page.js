@@ -87,18 +87,18 @@ export default function SMSAlertsPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">You're All Set! 🎉</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">You&apos;re All Set! 🎉</h2>
             <p className="text-lg text-gray-600 mb-8">
-              Thank you for signing up for SMS job alerts. You'll start receiving personalized job notifications based on your preferences.
+              Thank you for signing up for SMS job alerts. You&apos;ll start receiving personalized job notifications based on your preferences.
             </p>
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
               <p className="text-sm text-gray-700 mb-2">
-                <strong>What's Next?</strong>
+                <strong>What&apos;s Next?</strong>
               </p>
               <ul className="text-left text-sm text-gray-600 space-y-2">
                 <li className="flex items-start">
                   <span className="text-blue-600 mr-2">•</span>
-                  <span>You'll receive a confirmation text shortly</span>
+                  <span>You&apos;ll receive a confirmation text shortly</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-blue-600 mr-2">•</span>
@@ -270,7 +270,7 @@ export default function SMSAlertsPage() {
               {/* Specific Industry */}
               <div>
                 <label htmlFor="industries" className="block text-sm font-medium text-gray-700 mb-2">
-                  If you selected 'Specific industry/field', please specify:
+                  If you selected &apos;Specific industry/field&apos;, please specify:
                 </label>
                 <input
                   type="text"
