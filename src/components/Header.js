@@ -31,6 +31,17 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
+            {/* SMS Alerts Link */}
+            <Link 
+              href="/sms-alerts" 
+              className="text-gray-700 hover:text-blue-600 font-medium flex items-center whitespace-nowrap"
+            >
+              <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+              </svg>
+              Sign Up for SMS Job Alerts
+            </Link>
+
             {/* Locations Dropdown */}
             <div className="relative group">
               <button 
@@ -175,6 +186,12 @@ const Header = () => {
         {mobileMenuOpen && (
           <div className="md:hidden mt-4 pb-4 border-t border-gray-200">
             <nav className="flex flex-col space-y-3 mt-4">
+              <Link href="/sms-alerts" className="text-gray-700 hover:text-blue-600 font-medium flex items-center">
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+                SMS Job Alerts
+              </Link>
               <Link href="/locations" className="text-gray-700 hover:text-blue-600 font-medium">Locations</Link>
               <Link href="/categories" className="text-gray-700 hover:text-blue-600 font-medium">Categories</Link>
               <Link href="/candidates" className="text-gray-700 hover:text-blue-600 font-medium">For Candidates</Link>
