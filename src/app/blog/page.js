@@ -25,9 +25,9 @@ export default async function BlogPage() {
       
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="bg-linear-to-br from-blue-900 via-blue-800 to-indigo-900 py-16 md:py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+        <section className="bg-linear-to-br from-blue-900 via-blue-800 to-indigo-900 py-8 md:py-12">
+          <div className="max-w-screen-2xl mx-auto px-6 lg:px-12 text-center">
+            <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
               Our Blog
             </h1>
             <p className="text-xl text-blue-100 max-w-2xl mx-auto">
@@ -38,7 +38,7 @@ export default async function BlogPage() {
 
         {/* Blog Grid */}
         <section className="py-12 md:py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-screen-2xl mx-auto px-6 lg:px-12">
             {blogs.length === 0 ? (
               <div className="text-center py-16">
                 <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -50,7 +50,7 @@ export default async function BlogPage() {
                 <p className="text-gray-600">Check back soon for new content!</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
                 {blogs.map((blog) => (
                   <article 
                     key={blog.id}
