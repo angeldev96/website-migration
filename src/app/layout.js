@@ -146,6 +146,14 @@ export default function RootLayout({ children }) {
         {/* Preconnect to external resources for faster loading */}
         <link rel="preconnect" href="https://cdn.prod.website-files.com" />
         <link rel="dns-prefetch" href="https://cdn.prod.website-files.com" />
+        {/* Preload the app layout font with correct attributes to avoid preload warnings */}
+        <link
+          rel="preload"
+          href="/app/_next/static/media/e4af272ccee01ff0-s.p.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
