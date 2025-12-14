@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -10,6 +10,23 @@ const Header = () => {
   const [candidatesOpen, setCandidatesOpen] = useState(false);
   const [employersOpen, setEmployersOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const closeTimeouts = useRef({});
+
+  const openMenu = (key, setter) => {
+    if (closeTimeouts.current[key]) {
+      clearTimeout(closeTimeouts.current[key]);
+      closeTimeouts.current[key] = null;
+    }
+    setter(true);
+  };
+
+  const closeMenuWithDelay = (key, setter) => {
+    if (closeTimeouts.current[key]) clearTimeout(closeTimeouts.current[key]);
+    closeTimeouts.current[key] = setTimeout(() => {
+      setter(false);
+      closeTimeouts.current[key] = null;
+    }, 180);
+  };
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -44,11 +61,9 @@ const Header = () => {
             </Link>
 
             {/* Locations Dropdown */}
-            <div className="relative group">
+            <div className="relative group" onMouseEnter={() => openMenu('locations', setLocationsOpen)} onMouseLeave={() => closeMenuWithDelay('locations', setLocationsOpen)}>
               <button 
                 className="text-gray-700 hover:text-blue-600 font-medium flex items-center"
-                onMouseEnter={() => setLocationsOpen(true)}
-                onMouseLeave={() => setLocationsOpen(false)}
               >
                 Locations
                 <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -56,11 +71,7 @@ const Header = () => {
                 </svg>
               </button>
               {locationsOpen && (
-                <div 
-                  className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-2"
-                  onMouseEnter={() => setLocationsOpen(true)}
-                  onMouseLeave={() => setLocationsOpen(false)}
-                >
+                <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-2">
                   <Link href="/locations/boro-park" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Boro Park</Link>
                   <Link href="/locations" className="block px-4 py-2 text-blue-600 font-medium hover:bg-blue-50">View All →</Link>
                 </div>
@@ -68,11 +79,9 @@ const Header = () => {
             </div>
 
             {/* Categories Dropdown */}
-            <div className="relative group">
+            <div className="relative group" onMouseEnter={() => openMenu('categories', setCategoriesOpen)} onMouseLeave={() => closeMenuWithDelay('categories', setCategoriesOpen)}>
               <button 
                 className="text-gray-700 hover:text-blue-600 font-medium flex items-center"
-                onMouseEnter={() => setCategoriesOpen(true)}
-                onMouseLeave={() => setCategoriesOpen(false)}
               >
                 Categories
                 <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -80,11 +89,7 @@ const Header = () => {
                 </svg>
               </button>
               {categoriesOpen && (
-                <div 
-                  className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-2"
-                  onMouseEnter={() => setCategoriesOpen(true)}
-                  onMouseLeave={() => setCategoriesOpen(false)}
-                >
+                <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-2">
                   <Link href="/categories/accounting" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Accounting & Finance</Link>
                   <Link href="/categories/technology" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Technology & IT</Link>
                   <Link href="/categories/education" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Education</Link>
@@ -96,11 +101,9 @@ const Header = () => {
             </div>
 
             {/* For Candidates Dropdown */}
-            <div className="relative group">
+            <div className="relative group" onMouseEnter={() => openMenu('candidates', setCandidatesOpen)} onMouseLeave={() => closeMenuWithDelay('candidates', setCandidatesOpen)}>
               <button 
                 className="text-gray-700 hover:text-blue-600 font-medium flex items-center"
-                onMouseEnter={() => setCandidatesOpen(true)}
-                onMouseLeave={() => setCandidatesOpen(false)}
               >
                 For Candidates
                 <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -108,11 +111,7 @@ const Header = () => {
                 </svg>
               </button>
               {candidatesOpen && (
-                <div 
-                  className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-2"
-                  onMouseEnter={() => setCandidatesOpen(true)}
-                  onMouseLeave={() => setCandidatesOpen(false)}
-                >
+                <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-2">
                   <Link href="/candidates/browse-jobs" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Browse Jobs</Link>
                   <Link href="/candidates/create-profile" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Create Profile</Link>
                   <Link href="/candidates/career-resources" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Career Resources</Link>
@@ -122,11 +121,9 @@ const Header = () => {
             </div>
 
             {/* For Employers Dropdown */}
-            <div className="relative group">
+            <div className="relative group" onMouseEnter={() => openMenu('employers', setEmployersOpen)} onMouseLeave={() => closeMenuWithDelay('employers', setEmployersOpen)}>
               <button 
                 className="text-gray-700 hover:text-blue-600 font-medium flex items-center"
-                onMouseEnter={() => setEmployersOpen(true)}
-                onMouseLeave={() => setEmployersOpen(false)}
               >
                 For Employers
                 <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -134,11 +131,7 @@ const Header = () => {
                 </svg>
               </button>
               {employersOpen && (
-                <div 
-                  className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-2"
-                  onMouseEnter={() => setEmployersOpen(true)}
-                  onMouseLeave={() => setEmployersOpen(false)}
-                >
+                <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-2">
                   <Link href="/employers/post-job" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Post a Job</Link>
                   <Link href="/employers/pricing" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Pricing</Link>
                   <Link href="/employers/find-candidates" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Find Candidates</Link>
