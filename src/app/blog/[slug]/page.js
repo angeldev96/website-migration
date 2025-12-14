@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { formatFullDate } from '@/lib/dateUtils';
 import { getPublishedBlogBySlug } from '@/lib/blogDb';
+import { formatBlogContent } from '@/lib/formatBlogContent';
 
 async function getBlog(slug) {
   try {
@@ -45,6 +46,9 @@ export default async function BlogPostPage({ params }) {
   if (!blog) {
     notFound();
   }
+
+  // Format the blog content for better readability
+  const formattedContent = formatBlogContent(blog.content);
   
   return (
     <div className="min-h-screen flex flex-col bg-white">
@@ -97,13 +101,13 @@ export default async function BlogPostPage({ params }) {
             <div
               className="prose prose-lg lg:prose-xl max-w-none mx-auto
                 prose-headings:text-gray-900 prose-headings:font-bold prose-headings:leading-tight
-                prose-p:text-gray-700 prose-p:leading-relaxed prose-p:text-base
+                prose-p:text-gray-700 prose-p:leading-relaxed prose-p:text-lg prose-p:mb-6
                 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
-                prose-strong:text-gray-900
+                prose-strong:text-gray-900 prose-strong:text-base
                 prose-ul:text-gray-700 prose-ol:text-gray-700
                 prose-blockquote:border-l-blue-600 prose-blockquote:text-gray-600
                 prose-img:rounded-lg prose-img:shadow-md"
-              dangerouslySetInnerHTML={{ __html: blog.content }}
+              dangerouslySetInnerHTML={{ __html: formattedContent }}
             />
 
             {/* Share Section */}
