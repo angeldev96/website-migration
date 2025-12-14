@@ -3,6 +3,30 @@ import Link from 'next/link';
 import Image from 'next/image';
 import prisma from '@/lib/prisma';
 import { formatFullDate, formatShortDate } from '@/lib/dateUtils';
+import {
+  BarChart3,
+  Monitor,
+  GraduationCap,
+  HeartPulse,
+  TrendingUp,
+  Megaphone,
+  ClipboardList,
+  Headphones,
+  BadgeDollarSign,
+  Cpu,
+  Baby,
+  UtensilsCrossed,
+  ShoppingBag,
+  HardHat,
+  Car,
+  Gavel,
+  Home,
+  Users,
+  Paintbrush,
+  PenLine,
+  Briefcase,
+  Search
+} from 'lucide-react';
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }) {
@@ -128,21 +152,34 @@ export default async function JobDetailPage({ params }) {
 
   const getCategoryIcon = (category) => {
     const icons = {
-      'Accounting': '📊', 'Technology': '💻', 'Education': '📚',
-      'Healthcare': '⚕️', 'Sales': '📈', 'Marketing': '📈',
-      'Administration': '📋', 'Customer Service': '🎧', 'Finance': '💰',
-      'IT': '💻', 'Childcare': '👶', 'Food': '🍽️',
-      'Retail': '🛍️', 'Construction': '🏗️', 'Transportation': '🚗',
-      'Legal': '⚖️', 'Real Estate': '🏠', 'Human Resources': '👥',
-      'Design': '🎨', 'Writing': '✍️'
+      Accounting: BarChart3,
+      Technology: Monitor,
+      Education: GraduationCap,
+      Healthcare: HeartPulse,
+      Sales: TrendingUp,
+      Marketing: Megaphone,
+      Administration: ClipboardList,
+      'Customer Service': Headphones,
+      Finance: BadgeDollarSign,
+      IT: Cpu,
+      Childcare: Baby,
+      Food: UtensilsCrossed,
+      Retail: ShoppingBag,
+      Construction: HardHat,
+      Transportation: Car,
+      Legal: Gavel,
+      'Real Estate': Home,
+      'Human Resources': Users,
+      Design: Paintbrush,
+      Writing: PenLine
     };
-    
-    for (const [key, icon] of Object.entries(icons)) {
+
+    for (const [key, Icon] of Object.entries(icons)) {
       if (category?.toLowerCase().includes(key.toLowerCase())) {
-        return icon;
+        return Icon;
       }
     }
-    return '💼';
+    return Briefcase;
   };
 
   const getJobType = (description) => {
@@ -345,7 +382,10 @@ export default async function JobDetailPage({ params }) {
                 {/* Icon */}
                 <div className="shrink-0 animate-fade-in-up animation-delay-300">
                   <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-3xl sm:text-4xl border-2 border-white/30">
-                    {getCategoryIcon(job.category)}
+                    {(() => {
+                      const Icon = getCategoryIcon(job.category);
+                      return <Icon className="w-10 h-10 text-white" aria-hidden="true" />;
+                    })()}
                   </div>
                 </div>
 
@@ -538,7 +578,9 @@ export default async function JobDetailPage({ params }) {
           <div className="mt-12 animate-fade-in-up animation-delay-1000">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Similar Opportunities</h2>
             <div className="bg-white rounded-xl p-8 text-center border border-gray-200">
-              <div className="text-5xl mb-4">🔍</div>
+              <div className="mb-4 flex justify-center text-gray-500">
+                <Search className="w-12 h-12" aria-hidden="true" />
+              </div>
               <p className="text-gray-600">Similar job recommendations coming soon!</p>
             </div>
           </div>

@@ -3,6 +3,22 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { apiUrl } from '@/lib/apiUrl';
+import {
+  Briefcase,
+  ShoppingBag,
+  TrendingUp,
+  Car,
+  HeartPulse,
+  UtensilsCrossed,
+  Baby,
+  ClipboardList,
+  GraduationCap,
+  BadgeDollarSign,
+  Megaphone,
+  Cpu,
+  Monitor,
+  Folder
+} from 'lucide-react';
 
 // Define the specific categories we want to show (normalized)
 const TARGET_CATEGORIES = [
@@ -64,20 +80,22 @@ const PopularCategories = () => {
 
   const getCategoryIcon = (category) => {
     const icons = {
-      'Other': '💼',
-      'Retail': '🛍️',
-      'Sales': '📈',
-      'Transportation': '🚗',
-      'Healthcare': '⚕️',
-      'Restaurant': '🍽️',
-      'Childchildcare': '�',
-      'Technical': '💻',
-      'Office': '📋',
-      'Childcare': '👶',
-      'Education': '📚'
+      Other: Briefcase,
+      Finance: BadgeDollarSign,
+      Retail: ShoppingBag,
+      Sales: TrendingUp,
+      Transportation: Car,
+      Healthcare: HeartPulse,
+      Restaurant: UtensilsCrossed,
+      Technical: Cpu,
+      Technology: Monitor,
+      Office: ClipboardList,
+      Marketing: Megaphone,
+      Childcare: Baby,
+      Education: GraduationCap
     };
-    
-    return icons[category] || '💼';
+
+    return icons[category] || Briefcase;
   };
 
   if (loading) {
@@ -120,7 +138,14 @@ const PopularCategories = () => {
               key={category.name}
               className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200 hover:border-blue-500 group"
             >
-              <div className="text-4xl mb-4">{getCategoryIcon(category.name)}</div>
+              {(() => {
+                const Icon = getCategoryIcon(category.name);
+                return (
+                  <div className="mb-4 text-gray-800 group-hover:text-blue-600 transition-colors">
+                    <Icon className="w-10 h-10" aria-hidden="true" />
+                  </div>
+                );
+              })()}
               <h3 className="text-lg font-semibold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">
                 {category.name}
               </h3>
@@ -133,7 +158,9 @@ const PopularCategories = () => {
         
         {categories.length === 0 && !loading && (
           <div className="text-center py-12">
-            <div className="text-6xl mb-4">📂</div>
+            <div className="mb-4 flex justify-center text-gray-500">
+              <Folder className="w-14 h-14" aria-hidden="true" />
+            </div>
             <h3 className="text-2xl font-bold text-gray-800 mb-2">No categories available</h3>
             <p className="text-gray-600">Check back soon for job categories!</p>
           </div>

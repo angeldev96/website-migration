@@ -4,6 +4,30 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { apiUrl } from '@/lib/apiUrl';
 import { formatRelativeDate } from '@/lib/dateUtils';
+import {
+  BarChart3,
+  Monitor,
+  GraduationCap,
+  HeartPulse,
+  TrendingUp,
+  Megaphone,
+  ClipboardList,
+  Headphones,
+  BadgeDollarSign,
+  Cpu,
+  Baby,
+  UtensilsCrossed,
+  ShoppingBag,
+  HardHat,
+  Car,
+  Gavel,
+  Home,
+  Users,
+  Paintbrush,
+  PenLine,
+  Briefcase,
+  Search
+} from 'lucide-react';
 
 const FeaturedJobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -38,34 +62,34 @@ const FeaturedJobs = () => {
 
   const getCategoryIcon = (category) => {
     const icons = {
-      'Accounting': '📊',
-      'Technology': '�',
-      'Education': '📚',
-      'Healthcare': '⚕️',
-      'Sales': '📈',
-      'Marketing': '📈',
-      'Administration': '📋',
-      'Customer Service': '🎧',
-      'Finance': '💰',
-      'IT': '💻',
-      'Childcare': '👶',
-      'Food': '🍽️',
-      'Retail': '🛍️',
-      'Construction': '🏗️',
-      'Transportation': '🚗',
-      'Legal': '⚖️',
-      'Real Estate': '🏠',
-      'Human Resources': '👥',
-      'Design': '🎨',
-      'Writing': '✍️'
+      Accounting: BarChart3,
+      Technology: Monitor,
+      Education: GraduationCap,
+      Healthcare: HeartPulse,
+      Sales: TrendingUp,
+      Marketing: Megaphone,
+      Administration: ClipboardList,
+      'Customer Service': Headphones,
+      Finance: BadgeDollarSign,
+      IT: Cpu,
+      Childcare: Baby,
+      Food: UtensilsCrossed,
+      Retail: ShoppingBag,
+      Construction: HardHat,
+      Transportation: Car,
+      Legal: Gavel,
+      'Real Estate': Home,
+      'Human Resources': Users,
+      Design: Paintbrush,
+      Writing: PenLine
     };
-    
-    for (const [key, icon] of Object.entries(icons)) {
+
+    for (const [key, Icon] of Object.entries(icons)) {
       if (category?.toLowerCase().includes(key.toLowerCase())) {
-        return icon;
+        return Icon;
       }
     }
-    return '💼';
+    return Briefcase;
   };
 
   const getJobType = (description) => {
@@ -148,7 +172,10 @@ const FeaturedJobs = () => {
                       {/* Icon/Logo */}
                       <div className="shrink-0">
                         <div className="w-14 h-14 rounded-lg bg-linear-to-br from-blue-50 to-blue-100 flex items-center justify-center text-2xl border border-blue-200">
-                          {getCategoryIcon(job.category)}
+                          {(() => {
+                            const Icon = getCategoryIcon(job.category);
+                            return <Icon className="w-8 h-8 text-blue-700" aria-hidden="true" />;
+                          })()}
                         </div>
                       </div>
 
@@ -285,7 +312,9 @@ const FeaturedJobs = () => {
         {/* No jobs message */}
         {jobs.length === 0 && !loading && (
           <div className="text-center py-12">
-            <div className="text-6xl mb-4">🔍</div>
+            <div className="mb-4 flex justify-center text-gray-500">
+              <Search className="w-14 h-14" aria-hidden="true" />
+            </div>
             <h3 className="text-2xl font-bold text-gray-800 mb-2">No jobs found</h3>
             <p className="text-gray-600">Check back soon for new opportunities!</p>
           </div>

@@ -5,6 +5,22 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { apiUrl } from '@/lib/apiUrl';
 import { formatRelativeDate } from '@/lib/dateUtils';
+import {
+  Briefcase,
+  ShoppingBag,
+  TrendingUp,
+  Car,
+  HeartPulse,
+  UtensilsCrossed,
+  Baby,
+  ClipboardList,
+  GraduationCap,
+  BadgeDollarSign,
+  Cpu,
+  Monitor,
+  Megaphone,
+  Search
+} from 'lucide-react';
 
 const JobsClient = () => {
   const searchParams = useSearchParams();
@@ -46,10 +62,22 @@ const JobsClient = () => {
 
   const getCategoryIcon = (category) => {
     const icons = {
-      'Other': '💼', 'Retail': '🛍️', 'Sales': '📈', 'Transportation': '🚗', 'Healthcare': '⚕️',
-      'Restaurant': '🍽️', 'Childchildcare': '👶', 'Technical': '💻', 'Office': '📋', 'Childcare': '👶', 'Education': '📚'
+      Other: Briefcase,
+      Finance: BadgeDollarSign,
+      Retail: ShoppingBag,
+      Sales: TrendingUp,
+      Transportation: Car,
+      Healthcare: HeartPulse,
+      Restaurant: UtensilsCrossed,
+      Technical: Cpu,
+      Technology: Monitor,
+      Office: ClipboardList,
+      Marketing: Megaphone,
+      Childcare: Baby,
+      Education: GraduationCap
     };
-    return icons[category] || '💼';
+
+    return icons[category] || Briefcase;
   };
 
   const truncateText = (text, maxLength = 150) => {
@@ -92,7 +120,12 @@ const JobsClient = () => {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start gap-4">
                         <div className="shrink-0">
-                          <div className="w-14 h-14 rounded-lg bg-linear-to-br from-blue-50 to-blue-100 flex items-center justify-center text-2xl border border-blue-200">{getCategoryIcon(job.category)}</div>
+                          <div className="w-14 h-14 rounded-lg bg-linear-to-br from-blue-50 to-blue-100 flex items-center justify-center text-2xl border border-blue-200">
+                            {(() => {
+                              const Icon = getCategoryIcon(job.category);
+                              return <Icon className="w-8 h-8 text-blue-700" aria-hidden="true" />;
+                            })()}
+                          </div>
                         </div>
                         <div className="flex-1 min-w-0">
                           <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors line-clamp-1">{job.aiTitle || job.jobTitle}</h3>
@@ -117,7 +150,9 @@ const JobsClient = () => {
 
           {jobs.length === 0 && !loading && (
             <div className="text-center py-12 bg-white rounded-xl border border-gray-200">
-              <div className="text-6xl mb-4">🔍</div>
+              <div className="mb-4 flex justify-center text-gray-500">
+                <Search className="w-14 h-14" aria-hidden="true" />
+              </div>
               <h3 className="text-2xl font-bold text-gray-800 mb-2">No jobs found</h3>
               <p className="text-gray-600 mb-6">Try adjusting your filters or check back later for new opportunities!</p>
             </div>
