@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import slugify from '@/lib/slugify';
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 
@@ -96,11 +97,7 @@ export async function PUT(request, { params }) {
     // Generate new slug if title changed
     let newSlug = slug;
     if (title && title !== existingPost.title) {
-      newSlug = title
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-+|-+$/g, '');
-      
+      newSlug = slugify(title);
       // Check for duplicate slug
       const duplicateSlug = await prisma.blogPost.findFirst({
         where: { slug: newSlug, id: { not: existingPost.id } }

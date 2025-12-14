@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import slugify from '@/lib/slugify';
+import generateSlugWithLLM from '@/lib/llm';
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 
@@ -94,17 +96,26 @@ export async function POST(request) {
       );
     }
     
-    // Generate slug from title
-    let slug = title
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-+|-+$/g, '');
+    // Try to generate slug with LLM (Gemini). Fallback to slugify.
+    // Generate slug (LLM or fallback). Avoid logging title or generated slug in production.
+    let slug = null;
+    try {
+      slug = await generateSlugWithLLM(title);
+    } catch (e) {
+      // LLM generation failed — fallback will be used. Do not log error details here.
+      slug = null;
+    }
     
-    // Check for duplicate slug and make unique if needed
+    if (!slug) {
+      slug = slugify(title);
+    }
+
+    // Ensure uniqueness
     const existingSlug = await prisma.blogPost.findUnique({ where: { slug } });
     if (existingSlug) {
       slug = `${slug}-${Date.now()}`;
     }
+    
     
     const post = await prisma.blogPost.create({
       data: {

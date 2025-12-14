@@ -25,6 +25,7 @@ const Header = () => {
                 height={100}
                 className="h-24 md:h-28 w-auto brightness-0"
                 style={{ filter: 'brightness(0) saturate(100%)' }}
+                priority
               />
             </Link>
           </div>

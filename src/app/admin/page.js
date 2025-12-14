@@ -254,10 +254,14 @@ const BlogManagementTab = ({ onMessage, onRefreshStats }) => {
       const url = editingBlog ? apiUrl(`/api/blogs/${editingBlog.slug}`) : apiUrl('/api/blogs');
       const method = editingBlog ? 'PUT' : 'POST';
       
+      const payload = { ...formData };
+      // If slug is empty, let server generate; otherwise include slug
+      if (!payload.slug) delete payload.slug;
+
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(payload)
       });
       const json = await res.json();
 
@@ -344,6 +348,7 @@ const BlogManagementTab = ({ onMessage, onRefreshStats }) => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
                 placeholder="Enter blog title"
               />
+              <p className="mt-2 text-sm text-gray-500">The URL slug will be automatically generated using AI when you create the blog post.</p>
             </div>
 
             <div>
