@@ -129,7 +129,20 @@ const JobsClient = () => {
                         </div>
                         <div className="flex-1 min-w-0">
                           <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors line-clamp-1">{job.aiTitle || job.jobTitle}</h3>
-                          {job.company && <p className="text-base font-medium text-gray-700 mb-3">{job.company}</p>}
+                          {job.company && (
+                            <div className="flex items-center gap-2 mb-3">
+                              {job.companyLogo && (
+                                <div className="w-8 h-8 rounded bg-gray-50 border border-gray-200 flex items-center justify-center p-1 shrink-0">
+                                  <img 
+                                    src={job.companyLogo} 
+                                    alt={`${job.company} logo`}
+                                    className="w-full h-full object-contain"
+                                  />
+                                </div>
+                              )}
+                              <p className="text-base font-medium text-gray-700">{job.company}</p>
+                            </div>
+                          )}
                           <p className="text-gray-600 mb-4 line-clamp-2 text-sm leading-relaxed">{truncateText(job.aiDescription || job.description, 150)}</p>
                           <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
                             <div className="flex items-center gap-1.5"><svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg><span>{extractLocation(job.description)}</span></div>

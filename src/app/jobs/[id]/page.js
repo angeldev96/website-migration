@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import prisma from '@/lib/prisma';
 import { formatFullDate, formatShortDate } from '@/lib/dateUtils';
+import { getCompanyLogo } from '@/lib/companyLogo';
 import {
   BarChart3,
   Monitor,
@@ -130,7 +131,16 @@ async function getJob(id) {
     const job = await prisma.jobsSheet.findUnique({
       where: { id: parseInt(id) }
     });
-    return job;
+    
+    if (!job) return null;
+    
+    // Get company logo if company name exists
+    const companyLogo = job.company ? await getCompanyLogo(job.company) : null;
+    
+    return {
+      ...job,
+      companyLogo
+    };
   } catch (error) {
     console.error('Error fetching job:', error);
     return null;
@@ -395,7 +405,16 @@ export default async function JobDetailPage({ params }) {
                     {job.aiTitle || job.jobTitle}
                   </h1>
                   {job.company && (
-                    <div className="flex items-center gap-2 text-lg sm:text-xl mb-4">
+                    <div className="flex items-center gap-3 text-lg sm:text-xl mb-4">
+                      {job.companyLogo && (
+                        <div className="w-10 h-10 rounded-lg bg-white/90 backdrop-blur-sm flex items-center justify-center p-1.5 shrink-0">
+                          <img 
+                            src={job.companyLogo} 
+                            alt={`${job.company} logo`}
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
+                      )}
                       <span>{job.company}</span>
                       {job.companyVerified && (
                         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">

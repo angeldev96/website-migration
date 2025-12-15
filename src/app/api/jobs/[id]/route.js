@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { getCompanyLogo } from '@/lib/companyLogo';
 
 // Force dynamic rendering for Webflow Cloud
 export const dynamic = 'force-dynamic';
@@ -36,9 +37,15 @@ export async function GET(request, { params }) {
       );
     }
     
+    // Get company logo if company exists
+    const companyLogo = job.company ? await getCompanyLogo(job.company) : null;
+    
     return NextResponse.json({
       success: true,
-      data: job
+      data: {
+        ...job,
+        companyLogo
+      }
     });
     
   } catch (error) {

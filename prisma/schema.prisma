@@ -207,3 +207,12 @@ enum Role {
   USER
   ADMIN
 }
+
+model Company {
+  id      Int     @id @default(autoincrement())
+  name    String  @unique
+  logoUrl String? @map("logo_url")
+
+  @@index([name], map: "idx_companies_name")
+  @@map("companies")
+}

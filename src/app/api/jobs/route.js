@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { enrichJobsWithLogos } from '@/lib/companyLogo';
 
 // Force dynamic rendering for Webflow Cloud
 export const dynamic = 'force-dynamic';
@@ -82,9 +83,12 @@ export async function GET(request) {
       })
     ]);
     
+    // Enrich jobs with company logos
+    const jobsWithLogos = await enrichJobsWithLogos(jobs);
+    
     return NextResponse.json({
       success: true,
-      data: jobs,
+      data: jobsWithLogos,
       pagination: {
         page,
         limit,
