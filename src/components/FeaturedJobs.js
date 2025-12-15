@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { apiUrl } from '@/lib/apiUrl';
 import { formatRelativeDate } from '@/lib/dateUtils';
 import {
@@ -30,6 +31,7 @@ import {
 } from 'lucide-react';
 
 const FeaturedJobs = () => {
+  const router = useRouter();
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -188,7 +190,14 @@ const FeaturedJobs = () => {
 
                         {/* Company */}
                         {job.company && (
-                          <div className="flex items-center gap-2 mb-3">
+                          <div
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              router.push(`/companies/${encodeURIComponent(job.company)}`);
+                            }}
+                            className="flex items-center gap-2 mb-3 hover:opacity-75 transition-opacity w-fit cursor-pointer"
+                          >
                             {job.companyLogo && (
                               <div className="w-8 h-8 rounded bg-gray-50 border border-gray-200 flex items-center justify-center p-1 shrink-0">
                                 <img 
@@ -198,7 +207,7 @@ const FeaturedJobs = () => {
                                 />
                               </div>
                             )}
-                            <p className="text-base font-medium text-gray-700 flex items-center gap-1.5">
+                            <p className="text-base font-medium text-gray-700 hover:text-blue-600 transition-colors flex items-center gap-1.5">
                               {job.company}
                               {job.companyVerified && (
                                 <svg className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { apiUrl } from '@/lib/apiUrl';
 import { formatRelativeDate } from '@/lib/dateUtils';
 import {
@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 
 const JobsClient = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category');
   
@@ -130,7 +131,14 @@ const JobsClient = () => {
                         <div className="flex-1 min-w-0">
                           <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors line-clamp-1">{job.aiTitle || job.jobTitle}</h3>
                           {job.company && (
-                            <div className="flex items-center gap-2 mb-3">
+                            <div
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                router.push(`/companies/${encodeURIComponent(job.company)}`);
+                              }}
+                              className="flex items-center gap-2 mb-3 hover:opacity-75 transition-opacity w-fit cursor-pointer"
+                            >
                               {job.companyLogo && (
                                 <div className="w-8 h-8 rounded bg-gray-50 border border-gray-200 flex items-center justify-center p-1 shrink-0">
                                   <img 
@@ -140,7 +148,7 @@ const JobsClient = () => {
                                   />
                                 </div>
                               )}
-                              <p className="text-base font-medium text-gray-700">{job.company}</p>
+                              <p className="text-base font-medium text-gray-700 hover:text-blue-600 transition-colors">{job.company}</p>
                             </div>
                           )}
                           <p className="text-gray-600 mb-4 line-clamp-2 text-sm leading-relaxed">{truncateText(job.aiDescription || job.description, 150)}</p>
