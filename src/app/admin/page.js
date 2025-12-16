@@ -52,6 +52,173 @@ const DashboardTab = ({ stats }) => (
   </div>
 );
 
+const CompanyLogosTab = ({ onMessage }) => {
+  const [companies, setCompanies] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [editingId, setEditingId] = useState(null);
+  const [logoUrl, setLogoUrl] = useState('');
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    fetchCompanies();
+  }, []);
+
+  const fetchCompanies = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch(apiUrl('/api/admin/companies'));
+      const json = await res.json();
+      if (json.success) {
+        setCompanies(json.companies);
+      }
+    } catch (err) {
+      console.error('Error fetching companies:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEdit = (company) => {
+    setEditingId(company.id);
+    setLogoUrl(company.logoUrl || '');
+  };
+
+  const handleCancel = () => {
+    setEditingId(null);
+    setLogoUrl('');
+  };
+
+  const handleSave = async (companyId) => {
+    try {
+      setSaving(true);
+      const res = await fetch(apiUrl('/api/admin/companies'), {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: companyId, logoUrl })
+      });
+      const json = await res.json();
+      
+      if (json.success) {
+        onMessage('Logo updated successfully!');
+        setEditingId(null);
+        setLogoUrl('');
+        fetchCompanies();
+      } else {
+        onMessage(json.error || 'Failed to update logo');
+      }
+    } catch (err) {
+      onMessage('Error updating logo');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-bold text-gray-900">Company Logos</h2>
+        <span className="text-sm text-gray-600">{companies.length} companies</span>
+      </div>
+
+      {loading ? (
+        <div className="flex items-center justify-center py-12">
+          <div className="animate-spin w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full"></div>
+        </div>
+      ) : (
+        <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full table-fixed">
+              <thead className="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th className="w-48 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Company Name</th>
+                  <th className="w-32 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Logo Preview</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Logo URL</th>
+                  <th className="w-48 px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {companies.map((company) => (
+                  <tr key={company.id} className="hover:bg-gray-50 transition-colors">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-medium text-gray-900">{company.name}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {(editingId === company.id ? logoUrl : company.logoUrl) ? (
+                        <div className="w-12 h-12 rounded-lg bg-gray-50 border border-gray-200 flex items-center justify-center p-1">
+                          <img
+                            src={editingId === company.id ? logoUrl : company.logoUrl}
+                            alt={`${company.name} logo`}
+                            className="w-full h-full object-contain"
+                            onError={(e) => { e.target.style.display = 'none'; }}
+                          />
+                        </div>
+                      ) : (
+                        <div className="w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center">
+                          <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-6 py-4">
+                      {editingId === company.id ? (
+                        <input
+                          type="text"
+                          value={logoUrl}
+                          onChange={(e) => setLogoUrl(e.target.value)}
+                          placeholder="https://example.com/logo.png"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                        />
+                      ) : (
+                        <div className="text-sm text-gray-600 truncate" title={company.logoUrl}>
+                          {company.logoUrl || <span className="text-gray-400 italic">No logo URL</span>}
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      {editingId === company.id ? (
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={() => handleSave(company.id)}
+                            disabled={saving}
+                            className="px-3 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                          >
+                            {saving ? 'Saving...' : 'Save'}
+                          </button>
+                          <button
+                            onClick={handleCancel}
+                            disabled={saving}
+                            className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-50 transition-colors"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={() => handleEdit(company)}
+                          className="text-blue-600 hover:text-blue-700 font-medium"
+                        >
+                          Edit Logo
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          
+          {companies.length === 0 && (
+            <div className="text-center py-12 text-gray-500">
+              No companies found in the database
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
 const JobsManagementTab = ({ onMessage }) => {
   const [idInput, setIdInput] = useState('');
   const [job, setJob] = useState(null);
@@ -713,7 +880,8 @@ const AdminPage = () => {
   const tabs = [
     { id: 'dashboard', label: 'Dashboard', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
     { id: 'jobs', label: 'Jobs', icon: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
-    { id: 'blogs', label: 'Blogs', icon: 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z' }
+    { id: 'blogs', label: 'Blogs', icon: 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z' },
+    { id: 'companies', label: 'Company Logos', icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4' }
   ];
 
   return (
@@ -789,6 +957,7 @@ const AdminPage = () => {
             {activeTab === 'dashboard' && <DashboardTab stats={stats} />}
             {activeTab === 'jobs' && <JobsManagementTab onMessage={showMessage} />}
             {activeTab === 'blogs' && <BlogManagementTab onMessage={showMessage} onRefreshStats={fetchStats} />}
+            {activeTab === 'companies' && <CompanyLogosTab onMessage={showMessage} />}
           </main>
         </div>
       </div>
