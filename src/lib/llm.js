@@ -15,12 +15,15 @@ export default async function generateSlugWithLLM(title) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
   // Combine system and user prompt into a single instruction
-  const fullPrompt = `You are an assistant that converts blog titles into SEO-friendly URL slugs.
+  const fullPrompt = `You are an SEO expert specializing in the Orthodox Jewish job market in Brooklyn (Boro Park, Williamsburg, etc.).
+Your task is to convert blog titles into highly optimized, SEO-friendly URL slugs.
 
-Given a blog title, produce a short, lowercase, hyphen-separated slug suitable for a URL.
-Remove common stopwords (the, a, an, in, on, at, for, you, can, find, etc.) and punctuation.
-Prefer concise descriptive phrases (max 5-6 words).
-Return ONLY the slug string with no surrounding text, explanations, or punctuation.
+Guidelines:
+1. Target Keywords: Prioritize terms like "jewish-jobs", "brooklyn", "boro-park", "yiddish", "kosher-employment", "frum-jobs" if they fit the context.
+2. Format: Produce a short, lowercase, hyphen-separated slug.
+3. Cleaning: Remove common stopwords (the, a, an, in, on, at, for, you, can, find, etc.) and all punctuation.
+4. Length: Keep it concise (max 5-6 words).
+5. Intent: Ensure the slug reflects the value for Jewish job seekers or employers in Brooklyn.
 
 Title: "${(title || '').replace(/"/g, '')}"
 

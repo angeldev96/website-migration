@@ -4,8 +4,9 @@ import { formatShortDate } from '@/lib/dateUtils';
 import { getPublishedBlogs } from '@/lib/blogDb';
 
 export const metadata = {
-  title: 'Blog | Latest News and Tips',
-  description: 'Read our latest blog posts with tips, news, and insights.',
+  title: 'Jewish Career Blog | Employment Tips for Brooklyn & Boro Park',
+  description: 'Expert advice on finding Jewish jobs in Brooklyn. Read about kosher workplace culture, Yiddish employment trends, and career tips for the Orthodox community.',
+  keywords: 'Jewish career blog, Brooklyn jobs news, Boro Park employment tips, Yiddish job market, kosher workplace advice, frum career insights',
 };
 
 async function getBlogs() {

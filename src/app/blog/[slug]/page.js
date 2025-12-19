@@ -26,16 +26,17 @@ export async function generateMetadata({ params }) {
   }
   
   return {
-    title: `${blog.title} | Blog`,
-    description: blog.excerpt || blog.content.substring(0, 160),
+    title: `${blog.title} | Jewish Jobs & Career Blog Brooklyn`,
+    description: blog.excerpt || `${blog.title}. Find the latest insights on Jewish employment, kosher workplaces, and career opportunities in Boro Park and Brooklyn.`,
     openGraph: {
-      title: blog.title,
-      description: blog.excerpt || blog.content.substring(0, 160),
+      title: `${blog.title} | Yid Jobs Blog`,
+      description: blog.excerpt || blog.content.substring(0, 160).replace(/<[^>]*>/g, ''),
       type: 'article',
       publishedTime: blog.publishedAt || blog.createdAt,
       authors: blog.author?.name ? [blog.author.name] : undefined,
       images: blog.coverImage ? [blog.coverImage] : undefined
-    }
+    },
+    keywords: `Jewish jobs Brooklyn, Boro Park employment, Yiddish blog, kosher career, frum jobs, ${blog.title.split(' ').join(', ')}`
   };
 }
 

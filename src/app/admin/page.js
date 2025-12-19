@@ -374,6 +374,8 @@ const BlogManagementTab = ({ onMessage, onRefreshStats }) => {
     published: false
   });
   const [saving, setSaving] = useState(false);
+  const [suggesting, setSuggesting] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
   const [error, setError] = useState(null);
 
   const fetchBlogs = async () => {
@@ -394,6 +396,30 @@ const BlogManagementTab = ({ onMessage, onRefreshStats }) => {
     setEditingBlog(null);
     setShowEditor(false);
     setError(null);
+    setSuggestions([]);
+  };
+
+  const handleSuggestTitles = async () => {
+    if (!formData.content.trim()) {
+      setError('Please enter some content first to get better suggestions');
+      return;
+    }
+    setSuggesting(true);
+    try {
+      const res = await fetch(apiUrl('/api/admin/suggest-title'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: formData.title, content: formData.content })
+      });
+      const json = await res.json();
+      if (json.success) {
+        setSuggestions(json.suggestions);
+      }
+    } catch (err) {
+      setError('Failed to get suggestions');
+    } finally {
+      setSuggesting(false);
+    }
   };
 
   const handleEdit = (blog) => {
@@ -507,7 +533,32 @@ const BlogManagementTab = ({ onMessage, onRefreshStats }) => {
             )}
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Title *</label>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-sm font-semibold text-gray-700">Title *</label>
+                <button
+                  type="button"
+                  onClick={handleSuggestTitles}
+                  disabled={suggesting}
+                  className="text-xs font-medium text-blue-600 hover:text-blue-800 flex items-center gap-1"
+                >
+                  {suggesting ? (
+                    <>
+                      <svg className="animate-spin h-3 w-3" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      </svg>
+                      Suggesting...
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                      Suggest SEO Titles
+                    </>
+                  )}
+                </button>
+              </div>
               <input
                 type="text"
                 value={formData.title}
@@ -515,6 +566,28 @@ const BlogManagementTab = ({ onMessage, onRefreshStats }) => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
                 placeholder="Enter blog title"
               />
+              
+              {suggestions.length > 0 && (
+                <div className="mt-3 p-3 bg-blue-50 rounded-lg border border-blue-100">
+                  <p className="text-xs font-bold text-blue-800 mb-2 uppercase tracking-wider">AI Suggestions:</p>
+                  <div className="space-y-2">
+                    {suggestions.map((s, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => {
+                          setFormData({ ...formData, title: s });
+                          setSuggestions([]);
+                        }}
+                        className="block w-full text-left p-2 text-sm bg-white hover:bg-blue-100 border border-blue-200 rounded transition-colors text-gray-700"
+                      >
+                        {s}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
               <p className="mt-2 text-sm text-gray-500">The URL slug will be automatically generated using AI when you create the blog post.</p>
             </div>
 
