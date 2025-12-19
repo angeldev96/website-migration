@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { apiUrl } from '@/lib/apiUrl';
 import { formatShortDate } from '@/lib/dateUtils';
+import { formatGenderCategory } from '@/lib/jobUtils';
 
 // Tab Components
 const DashboardTab = ({ stats }) => (
@@ -332,8 +333,8 @@ const JobsManagementTab = ({ onMessage }) => {
                 <span className="ml-2 font-medium text-gray-900">{job.phoneNumber || '—'}</span>
               </div>
               <div>
-                <span className="text-gray-500">Gender Category:</span>
-                <span className="ml-2 font-medium text-gray-900">{job.genderCategory || 'Any'}</span>
+                <span className="text-gray-500">Type:</span>
+                <span className="ml-2 font-medium text-gray-900">{formatGenderCategory(job.genderCategory) || 'Any'}</span>
               </div>
             </div>
             <div className="pt-4 border-t border-gray-100">

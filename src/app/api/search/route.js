@@ -72,7 +72,7 @@ export async function POST(request) {
       };
     }
     
-    // Gender category filter
+    // Job type filter (legacy gender category)
     if (genderCategory && genderCategory !== 'all') {
       where.genderCategory = {
         equals: genderCategory,

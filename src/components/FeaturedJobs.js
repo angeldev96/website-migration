@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { apiUrl } from '@/lib/apiUrl';
 import { formatRelativeDate } from '@/lib/dateUtils';
+import { formatGenderCategory } from '@/lib/jobUtils';
 import {
   BarChart3,
   Monitor,
@@ -247,10 +248,10 @@ const FeaturedJobs = () => {
                             {job.category}
                           </div>
 
-                          {/* Gender Category if available */}
+                          {/* Job Type Badge if available */}
                           {job.genderCategory && job.genderCategory !== 'Any' && (
                             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-50 text-purple-700 border border-purple-200">
-                              {job.genderCategory}
+                              {formatGenderCategory(job.genderCategory)}
                             </div>
                           )}
                         </div>

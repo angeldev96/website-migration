@@ -4,6 +4,7 @@ import Image from 'next/image';
 import prisma from '@/lib/prisma';
 import { formatFullDate, formatShortDate } from '@/lib/dateUtils';
 import { getCompanyLogo } from '@/lib/companyLogo';
+import { formatGenderCategory } from '@/lib/jobUtils';
 import {
   BarChart3,
   Monitor,
@@ -49,19 +50,21 @@ export async function generateMetadata({ params }) {
     const jobTitle = job.aiTitle || job.jobTitle;
     const jobDesc = job.aiDescription || job.description || '';
     const location = 'Boro Park'; // site focuses on Boro Park
+    const mappedType = formatGenderCategory(job.genderCategory);
 
     // Build a focused, readable meta description (<= 155 chars when possible)
     const pieces = [];
     if (job.company) pieces.push(`Hiring: ${job.company}`);
     if (job.category) pieces.push(job.category);
     if (job.jobDate) pieces.push(`Posted ${formatShortDate(job.jobDate)}`);
+    if (mappedType && mappedType !== 'Any') pieces.push(mappedType);
     if (job.description) pieces.push(excerpt(job.description, 80));
 
     const baseDesc = `${jobTitle} — ${pieces.filter(Boolean).join(' • ')}`;
     const truncatedDesc = baseDesc.length > 155 ? baseDesc.substring(0, 152).trim() + '...' : baseDesc;
 
     // Keywords array (helpful but Google ignores meta keywords mostly). Keep it targeted.
-    const keywordsArr = [jobTitle, job.company, job.category, location, job.genderCategory].filter(Boolean).slice(0, 12);
+    const keywordsArr = [jobTitle, job.company, job.category, location, mappedType].filter(Boolean).slice(0, 12);
 
     return {
       title: `${jobTitle} — ${job.company ? job.company + ' | ' : ''}Jobs in ${location} | Yid Jobs`,
@@ -108,7 +111,7 @@ export async function generateMetadata({ params }) {
       other: {
         'job-category': job.category,
         'job-location': location,
-        'job-type': job.genderCategory || 'Any',
+        'job-type': mappedType || 'Any',
       }
     };
   } catch (error) {
@@ -578,9 +581,8 @@ export default async function JobDetailPage({ params }) {
                       
                       {job.genderCategory && job.genderCategory !== 'Any' && (
                         <div>
-                          <div className="text-xs text-gray-500 font-medium mb-1">Gender Category</div>
                           <div className="inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-semibold bg-purple-50 text-purple-700 border border-purple-200">
-                            {job.genderCategory}
+                            {formatGenderCategory(job.genderCategory)}
                           </div>
                         </div>
                       )}
