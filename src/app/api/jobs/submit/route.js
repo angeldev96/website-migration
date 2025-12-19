@@ -22,9 +22,9 @@ export async function POST(request) {
     // was not regenerated after adding the column directly in the DB.
     const inserted = await prisma.$queryRaw`
       INSERT INTO public.jobs_sheet
-        ("job_title","description","category","email_info","phone_number","job_date","company","company_verified","gender_category","job_type")
+        ("job_title","description","category","email_info","phone_number","job_date","company","company_verified","gender_category","job_type","status")
       VALUES
-        (${jobTitle}, ${description}, ${categoryValue}, ${email || null}, ${phoneNumber || null}, ${jobDate}, ${company || null}, false, ${null}, ${jobType || null})
+        (${jobTitle}, ${description}, ${categoryValue}, ${email || null}, ${phoneNumber || null}, ${jobDate}, ${company || null}, false, ${null}, ${jobType || null}, 'PENDING')
       RETURNING id;
     `;
 

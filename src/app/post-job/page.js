@@ -1,193 +1,115 @@
 'use client';
 
-import React, { useState } from 'react';
-import { apiUrl } from '@/lib/apiUrl';
+import React from 'react';
+import { Mail, ShieldCheck, Zap, Info, MessageSquare } from 'lucide-react';
 
 export default function PostJobPage() {
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    company: '',
-    jobTitle: '',
-    description: '',
-    location: '',
-    category: '',
-    jobType: '',
-    phoneNumber: ''
-  });
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState(null);
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage(null);
-
-    // basic client-side validation
-    if (!form.jobTitle || !form.description) {
-      setMessage({ type: 'error', text: 'Please provide a job title and description.' });
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const res = await fetch(apiUrl('/api/jobs/submit'), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
-
-      const data = await res.json();
-      if (data.success) {
-        setMessage({ type: 'success', text: 'Job posted successfully. It may take a minute to appear.' });
-        setForm({ name: '', email: '', company: '', jobTitle: '', description: '', location: '', category: '', jobType: '', phoneNumber: '' });
-      } else {
-        setMessage({ type: 'error', text: data.error || 'Failed to post job.' });
-      }
-    } catch (err) {
-      setMessage({ type: 'error', text: 'Network error. Try again.' });
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <main className="min-h-screen bg-gray-50 py-12">
       <div className="container mx-auto px-4">
-        <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-2">
-            {/* Left - Form */}
-            <div className="p-8 lg:p-12">
-              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between items-center text-center sm:text-left">
-                <div>
-                  <h1 className="text-3xl font-extrabold text-gray-900">Post a job</h1>
-                  <p className="mt-2 text-sm text-gray-600">No account required — submit a job and it will be reviewed.</p>
+        <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+          {/* Header */}
+          <div className="bg-linear-to-r from-blue-600 to-blue-700 p-8 lg:p-12 text-white text-center">
+            <h1 className="text-3xl md:text-4xl font-extrabold mb-4">Post a Job on Yid Jobs</h1>
+            <p className="text-blue-100 text-lg max-w-2xl mx-auto">
+              We&apos;ve simplified our process. Now you can post jobs directly via email using our AI-powered system.
+            </p>
+          </div>
+
+          <div className="p-8 lg:p-12">
+            {/* Step by Step Section */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+              <div className="flex flex-col items-center text-center p-6 bg-blue-50 rounded-2xl border border-blue-100">
+                <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white mb-4 shadow-lg">
+                  <Mail className="w-6 h-6" />
                 </div>
-              <div className="flex items-center text-center mt-4 sm:mt-0 ml-4">
-  <div className="text-sm text-gray-500 mr-2">Estimated time</div>
-  <div className="flex items-center justify-center h-10 w-10 rounded-full bg-blue-100 text-blue-700 text-lg font-bold">
-    2
-    <span className="text-sm font-semibold ml-1">min</span>
-  </div>
-</div>
+                <h3 className="font-bold text-gray-900 mb-2">1. Send Email</h3>
+                <p className="text-sm text-gray-600">Send your job details to <span className="font-semibold text-blue-600">jobs@yidjobs.com</span></p>
               </div>
 
-              {message && (
-                <div className={`mt-6 p-3 rounded-lg ${message.type === 'error' ? 'bg-red-50 text-red-700' : 'bg-green-50 text-green-700'}`}>
-                  {message.text}
+              <div className="flex flex-col items-center text-center p-6 bg-blue-50 rounded-2xl border border-blue-100">
+                <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white mb-4 shadow-lg">
+                  <Zap className="w-6 h-6" />
                 </div>
-              )}
+                <h3 className="font-bold text-gray-900 mb-2">2. AI Processing</h3>
+                <p className="text-sm text-gray-600">Our AI extracts the title, category, and description automatically.</p>
+              </div>
 
-              <form onSubmit={handleSubmit} className="mt-6 space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <label className="block">
-                    <span className="text-sm font-medium text-gray-700">Your name</span>
-                    <input name="name" value={form.name} onChange={handleChange} className="mt-2 block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-900 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Full name" />
-                  </label>
-
-                  <label className="block">
-                    <span className="text-sm font-medium text-gray-700">Your email</span>
-                    <input name="email" type="email" value={form.email} onChange={handleChange} className="mt-2 block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-900 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="hello@company.com" />
-                  </label>
+              <div className="flex flex-col items-center text-center p-6 bg-blue-50 rounded-2xl border border-blue-100">
+                <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white mb-4 shadow-lg">
+                  <ShieldCheck className="w-6 h-6" />
                 </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <label className="block">
-                    <span className="text-sm font-medium text-gray-700">Company</span>
-                    <input name="company" value={form.company} onChange={handleChange} className="mt-2 block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-900 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Company name" />
-                  </label>
-
-                  <label className="block">
-                    <span className="text-sm font-medium text-gray-700">Job title</span>
-                    <input name="jobTitle" value={form.jobTitle} onChange={handleChange} className="mt-2 block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-900 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Sales Associate, Driver, etc." />
-                  </label>
-                </div>
-
-                <label className="block">
-                  <span className="text-sm font-medium text-gray-700">Description</span>
-                  <textarea name="description" value={form.description} onChange={handleChange} className="mt-2 block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-900 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 h-48" placeholder="Describe the role, requirements, pay, hours, location..." />
-                </label>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <label className="block">
-                    <span className="text-sm font-medium text-gray-700">Location</span>
-                    <input name="location" value={form.location} onChange={handleChange} className="mt-2 block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-900 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Boro Park" />
-                  </label>
-
-
-                  <label className="block">
-                    <span className="text-sm font-medium text-gray-700">Category</span>
-                    <select name="category" value={form.category} onChange={handleChange} className="mt-2 block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                      <option value="">Choose a category...</option>
-                      <option>Childcare</option>
-                      <option>Driver</option>
-                      <option>Education</option>
-                      <option>Finance</option>
-                      <option>Healthcare</option>
-                      <option>Marketing</option>
-                      <option>Office</option>
-                      <option>Other</option>
-                      <option>Restaurant</option>
-                      <option>Retail</option>
-                      <option>Sales</option>
-                      <option>Technical</option>
-                      <option>Technology</option>
-                      <option>Transportation</option>
-                    </select>
-                  </label>
-
-                  <label className="block">
-                    <span className="text-sm font-medium text-gray-700">Job type</span>
-                    <select name="jobType" value={form.jobType} onChange={handleChange} className="mt-2 block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                      <option value="">Choose a type...</option>
-                      <option>Full Time</option>
-                      <option>Part Time</option>
-                      <option>Contract</option>
-                    </select>
-                  </label>
-                </div>
-
-                <label className="block">
-                  <span className="text-sm font-medium text-gray-700">Phone (optional)</span>
-                  <input name="phoneNumber" value={form.phoneNumber} onChange={handleChange} className="mt-2 block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-900 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g. +1 555 555 5555" />
-                </label>
-
-                <div className="pt-4">
-                  <button disabled={loading} type="submit" className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white py-4 rounded-full font-semibold shadow-lg hover:from-blue-700 hover:to-blue-600 transition-all">
-                    {loading ? 'Posting...' : 'Submit job'}
-                  </button>
-                </div>
-              </form>
+                <h3 className="font-bold text-gray-900 mb-2">3. Manual Review</h3>
+                <p className="text-sm text-gray-600">Every post is reviewed by our team before going live.</p>
+              </div>
             </div>
 
-            {/* Right - Visual / Tips */}
-            <aside className="hidden lg:block bg-gradient-to-b from-gray-50 to-white p-8 border-l border-gray-100">
-              <div className="sticky top-8">
-                <h3 className="text-lg font-bold text-gray-900 mb-3">Tips for a great listing</h3>
-                <ul className="space-y-3 text-gray-700">
-                  <li>Be specific about hours and pay range.</li>
-                  <li>Include required experience and any certifications.</li>
-                  <li>Mention if the role is suitable for entry-level applicants.</li>
-                  <li>We manually review each posting to keep the site scam-free.</li>
-                </ul>
-
-                <div className="mt-6 bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
-                  <div className="text-xs text-gray-500">Preview</div>
-                  <div className="mt-3">
-                    <div className="text-sm font-semibold text-gray-900">{form.jobTitle || 'Job title preview'}</div>
-                    <div className="text-xs text-gray-500 mt-1">{form.company || 'Company name'}</div>
-                    <div className="mt-3 text-sm text-gray-700 line-clamp-3">{form.description || 'A short preview of the job description will appear here.'}</div>
-                  </div>
+            {/* Detailed Instructions */}
+            <div className="space-y-8">
+              <section>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <Info className="text-blue-600 w-6 h-6" />
+                  Posting Guidelines for Entities
+                </h2>
+                <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200">
+                  <ul className="space-y-4">
+                    <li className="flex gap-3">
+                      <div className="mt-1 bg-blue-100 rounded-full p-1 h-fit">
+                        <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-900">Weekly Quota</p>
+                        <p className="text-gray-600">Each entity is allowed to post up to <span className="font-bold text-gray-900">2 jobs per week</span> for free.</p>
+                      </div>
+                    </li>
+                    <li className="flex gap-3">
+                      <div className="mt-1 bg-blue-100 rounded-full p-1 h-fit">
+                        <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-900">Need to post more?</p>
+                        <p className="text-gray-600">If you need to exceed the weekly limit, please contact our administrator at <span className="font-semibold text-blue-600">admin@yidjobs.com</span> to request a quota increase.</p>
+                      </div>
+                    </li>
+                    <li className="flex gap-3">
+                      <div className="mt-1 bg-blue-100 rounded-full p-1 h-fit">
+                        <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-900">Approval Process</p>
+                        <p className="text-gray-600">Once submitted, your job will be marked as <span className="font-bold text-orange-600">PENDING</span>. You will receive a confirmation email once it is approved and live on the site.</p>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
+              </section>
+
+              <div className="bg-blue-600 rounded-2xl p-8 text-white flex flex-col md:flex-row items-center justify-between gap-6">
+                <div>
+                  <h3 className="text-xl font-bold mb-2">Ready to hire?</h3>
+                  <p className="text-blue-100">Just send an email with the job details and we&apos;ll handle the rest.</p>
+                </div>
+                <a 
+                  href="mailto:jobs@yidjobs.com" 
+                  className="bg-white text-blue-600 px-8 py-3 rounded-xl font-bold hover:bg-blue-50 transition-colors flex items-center gap-2"
+                >
+                  <Mail className="w-5 h-5" />
+                  Send Job Email
+                </a>
               </div>
-            </aside>
+            </div>
+          </div>
+
+          {/* Footer Info */}
+          <div className="bg-gray-50 p-8 border-t border-gray-100 text-center">
+            <p className="text-sm text-gray-500 flex items-center justify-center gap-2">
+              <MessageSquare className="w-4 h-4" />
+              Questions? Contact us at admin@yidjobs.com
+            </p>
           </div>
         </div>
       </div>
     </main>
   );
 }
+
