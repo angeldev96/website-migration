@@ -131,21 +131,21 @@ const CompanyLogosTab = ({ onMessage }) => {
             <table className="w-full table-fixed">
               <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
-                  <th className="w-48 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Company Name</th>
-                  <th className="w-32 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Logo Preview</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Logo URL</th>
-                  <th className="w-48 px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                  <th className="w-64 px-6 py-4 text-left text-sm font-bold text-gray-600 uppercase tracking-wider">Company Name</th>
+                  <th className="w-48 px-6 py-4 text-left text-sm font-bold text-gray-600 uppercase tracking-wider">Logo Preview</th>
+                  <th className="px-6 py-4 text-left text-sm font-bold text-gray-600 uppercase tracking-wider">Logo URL</th>
+                  <th className="w-48 px-6 py-4 text-right text-sm font-bold text-gray-600 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {companies.map((company) => (
                   <tr key={company.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">{company.name}</div>
+                    <td className="px-6 py-6 whitespace-nowrap">
+                      <div className="text-base font-semibold text-gray-900">{company.name}</div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 py-6 whitespace-nowrap">
                       {(editingId === company.id ? logoUrl : company.logoUrl) ? (
-                        <div className="w-12 h-12 rounded-lg bg-gray-50 border border-gray-200 flex items-center justify-center p-1">
+                        <div className="w-24 h-24 rounded-xl bg-gray-50 border border-gray-200 shadow-sm flex items-center justify-center p-2">
                           <img
                             src={editingId === company.id ? logoUrl : company.logoUrl}
                             alt={`${company.name} logo`}
@@ -154,29 +154,29 @@ const CompanyLogosTab = ({ onMessage }) => {
                           />
                         </div>
                       ) : (
-                        <div className="w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center">
-                          <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="w-24 h-24 rounded-xl bg-gray-100 flex items-center justify-center">
+                          <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
                         </div>
                       )}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-6">
                       {editingId === company.id ? (
                         <input
                           type="text"
                           value={logoUrl}
                           onChange={(e) => setLogoUrl(e.target.value)}
                           placeholder="https://example.com/logo.png"
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                         />
                       ) : (
-                        <div className="text-sm text-gray-600 truncate" title={company.logoUrl}>
+                        <div className="text-base text-gray-600 break-all" title={company.logoUrl}>
                           {company.logoUrl || <span className="text-gray-400 italic">No logo URL</span>}
                         </div>
                       )}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <td className="px-6 py-6 whitespace-nowrap text-right text-base font-medium">
                       {editingId === company.id ? (
                         <div className="flex items-center justify-end gap-2">
                           <button
@@ -971,7 +971,7 @@ const AdminPage = () => {
     <div className="min-h-screen bg-gray-100">
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
@@ -1011,7 +1011,7 @@ const AdminPage = () => {
         </div>
       )}
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar */}
           <aside className="lg:w-64 shrink-0">

@@ -174,10 +174,10 @@ const FeaturedJobs = () => {
                     <div className="flex items-start gap-4">
                       {/* Icon/Logo */}
                       <div className="shrink-0">
-                        <div className="w-14 h-14 rounded-lg bg-linear-to-br from-blue-50 to-blue-100 flex items-center justify-center text-2xl border border-blue-200">
+                        <div className="w-16 h-16 rounded-xl bg-linear-to-br from-blue-50 to-blue-100 flex items-center justify-center text-2xl border border-blue-200 shadow-sm">
                           {(() => {
                             const Icon = getCategoryIcon(job.category);
-                            return <Icon className="w-8 h-8 text-blue-700" aria-hidden="true" />;
+                            return <Icon className="w-9 h-9 text-blue-700" aria-hidden="true" />;
                           })()}
                         </div>
                       </div>
@@ -200,7 +200,7 @@ const FeaturedJobs = () => {
                             className="flex items-center gap-2 mb-3 hover:opacity-75 transition-opacity w-fit cursor-pointer"
                           >
                             {job.companyLogo && (
-                              <div className="w-8 h-8 rounded bg-gray-50 border border-gray-200 flex items-center justify-center p-1 shrink-0">
+                              <div className="w-12 h-12 rounded-lg bg-gray-50 border border-gray-200 flex items-center justify-center p-1.5 shrink-0">
                                 <img 
                                   src={job.companyLogo} 
                                   alt={`${job.company} logo`}
