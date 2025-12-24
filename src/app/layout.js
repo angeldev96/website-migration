@@ -43,9 +43,9 @@ export const metadata = {
     telephone: false,
   },
   icons: {
-    icon: "/app/favico.png",
-    shortcut: "/app/favico.png",
-    apple: "/app/favico.png",
+    icon: "/favico.png",
+    shortcut: "/favico.png",
+    apple: "/favico.png",
   },
   openGraph: {
     type: "website",
@@ -149,7 +149,7 @@ export default function RootLayout({ children }) {
         {/* Preload the app layout font with correct attributes to avoid preload warnings */}
         <link
           rel="preload"
-          href="/app/_next/static/media/e4af272ccee01ff0-s.p.woff2"
+          href="/_next/static/media/e4af272ccee01ff0-s.p.woff2"
           as="font"
           type="font/woff2"
           crossOrigin="anonymous"

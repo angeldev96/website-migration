@@ -1,11 +1,11 @@
 /**
  * Helper function to get the correct API base path
- * In production (Webflow Cloud), the app is mounted at /app
+ * In production, the app is mounted at root /
  * In development, it's at the root /
  */
 export function getBasePath() {
   // Use the basePath from next.config.mjs
-  return '/app';
+  return '';
 }
 
 /**

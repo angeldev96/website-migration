@@ -3,8 +3,8 @@
 // Set `NEXT_PUBLIC_BASE_PATH` to "/app" (or your mount path) in production/environment
 // where the app is hosted under a subpath (e.g., Webflow Cloud). Leave unset for local dev.
 const nextConfig = {
-  basePath: '/app',
-  assetPrefix: '/app',
+  // basePath: '/app',
+  // assetPrefix: '/app',
   experimental: {
     viewTransition: true,
   },

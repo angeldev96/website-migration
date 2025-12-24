@@ -7,16 +7,16 @@ export async function GET() {
       success: true,
       message: 'API routes are working correctly',
       info: {
-        basePath: '/app',
+        basePath: '',
         timestamp: new Date().toISOString(),
         environment: process.env.NODE_ENV,
         hasDatabase: !!process.env.DATABASE_URL,
       },
       endpoints: {
-        jobs: `${baseUrl}/app/api/jobs`,
-        categories: `${baseUrl}/app/api/categories`,
-        search: `${baseUrl}/app/api/search`,
-        testEnv: `${baseUrl}/app/api/test-env`,
+        jobs: `${baseUrl}/api/jobs`,
+        categories: `${baseUrl}/api/categories`,
+        search: `${baseUrl}/api/search`,
+        testEnv: `${baseUrl}/api/test-env`,
       },
     });
   } catch (error) {

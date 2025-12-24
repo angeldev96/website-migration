@@ -19,7 +19,7 @@ export function getServerUrl() {
  */
 export function buildServerUrl(path) {
   const baseUrl = getServerUrl();
-  const basePath = '/app';
+  const basePath = '';
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
   return `${baseUrl}${basePath}${normalizedPath}`;
 }

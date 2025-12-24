@@ -3,14 +3,14 @@ export default function manifest() {
     name: 'Yid Jobs - Jewish Jobs in Boro Park',
     short_name: 'Yid Jobs',
     description: 'Find Jewish jobs in Boro Park. The largest Yiddish jobs website serving the Orthodox Jewish community.',
-    start_url: '/app',
+    start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',
     theme_color: '#2563eb',
     orientation: 'portrait',
     icons: [
       {
-        src: '/app/favico.png',
+        src: '/favico.png',
         sizes: '32x32',
         type: 'image/png',
         purpose: 'any',
