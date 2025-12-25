@@ -72,8 +72,7 @@ const Header = () => {
               </button>
               {locationsOpen && (
                 <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-2">
-                  <Link href="/locations/boro-park" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Boro Park</Link>
-                  <Link href="/locations" className="block px-4 py-2 text-blue-600 font-medium hover:bg-blue-50">View All →</Link>
+                  <Link href="/jobs" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">All Locations</Link>
                 </div>
               )}
             </div>
@@ -112,10 +111,7 @@ const Header = () => {
               </button>
               {candidatesOpen && (
                 <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-2">
-                  <Link href="/candidates/browse-jobs" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Browse Jobs</Link>
-                  <Link href="/candidates/create-profile" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Create Profile</Link>
-                  <Link href="/candidates/career-resources" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Career Resources</Link>
-                  <Link href="/candidates/resume-tips" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Resume Tips</Link>
+                  <Link href="/jobs" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Browse Jobs</Link>
                 </div>
               )}
             </div>
@@ -132,10 +128,7 @@ const Header = () => {
               </button>
               {employersOpen && (
                 <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-2">
-                  <Link href="/employers/post-job" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Post a Job</Link>
-                  <Link href="/employers/pricing" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Pricing</Link>
-                  <Link href="/employers/find-candidates" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Find Candidates</Link>
-                  <Link href="/employers/hiring-solutions" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Hiring Solutions</Link>
+                  <Link href="/post-job" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Post a Job</Link>
                 </div>
               )}
             </div>
@@ -177,10 +170,7 @@ const Header = () => {
                 </svg>
                 SMS Job Alerts
               </Link>
-              <Link href="/locations" className="text-gray-700 hover:text-blue-600 font-medium">Locations</Link>
-              <Link href="/categories" className="text-gray-700 hover:text-blue-600 font-medium">Categories</Link>
-              <Link href="/candidates" className="text-gray-700 hover:text-blue-600 font-medium">For Candidates</Link>
-              <Link href="/employers" className="text-gray-700 hover:text-blue-600 font-medium">For Employers</Link>
+              <Link href="/jobs" className="text-gray-700 hover:text-blue-600 font-medium">Jobs</Link>
               <Link href="/blog" className="text-gray-700 hover:text-blue-600 font-medium">Blog</Link>
               <Link href="/post-job" className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-center">Post a job</Link>
               

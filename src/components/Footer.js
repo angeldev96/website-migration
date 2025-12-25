@@ -19,8 +19,7 @@ const Footer = () => {
           </div>
 
           <div className="flex items-center gap-6">
-            <Link href="/privacy" className="text-sm text-gray-600 hover:text-gray-900">Privacy</Link>
-            <Link href="/terms" className="text-sm text-gray-600 hover:text-gray-900">Terms</Link>
+            {/* Links removed as pages do not exist yet */}
           </div>
         </div>
       </div>
