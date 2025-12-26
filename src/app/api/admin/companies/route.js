@@ -66,16 +66,17 @@ export async function POST(request) {
 export async function PATCH(request) {
   try {
     const { id, logoUrl } = await request.json();
+    const companyId = parseInt(id);
 
-    if (!id) {
+    if (isNaN(companyId)) {
       return NextResponse.json(
-        { success: false, error: 'Company ID is required' },
+        { success: false, error: 'Invalid company ID' },
         { status: 400 }
       );
     }
 
     const company = await prisma.company.update({
-      where: { id: parseInt(id) },
+      where: { id: companyId },
       data: { logoUrl: logoUrl?.trim() || null }
     });
 

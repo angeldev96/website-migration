@@ -35,6 +35,13 @@ export async function generateMetadata({ params }) {
   const { id } = await params;
   const jobId = parseInt(id);
   
+  if (isNaN(jobId)) {
+    return {
+      title: 'Job Not Found - Yiddish Jobs',
+      description: 'The requested job listing is invalid.',
+    };
+  }
+  
   try {
     const job = await prisma.jobsSheet.findUnique({
       where: { id: jobId }
@@ -130,9 +137,12 @@ function excerpt(text, maxLen = 120) {
 }
 
 async function getJob(id) {
+  const jobId = parseInt(id);
+  if (isNaN(jobId)) return null;
+
   try {
     const job = await prisma.jobsSheet.findUnique({
-      where: { id: parseInt(id) }
+      where: { id: jobId }
     });
     
     if (!job) return null;
