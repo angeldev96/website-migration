@@ -21,7 +21,7 @@ export default function AboutPage() {
           <h2 className="text-xl font-semibold text-gray-900 mt-6 mb-3">What you can find here</h2>
           <ul className="list-disc list-inside text-gray-700 space-y-2">
             <li><strong>Macher jobs</strong> – for go-getters and doers looking to make things happen</li>
-            <li><strong>Yid jobs</strong> – roles tailored for members of the Yiddish-speaking and Jewish communities</li>
+            <li><strong>Yiddish jobs</strong> – roles tailored for members of the Yiddish-speaking and Jewish communities</li>
             <li><strong>Macher USA</strong> – from local gigs to nationwide positions</li>
           </ul>
 

@@ -1,7 +1,7 @@
 export default function manifest() {
   return {
-    name: 'Yid Jobs - Jewish Jobs in Boro Park',
-    short_name: 'Yid Jobs',
+    name: 'Yiddish Jobs - Jewish Jobs in Boro Park',
+    short_name: 'Yiddish Jobs',
     description: 'Find Jewish jobs in Boro Park. The largest Yiddish jobs website serving the Orthodox Jewish community.',
     start_url: '/',
     display: 'standalone',

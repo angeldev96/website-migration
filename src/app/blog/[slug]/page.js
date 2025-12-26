@@ -29,7 +29,7 @@ export async function generateMetadata({ params }) {
     title: `${blog.title} | Jewish Jobs & Career Blog Brooklyn`,
     description: blog.excerpt || `${blog.title}. Find the latest insights on Jewish employment, kosher workplaces, and career opportunities in Boro Park and Brooklyn.`,
     openGraph: {
-      title: `${blog.title} | Yid Jobs Blog`,
+      title: `${blog.title} | Yiddish Jobs Blog`,
       description: blog.excerpt || blog.content.substring(0, 160).replace(/<[^>]*>/g, ''),
       type: 'article',
       publishedTime: blog.publishedAt || blog.createdAt,

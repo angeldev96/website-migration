@@ -7,25 +7,25 @@ import FeaturedJobs from '@/components/FeaturedJobs';
 import NewsletterSection from '@/components/NewsletterSection';
 
 export const metadata = {
-  title: "Yid Jobs - Jewish Jobs in Boro Park | Find Yiddish Employment Today",
+  title: "Yiddish Jobs - Jewish Jobs in Boro Park | Find Yiddish Employment Today",
   description: "The #1 Jewish job board for Boro Park. Find thousands of kosher job opportunities in the Orthodox Jewish community. Browse retail, healthcare, education, office, childcare and restaurant jobs. Join the largest Yiddish employment platform serving frum professionals.",
   keywords: "Jewish jobs Boro Park, Yiddish jobs Boro Park, Orthodox Jewish employment, kosher jobs, frum jobs, Shomer Shabbos jobs, Jewish community jobs, Boro Park employment, Boro Park jobs, Jewish job board, Yiddish career opportunities",
   openGraph: {
-    title: "Yid Jobs - Jewish Jobs in Boro Park",
-    description: "Find thousands of kosher job opportunities in Boro Park and the Orthodox Jewish community. The largest Yiddish employment platform.",
-    url: "https://yidjobs.com",
+    title: "Yiddish Jobs - Jewish Jobs in Boro Park",
+    description: "Find thousands of job opportunities in Boro Park and the Orthodox Jewish community. The largest Yiddish employment platform.",
+    url: "https://yiddishjobs.com",
     type: "website",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Yid Jobs - Jewish Jobs in Boro Park"
+        alt: "Yiddish Jobs - Jewish Jobs in Boro Park"
       }
     ]
   },
   alternates: {
-    canonical: "https://yidjobs.com"
+    canonical: "https://yiddishjobs.com"
   }
 };
 
@@ -37,8 +37,8 @@ const HomePage = () => {
     "description": "Find thousands of job opportunities in the Orthodox Jewish community of Boro Park",
     "hiringOrganization": {
       "@type": "Organization",
-      "name": "Yid Jobs",
-      "sameAs": "https://yidjobs.com"
+      "name": "Yiddish Jobs",
+      "sameAs": "https://yiddishjobs.com"
     },
     "jobLocation": {
       "@type": "Place",
@@ -149,7 +149,7 @@ const HomePage = () => {
             </h2>
             <div className="prose prose-lg max-w-none text-gray-700">
               <p className="mb-4">
-                <strong>Yid Jobs</strong> is the premier employment platform serving the Orthodox Jewish community
+                <strong>Yiddish Jobs</strong> is the premier employment platform serving the Orthodox Jewish community
                 in Boro Park. We connect Jewish job seekers with kosher employers who value Shomer Shabbos
                 workers and understand the unique needs of the frum community in Boro Park.
               </p>
@@ -168,7 +168,7 @@ const HomePage = () => {
               </ul>
               <p className="mb-4">
                 Whether you&apos;re seeking full-time employment, part-time work, or flexible opportunities 
-                that accommodate Jewish holidays and Shabbos observance, Yid Jobs connects you with 
+                that accommodate Jewish holidays and Shabbos observance, Yiddish Jobs connects you with 
                 employers who respect and celebrate your values. All positions are posted by verified 
                 businesses within the Jewish community, ensuring a kosher work environment.
               </p>

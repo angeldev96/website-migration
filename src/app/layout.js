@@ -7,10 +7,10 @@ import WelcomeModal from "@/components/WelcomeModal";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  metadataBase: new URL('https://yidjobs.com'),
+  metadataBase: new URL('https://yiddishjobs.com'),
   title: {
-    default: "Yid Jobs - Jewish Jobs in Boro Park | Yiddish Employment Opportunities",
-    template: "%s | Yid Jobs - Jewish Jobs in Boro Park"
+    default: "Yiddish Jobs - Jewish Jobs in Boro Park | Yiddish Employment Opportunities",
+    template: "%s | Yiddish Jobs - Jewish Jobs in Boro Park"
   },
   description: "Find Jewish jobs in Boro Park. The largest Yiddish jobs website serving the Orthodox Jewish community. Thousands of kosher job opportunities in retail, healthcare, education, office work and more. Post and find jobs in the Jewish community today.",
   keywords: [
@@ -19,7 +19,7 @@ export const metadata = {
     "Boro Park jobs",
     "Orthodox Jewish jobs",
     "kosher jobs",
-    "Yid jobs",
+    "Yiddish jobs",
     "frum jobs",
     "Jewish community jobs",
     "Boro Park employment",
@@ -35,9 +35,9 @@ export const metadata = {
     "Jewish education jobs Boro Park",
     "Jewish office jobs Boro Park"
   ],
-  authors: [{ name: "Yid Jobs" }],
-  creator: "Yid Jobs",
-  publisher: "Yid Jobs",
+  authors: [{ name: "Yiddish Jobs" }],
+  creator: "Yiddish Jobs",
+  publisher: "Yiddish Jobs",
   formatDetection: {
     email: false,
     address: false,
@@ -51,25 +51,25 @@ export const metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://yidjobs.com",
-    siteName: "Yid Jobs - Jewish Jobs in Boro Park",
-    title: "Yid Jobs - Find Jewish Jobs in Boro Park | Yiddish Employment",
+    url: "https://yiddishjobs.com",
+    siteName: "Yiddish Jobs - Jewish Jobs in Boro Park",
+    title: "Yiddish Jobs - Find Jewish Jobs in Boro Park | Yiddish Employment",
     description: "The largest Jewish job board for Boro Park. Find kosher job opportunities in the Orthodox Jewish community. Browse thousands of Yiddish jobs in retail, healthcare, education and more.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Yid Jobs - Jewish Jobs in Boro Park"
+        alt: "Yiddish Jobs - Jewish Jobs in Boro Park"
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Yid Jobs - Jewish Jobs in Boro Park",
+    title: "Yiddish Jobs - Jewish Jobs in Boro Park",
     description: "Find kosher job opportunities in the Orthodox Jewish community. The largest Yiddish job board for Boro Park.",
     images: ["/og-image.png"],
-    creator: "@yidjobs"
+    creator: "@yiddishjobs"
   },
   robots: {
     index: true,
@@ -87,7 +87,7 @@ export const metadata = {
     yandex: "your-yandex-verification-code",
   },
   alternates: {
-    canonical: "https://yidjobs.com",
+    canonical: "https://yiddishjobs.com",
   },
   category: "employment",
 };
@@ -96,29 +96,29 @@ export default function RootLayout({ children }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Yid Jobs",
+    "name": "Yiddish Jobs",
     "alternateName": "Yiddish Jobs Boro Park",
-    "url": "https://yidjobs.com",
+    "url": "https://yiddishjobs.com",
     "description": "The largest Jewish job board serving Boro Park and the Orthodox Jewish community",
     "potentialAction": {
       "@type": "SearchAction",
       "target": {
         "@type": "EntryPoint",
-        "urlTemplate": "https://yidjobs.com/jobs?search={search_term_string}"
+        "urlTemplate": "https://yiddishjobs.com/jobs?search={search_term_string}"
       },
       "query-input": "required name=search_term_string"
     },
     "publisher": {
       "@type": "Organization",
-      "name": "Yid Jobs",
-      "url": "https://yidjobs.com",
+      "name": "Yiddish Jobs",
+      "url": "https://yiddishjobs.com",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://yidjobs.com/favico.png"
+        "url": "https://yiddishjobs.com/favico.png"
       },
       "sameAs": [
-        "https://www.facebook.com/yidjobs",
-        "https://twitter.com/yidjobs"
+        "https://www.facebook.com/yiddishjobs",
+        "https://twitter.com/yiddishjobs"
       ],
       "areaServed": {
         "@type": "Place",

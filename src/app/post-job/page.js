@@ -10,7 +10,7 @@ export default function PostJobPage() {
         <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
           {/* Header */}
           <div className="bg-linear-to-r from-blue-600 to-blue-700 p-8 lg:p-12 text-white text-center">
-            <h1 className="text-3xl md:text-4xl font-extrabold mb-4">Post a Job on Yid Jobs</h1>
+            <h1 className="text-3xl md:text-4xl font-extrabold mb-4">Post a Job on Yiddish Jobs</h1>
             <p className="text-blue-100 text-lg max-w-2xl mx-auto">
               We&apos;ve simplified our process. Now you can post jobs directly via email using our AI-powered system.
             </p>
@@ -24,7 +24,7 @@ export default function PostJobPage() {
                   <Mail className="w-6 h-6" />
                 </div>
                 <h3 className="font-bold text-gray-900 mb-2">1. Send Email</h3>
-                <p className="text-sm text-gray-600">Send your job details to <span className="font-semibold text-blue-600">jobs@yidjobs.com</span></p>
+                <p className="text-sm text-gray-600">Send your job details to <span className="font-semibold text-blue-600">jobs@yiddishjobs.com</span></p>
               </div>
 
               <div className="flex flex-col items-center text-center p-6 bg-blue-50 rounded-2xl border border-blue-100">
@@ -68,7 +68,7 @@ export default function PostJobPage() {
                       </div>
                       <div>
                         <p className="font-semibold text-gray-900">Need to post more?</p>
-                        <p className="text-gray-600">If you need to exceed the weekly limit, please contact our administrator at <span className="font-semibold text-blue-600">admin@yidjobs.com</span> to request a quota increase.</p>
+                        <p className="text-gray-600">If you need to exceed the weekly limit, please contact our administrator at <span className="font-semibold text-blue-600">admin@yiddishjobs.com</span> to request a quota increase.</p>
                       </div>
                     </li>
                     <li className="flex gap-3">
@@ -90,7 +90,7 @@ export default function PostJobPage() {
                   <p className="text-blue-100">Just send an email with the job details and we&apos;ll handle the rest.</p>
                 </div>
                 <a 
-                  href="mailto:jobs@yidjobs.com" 
+                  href="mailto:jobs@yiddishjobs.com" 
                   className="bg-white text-blue-600 px-8 py-3 rounded-xl font-bold hover:bg-blue-50 transition-colors flex items-center gap-2"
                 >
                   <Mail className="w-5 h-5" />
@@ -104,7 +104,7 @@ export default function PostJobPage() {
           <div className="bg-gray-50 p-8 border-t border-gray-100 text-center">
             <p className="text-sm text-gray-500 flex items-center justify-center gap-2">
               <MessageSquare className="w-4 h-4" />
-              Questions? Contact us at admin@yidjobs.com
+              Questions? Contact us at admin@yiddishjobs.com
             </p>
           </div>
         </div>

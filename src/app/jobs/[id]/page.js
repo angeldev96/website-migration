@@ -42,7 +42,7 @@ export async function generateMetadata({ params }) {
 
     if (!job) {
       return {
-        title: 'Job Not Found - Yid Jobs - Jewish Jobs in Boro Park',
+        title: 'Job Not Found - Yiddish Jobs - Jewish Jobs in Boro Park',
         description: 'This job listing is no longer available. Browse thousands of other Jewish job opportunities in Boro Park.',
       };
     }
@@ -67,7 +67,7 @@ export async function generateMetadata({ params }) {
     const keywordsArr = [jobTitle, job.company, job.category, location, mappedType].filter(Boolean).slice(0, 12);
 
     return {
-      title: `${jobTitle} — ${job.company ? job.company + ' | ' : ''}Jobs in ${location} | Yid Jobs`,
+      title: `${jobTitle} — ${job.company ? job.company + ' | ' : ''}Jobs in ${location} | Yiddish Jobs`,
       description: truncatedDesc,
       keywords: keywordsArr.join(', '),
       robots: {
@@ -82,11 +82,11 @@ export async function generateMetadata({ params }) {
           'max-snippet': -1
         }
       },
-      authors: job.company ? [{ name: job.company }] : [{ name: 'Yid Jobs' }],
+      authors: job.company ? [{ name: job.company }] : [{ name: 'Yiddish Jobs' }],
       openGraph: {
         title: `${jobTitle} - Jobs in ${location}`,
         description: truncatedDesc,
-        url: `https://yidjobs.com/jobs/${jobId}`,
+        url: `https://yiddishjobs.com/jobs/${jobId}`,
         type: 'article',
         publishedTime: job.jobDate?.toISOString(),
         modifiedTime: job.updatedAt?.toISOString(),
@@ -95,7 +95,7 @@ export async function generateMetadata({ params }) {
             url: '/og-image.png',
             width: 1200,
             height: 630,
-            alt: `${jobTitle} - Yid Jobs`
+            alt: `${jobTitle} - Yiddish Jobs`
           }
         ]
       },
@@ -106,7 +106,7 @@ export async function generateMetadata({ params }) {
         images: ['/og-image.png']
       },
       alternates: {
-        canonical: `https://yidjobs.com/jobs/${jobId}`
+        canonical: `https://yiddishjobs.com/jobs/${jobId}`
       },
       other: {
         'job-category': job.category,
@@ -116,7 +116,7 @@ export async function generateMetadata({ params }) {
     };
   } catch (error) {
     return {
-      title: 'Job Details - Yid Jobs - Jewish Jobs in Boro Park',
+      title: 'Job Details - Yiddish Jobs - Jewish Jobs in Boro Park',
       description: 'View job details and apply for positions in the Orthodox Jewish community of Boro Park.',
     };
   }
@@ -281,7 +281,7 @@ export default async function JobDetailPage({ params }) {
     "description": job.aiDescription || job.description,
     "identifier": {
       "@type": "PropertyValue",
-      "name": "Yid Jobs",
+      "name": "Yiddish Jobs",
       "value": job.id.toString()
     },
     "datePosted": job.jobDate?.toISOString() || new Date().toISOString(),
@@ -289,9 +289,9 @@ export default async function JobDetailPage({ params }) {
     "employmentType": jobType === 'Full Time' ? 'FULL_TIME' : 'PART_TIME',
     "hiringOrganization": {
       "@type": "Organization",
-      "name": job.company || "Yid Jobs",
-      "sameAs": "https://yidjobs.com",
-      "logo": "https://yidjobs.com/favico.png"
+      "name": job.company || "Yiddish Jobs",
+      "sameAs": "https://yiddishjobs.com",
+      "logo": "https://yiddishjobs.com/favico.png"
     },
     "jobLocation": {
       "@type": "Place",
@@ -332,19 +332,19 @@ export default async function JobDetailPage({ params }) {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://yidjobs.com"
+        "item": "https://yiddishjobs.com"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Jobs",
-        "item": "https://yidjobs.com/jobs"
+        "item": "https://yiddishjobs.com/jobs"
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": job.aiTitle || job.jobTitle,
-        "item": `https://yidjobs.com/jobs/${job.id}`
+        "item": `https://yiddishjobs.com/jobs/${job.id}`
       }
     ]
   };

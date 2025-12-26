@@ -63,7 +63,7 @@ export async function generateMetadata({ params }) {
   const decodedName = decodeURIComponent(name);
   
   return {
-    title: `${decodedName} Jobs - Yid Jobs`,
+    title: `${decodedName} Jobs - Yiddish Jobs`,
     description: `Browse all job opportunities at ${decodedName}. Find your next career in the Orthodox Jewish community of Boro Park.`
   };
 }

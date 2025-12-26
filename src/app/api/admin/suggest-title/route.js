@@ -47,7 +47,7 @@ export async function POST(request) {
 
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
-    const prompt = `You are an SEO expert for a Jewish job board in Brooklyn called "Yid Jobs".
+    const prompt = `You are an SEO expert for a Jewish job board in Brooklyn called "Yiddish Jobs".
 Your goal is to suggest 3 highly optimized, catchy, and SEO-friendly titles for a blog post.
 The target audience is the Orthodox Jewish community in Boro Park, Williamsburg, and Flatbush.
 Keywords to consider: Jewish jobs, Brooklyn, Boro Park, Yiddish, Kosher workplace, Frum employment, Shomer Shabbos.
