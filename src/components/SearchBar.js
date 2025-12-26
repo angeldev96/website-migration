@@ -77,7 +77,7 @@ const SearchBar = () => {
             }}
           >
             <option value="">All Locations</option>
-            <option value="boro-park">Boro Park</option>
+            <option value="Boro Park">Boro Park</option>
           </select>
         </div>
         <button

@@ -73,6 +73,7 @@ const Header = () => {
               {locationsOpen && (
                 <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-2">
                   <Link href="/jobs" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">All Locations</Link>
+                  <Link href="/jobs?location=Boro Park" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Boro Park</Link>
                 </div>
               )}
             </div>
@@ -89,12 +90,12 @@ const Header = () => {
               </button>
               {categoriesOpen && (
                 <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-2">
-                  <Link href="/categories/accounting" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Accounting & Finance</Link>
-                  <Link href="/categories/technology" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Technology & IT</Link>
-                  <Link href="/categories/education" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Education</Link>
-                  <Link href="/categories/healthcare" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Healthcare</Link>
-                  <Link href="/categories/sales" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Sales & Marketing</Link>
-                  <Link href="/categories" className="block px-4 py-2 text-blue-600 font-medium hover:bg-blue-50">View All →</Link>
+                  <Link href="/jobs?category=Office" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Office</Link>
+                  <Link href="/jobs?category=Childcare" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Childcare</Link>
+                  <Link href="/jobs?category=Healthcare" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Healthcare</Link>
+                  <Link href="/jobs?category=Transportation" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Transportation</Link>
+                  <Link href="/jobs?category=Sales" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Sales</Link>
+                  <Link href="/jobs" className="block px-4 py-2 text-blue-600 font-medium hover:bg-blue-50">View All →</Link>
                 </div>
               )}
             </div>

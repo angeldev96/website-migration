@@ -26,28 +26,37 @@ const JobsClient = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category');
+  const locationParam = searchParams.get('location');
+  const searchParam = searchParams.get('search');
   
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState(categoryParam || '');
+  const [selectedLocation, setSelectedLocation] = useState(locationParam || '');
+  const [searchQuery, setSearchQuery] = useState(searchParam || '');
   const jobsPerPage = 20;
 
   useEffect(() => {
     setSelectedCategory(categoryParam || '');
+    setSelectedLocation(locationParam || '');
+    setSearchQuery(searchParam || '');
     setCurrentPage(1);
-  }, [categoryParam]);
+  }, [categoryParam, locationParam, searchParam]);
 
   useEffect(() => {
-    fetchJobs(currentPage, selectedCategory);
-  }, [currentPage, selectedCategory]);
+    fetchJobs(currentPage, selectedCategory, selectedLocation, searchQuery);
+  }, [currentPage, selectedCategory, selectedLocation, searchQuery]);
 
-  const fetchJobs = async (page, category) => {
+  const fetchJobs = async (page, category, location, search) => {
     try {
       setLoading(true);
       let url = `/api/jobs?page=${page}&limit=${jobsPerPage}`;
       if (category) url += `&category=${encodeURIComponent(category)}`;
+      if (location) url += `&location=${encodeURIComponent(location)}`;
+      if (search) url += `&search=${encodeURIComponent(search)}`;
+      
       const response = await fetch(apiUrl(url));
       const data = await response.json();
       if (data.success) {
@@ -89,6 +98,8 @@ const JobsClient = () => {
 
   const clearFilters = () => {
     setSelectedCategory('');
+    setSelectedLocation('');
+    setSearchQuery('');
     setCurrentPage(1);
     if (typeof window !== 'undefined') window.history.pushState({}, '', '/jobs');
   };
@@ -109,8 +120,28 @@ const JobsClient = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-3">{selectedCategory ? `${selectedCategory} Jobs` : 'All Jobs'}</h1>
-            <p className="text-lg text-gray-600">Showing {jobs.length} of {totalPages * jobsPerPage} available positions</p>
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+              <div>
+                <h1 className="text-4xl font-bold text-gray-900 mb-3">
+                  {selectedCategory ? `${selectedCategory} Jobs` : 
+                   searchQuery ? `Search: ${searchQuery}` : 
+                   selectedLocation ? `Jobs in ${selectedLocation}` : 
+                   'All Jobs'}
+                </h1>
+                <p className="text-lg text-gray-600">Showing {jobs.length} of {totalPages * jobsPerPage} available positions</p>
+              </div>
+              {(selectedCategory || selectedLocation || searchQuery) && (
+                <button 
+                  onClick={clearFilters}
+                  className="text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1 transition-colors"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  Clear all filters
+                </button>
+              )}
+            </div>
           </div>
 
           <div className="space-y-4">
