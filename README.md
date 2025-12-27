@@ -9,7 +9,7 @@ A modern job board platform built with Next.js 15, React 19, Tailwind CSS 4, and
 - **Styling:** Tailwind CSS v4
 - **Database:** PostgreSQL (Railway)
 - **ORM:** Prisma
-- **Deployment:** Vercel (recommended)
+- **Deployment:** Railway (recommended)
 
 ## 📋 Prerequisites
 
