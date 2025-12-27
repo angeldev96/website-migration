@@ -13,8 +13,7 @@ A modern job board platform built with Next.js 15, React 19, Tailwind CSS 4, and
 
 ## 📋 Prerequisites
 
-- Node.js 18+ 
-- npm or yarn
+- Bun (recommended) or Node.js 18+ 
 - PostgreSQL database (Railway)
 
 ## 🔧 Setup Instructions
@@ -29,7 +28,8 @@ cd website-migration
 ### 2. Install dependencies
 
 ```bash
-npm install
+bun install
+# or npm install
 ```
 
 ### 3. Environment Variables
@@ -50,19 +50,19 @@ NEXT_PUBLIC_APP_URL="http://localhost:3000"
 ### 4. Generate Prisma Client
 
 ```bash
-npx prisma generate
+bun x prisma generate
 ```
 
 ### 5. Sync with Database
 
 ```bash
-npx prisma db pull
+bun x prisma db pull
 ```
 
 ### 6. Run Development Server
 
 ```bash
-npm run dev
+bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to see the result.
