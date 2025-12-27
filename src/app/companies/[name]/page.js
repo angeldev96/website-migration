@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import prisma from '@/lib/prisma';
 import { enrichJobsWithLogos } from '@/lib/companyLogo';
@@ -87,11 +88,13 @@ export default async function CompanyPage({ params }) {
         <div className="container mx-auto px-4 py-8 md:py-12 max-w-screen-2xl">
           <div className="flex items-center gap-6">
             {company.logoUrl && (
-              <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl bg-white shadow-md p-3 flex-shrink-0">
-                <img
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl bg-white shadow-md p-3 shrink-0 relative">
+                <Image
                   src={company.logoUrl}
                   alt={`${company.name} logo`}
-                  className="w-full h-full object-contain"
+                  fill
+                  className="object-contain p-3"
+                  unoptimized
                 />
               </div>
             )}
@@ -144,11 +147,13 @@ export default async function CompanyPage({ params }) {
                       {/* Company Info */}
                       <div className="flex items-center gap-2 text-gray-600 mb-2">
                         {job.companyLogo && (
-                          <div className="w-8 h-8 rounded bg-white shadow-sm flex items-center justify-center flex-shrink-0 p-1">
-                            <img
+                          <div className="w-8 h-8 rounded bg-white shadow-sm flex items-center justify-center shrink-0 p-1 relative">
+                            <Image
                               src={job.companyLogo}
                               alt={`${job.company} logo`}
-                              className="w-full h-full object-contain"
+                              fill
+                              className="object-contain p-1"
+                              unoptimized
                             />
                           </div>
                         )}

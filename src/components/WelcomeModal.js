@@ -26,7 +26,7 @@ export default function WelcomeModal() {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-300">
+    <div className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-300">
       <div 
         className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in slide-in-from-bottom-4 duration-500 ease-out"
         role="dialog"
@@ -63,7 +63,7 @@ export default function WelcomeModal() {
           {/* Features */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-10">
             <div className="flex gap-4">
-              <div className="flex-shrink-0 mt-1">
+              <div className="shrink-0 mt-1">
                 <Zap className="w-6 h-6 text-amber-500" />
               </div>
               <div>
@@ -72,7 +72,7 @@ export default function WelcomeModal() {
               </div>
             </div>
             <div className="flex gap-4">
-              <div className="flex-shrink-0 mt-1">
+              <div className="shrink-0 mt-1">
                 <ShieldCheck className="w-6 h-6 text-emerald-500" />
               </div>
               <div>

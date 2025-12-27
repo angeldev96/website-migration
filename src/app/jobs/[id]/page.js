@@ -423,11 +423,13 @@ export default async function JobDetailPage({ params }) {
                       className="flex items-center gap-3 text-lg sm:text-xl mb-4 hover:opacity-80 transition-opacity w-fit"
                     >
                       {job.companyLogo && (
-                        <div className="w-16 h-16 rounded-xl bg-white/90 backdrop-blur-sm flex items-center justify-center p-2 shrink-0 shadow-sm">
-                          <img 
+                        <div className="w-16 h-16 rounded-xl bg-white/90 backdrop-blur-sm flex items-center justify-center p-2 shrink-0 shadow-sm relative">
+                          <Image 
                             src={job.companyLogo} 
                             alt={`${job.company} logo`}
-                            className="w-full h-full object-contain"
+                            fill
+                            className="object-contain p-2"
+                            unoptimized
                           />
                         </div>
                       )}

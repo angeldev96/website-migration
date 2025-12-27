@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { formatShortDate } from '@/lib/dateUtils';
 import { getPublishedBlogs } from '@/lib/blogDb';
 
@@ -59,11 +60,13 @@ export default async function BlogPage() {
                   >
                     {/* Cover Image */}
                     {blog.coverImage ? (
-                      <div className="aspect-video overflow-hidden">
-                        <img 
+                      <div className="aspect-video overflow-hidden relative">
+                        <Image 
                           src={blog.coverImage} 
                           alt={blog.title}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                          fill
+                          className="object-cover hover:scale-105 transition-transform duration-300"
+                          unoptimized
                         />
                       </div>
                     ) : (

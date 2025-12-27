@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { apiUrl } from '@/lib/apiUrl';
 import { formatShortDate } from '@/lib/dateUtils';
 import { formatGenderCategory } from '@/lib/jobUtils';
@@ -145,12 +146,13 @@ const CompanyLogosTab = ({ onMessage }) => {
                     </td>
                     <td className="px-6 py-6 whitespace-nowrap">
                       {(editingId === company.id ? logoUrl : company.logoUrl) ? (
-                        <div className="w-24 h-24 rounded-xl bg-gray-50 border border-gray-200 shadow-sm flex items-center justify-center p-2">
-                          <img
+                        <div className="w-24 h-24 rounded-xl bg-gray-50 border border-gray-200 shadow-sm flex items-center justify-center p-2 relative">
+                          <Image
                             src={editingId === company.id ? logoUrl : company.logoUrl}
                             alt={`${company.name} logo`}
-                            className="w-full h-full object-contain"
-                            onError={(e) => { e.target.style.display = 'none'; }}
+                            fill
+                            className="object-contain p-2"
+                            unoptimized
                           />
                         </div>
                       ) : (

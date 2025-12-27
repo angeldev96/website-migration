@@ -113,7 +113,7 @@ async function countJobsSince(days) {
   return res[0]?.count ?? 0;
 }
 
-export default {
+const db = {
   sql,
   countAllJobs,
   findJobsBasic,
@@ -125,3 +125,5 @@ export default {
   countDistinctCompanies,
   countJobsSince
 };
+
+export default db;

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { apiUrl } from '@/lib/apiUrl';
 import { formatRelativeDate } from '@/lib/dateUtils';
@@ -200,11 +201,13 @@ const FeaturedJobs = () => {
                             className="flex items-center gap-2 mb-3 hover:opacity-75 transition-opacity w-fit cursor-pointer"
                           >
                             {job.companyLogo && (
-                              <div className="w-12 h-12 rounded-lg bg-gray-50 border border-gray-200 flex items-center justify-center p-1.5 shrink-0">
-                                <img 
+                              <div className="w-12 h-12 rounded-lg bg-gray-50 border border-gray-200 flex items-center justify-center p-1.5 shrink-0 relative">
+                                <Image 
                                   src={job.companyLogo} 
                                   alt={`${job.company} logo`}
-                                  className="w-full h-full object-contain"
+                                  fill
+                                  className="object-contain p-1.5"
+                                  unoptimized
                                 />
                               </div>
                             )}

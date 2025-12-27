@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { formatFullDate } from '@/lib/dateUtils';
 import { getPublishedBlogBySlug } from '@/lib/blogDb';
@@ -58,10 +59,13 @@ export default async function BlogPostPage({ params }) {
         {/* Hero / Cover Image */}
         {blog.coverImage ? (
           <div className="w-full h-64 md:h-96 relative overflow-hidden">
-            <img 
+            <Image 
               src={blog.coverImage}
               alt={blog.title}
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
+              priority
+              unoptimized
             />
             <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
           </div>
