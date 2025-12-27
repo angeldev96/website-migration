@@ -1,12 +1,46 @@
 'use client';
 
-import React from 'react';
-import { Mail, ShieldCheck, Zap, Info, MessageSquare } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Mail, ShieldCheck, Zap, Info, MessageSquare, ArrowRight } from 'lucide-react';
+import { apiUrl } from '@/lib/apiUrl';
+import Link from 'next/link';
 
 export default function PostJobPage() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    fetch(apiUrl('/api/auth/me'))
+      .then(res => res.json())
+      .then(json => {
+        if (json.success) setUser(json.data);
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <main className="min-h-screen bg-gray-50 py-12">
       <div className="container mx-auto px-4">
+        {user?.role === 'CORPORATION' && (
+          <div className="max-w-4xl mx-auto mb-8 bg-purple-50 border border-purple-100 rounded-2xl p-6 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center text-white shadow-lg">
+                <ShieldCheck className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="font-bold text-purple-900">Corporate Account Detected</h3>
+                <p className="text-purple-700 text-sm">You can manage your jobs and profile directly in the portal.</p>
+              </div>
+            </div>
+            <Link 
+              href="/employer"
+              className="bg-purple-600 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-purple-700 transition-colors flex items-center gap-2"
+            >
+              Go to Portal
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        )}
+
         <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
           {/* Header */}
           <div className="bg-linear-to-r from-blue-600 to-blue-700 p-8 lg:p-12 text-white text-center">

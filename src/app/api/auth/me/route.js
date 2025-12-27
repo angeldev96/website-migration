@@ -25,7 +25,15 @@ export async function GET(request) {
 
     const decoded = jwt.verify(token, JWT_SECRET);
     const userId = decoded.userId;
-    const user = await prisma.user.findUnique({ where: { id: userId }, select: { id: true, email: true, role: true } });
+    const user = await prisma.user.findUnique({ 
+      where: { id: userId }, 
+      select: { 
+        id: true, 
+        email: true, 
+        role: true,
+        company: true
+      } 
+    });
     if (!user) return NextResponse.json({ success: false, error: 'Not found' }, { status: 404 });
 
     return NextResponse.json({ success: true, data: user });

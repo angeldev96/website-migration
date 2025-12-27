@@ -173,6 +173,8 @@ model User {
   email     String     @unique
   password  String
   role      Role       @default(USER)
+  companyId Int?       @map("company_id")
+  company   Company?   @relation(fields: [companyId], references: [id])
   createdAt DateTime   @default(now()) @map("created_at")
   updatedAt DateTime   @updatedAt @map("updated_at")
   blogPosts BlogPost[]
@@ -215,6 +217,7 @@ model Company {
   id      Int     @id @default(autoincrement())
   name    String  @unique
   logoUrl String? @map("logo_url")
+  users   User[]
 
   @@index([name], map: "idx_companies_name")
   @@map("companies")
