@@ -17,7 +17,7 @@ export default function robots() {
         disallow: ['/api/', '/admin/'],
       },
     ],
-    sitemap: 'https://yiddishjobs.com/sitemap.xml',
-    host: 'https://yiddishjobs.com',
+    sitemap: 'https://www.yiddishjobs.com/sitemap.xml',
+    host: 'https://www.yiddishjobs.com',
   };
 }

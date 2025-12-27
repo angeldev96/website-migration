@@ -7,7 +7,7 @@ import WelcomeModal from "@/components/WelcomeModal";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  metadataBase: new URL('https://yiddishjobs.com'),
+  metadataBase: new URL('https://www.yiddishjobs.com'),
   title: {
     default: "Yiddish Jobs - Jewish Jobs in Boro Park | Yiddish Employment Opportunities",
     template: "%s | Yiddish Jobs - Jewish Jobs in Boro Park"
