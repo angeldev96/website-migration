@@ -33,6 +33,8 @@ model JobsSheet {
   companyVerified                                                           Boolean?             @map("company_verified")
   genderCategory                                                            String?              @map("gender_category")
   jobType                                                                   String?              @map("job_type")
+  publisherId                                                               Int?                 @map("publisher_id")
+  status                                                                    String?              @default("PENDING")
   child                                                                     child[]
   job_insertion_logs_job_insertion_logs_matched_original_job_idTojobs_sheet job_insertion_logs[] @relation("job_insertion_logs_matched_original_job_idTojobs_sheet")
   job_insertion_logs_job_insertion_logs_newly_inserted_job_idTojobs_sheet   job_insertion_logs[] @relation("job_insertion_logs_newly_inserted_job_idTojobs_sheet")
@@ -206,6 +208,7 @@ enum job_log_status {
 enum Role {
   USER
   ADMIN
+  CORPORATION
 }
 
 model Company {
