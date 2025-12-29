@@ -1,7 +1,7 @@
 import prisma from '@/lib/prisma';
 
 export default async function sitemap() {
-  const baseUrl = 'https://yiddishjobs.com';
+  const baseUrl = 'https://www.yiddishjobs.com';
   
   // Static pages
   const staticPages = [
