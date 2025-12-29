@@ -45,13 +45,14 @@ export function middleware(request) {
   
   // Content Security Policy (restrict sources of scripts, styles, images, etc.)
   // Nota: Ajusta esto según tus necesidades específicas
+  // IMPORTANT: Agregado Microsoft Clarity para analítica
   const cspHeader = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.prod.website-files.com",
+    "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.prod.website-files.com https://www.clarity.ms https://clarity.ms",
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: https: blob:",
     "font-src 'self' data:",
-    "connect-src 'self' https: wss:",
+    "connect-src 'self' https: wss: https://www.clarity.ms https://clarity.ms",
     "frame-ancestors 'none'",
     "form-action 'self'",
     "base-uri 'self'",
