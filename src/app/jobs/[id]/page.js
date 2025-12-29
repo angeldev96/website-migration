@@ -240,12 +240,6 @@ export default async function JobDetailPage({ params }) {
         imageUrl: 'https://icons.iconarchive.com/icons/martz90/circle-addon1/512/t-mobile-icon.png'
       },
       {
-        key: 'at&t',
-        name: "AT&T",
-        initials: 'AT',
-        imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa_TW8c50QW6VMUAsHEsrXkVQIjtq4LqiXQw&s'
-      },
-      {
         key: 'att',
         name: "AT&T",
         initials: 'AT',
