@@ -2,30 +2,9 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import slugify from '@/lib/slugify';
 import generateSlugWithLLM from '@/lib/llm';
-import { cookies } from 'next/headers';
-import jwt from 'jsonwebtoken';
+import { requireAdmin, createAuthErrorResponse } from '@/lib/authMiddleware';
 
 export const dynamic = 'force-dynamic';
-
-// Helper to verify admin user
-async function verifyAdmin(request) {
-  try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get('token')?.value;
-    
-    if (!token) return null;
-    
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'change-me');
-    const user = await prisma.user.findUnique({
-      where: { id: decoded.userId }
-    });
-    
-    if (!user || user.role !== 'ADMIN') return null;
-    return user;
-  } catch {
-    return null;
-  }
-}
 
 // GET /api/blogs - Get all blog posts (public: only published, admin: all)
 export async function GET(request) {
@@ -37,7 +16,7 @@ export async function GET(request) {
     const includeUnpublished = searchParams.get('all') === 'true';
     
     // Check if admin for unpublished posts
-    const admin = includeUnpublished ? await verifyAdmin(request) : null;
+    const admin = includeUnpublished ? await requireAdmin() : null;
     
     const where = admin ? {} : { published: true };
     
@@ -78,12 +57,9 @@ export async function GET(request) {
 // POST /api/blogs - Create a new blog post (admin only)
 export async function POST(request) {
   try {
-    const admin = await verifyAdmin(request);
+    const admin = await requireAdmin();
     if (!admin) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized - Admin access required' },
-        { status: 401 }
-      );
+      return createAuthErrorResponse('Admin access required', 401);
     }
     
     const body = await request.json();

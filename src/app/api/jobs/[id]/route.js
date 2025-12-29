@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { getCompanyLogo } from '@/lib/companyLogo';
+import { requireAdmin, createAuthErrorResponse } from '@/lib/authMiddleware';
 
 // Force dynamic rendering for Webflow Cloud
 export const dynamic = 'force-dynamic';
@@ -61,8 +62,14 @@ export async function GET(request, { params }) {
   }
 }
 
-// DELETE /api/jobs/[id] - Delete a job by ID
+// DELETE /api/jobs/[id] - Delete a job by ID (ADMIN ONLY)
 export async function DELETE(request, { params }) {
+  // Verify admin access
+  const admin = await requireAdmin();
+  if (!admin) {
+    return createAuthErrorResponse('Admin access required', 401);
+  }
+
   try {
     const { id } = await params;
     const jobId = parseInt(id);

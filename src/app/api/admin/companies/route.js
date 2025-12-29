@@ -1,10 +1,15 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { requireAdmin, createAuthErrorResponse } from '@/lib/authMiddleware';
 
 export const dynamic = 'force-dynamic';
 
-// GET /api/admin/companies - List all companies
-export async function GET() {
+// GET /api/admin/companies - List all companies (ADMIN ONLY)
+export async function GET(request) {
+  const admin = await requireAdmin();
+  if (!admin) {
+    return createAuthErrorResponse('Admin access required', 401);
+  }
   try {
     const companies = await prisma.company.findMany({
       orderBy: { name: 'asc' },
@@ -25,8 +30,12 @@ export async function GET() {
   }
 }
 
-// POST /api/admin/companies - Create new company
+// POST /api/admin/companies - Create new company (ADMIN ONLY)
 export async function POST(request) {
+  const admin = await requireAdmin();
+  if (!admin) {
+    return createAuthErrorResponse('Admin access required', 401);
+  }
   try {
     const { name, logoUrl } = await request.json();
 
@@ -62,8 +71,12 @@ export async function POST(request) {
   }
 }
 
-// PATCH /api/admin/companies - Update company logo
+// PATCH /api/admin/companies - Update company logo (ADMIN ONLY)
 export async function PATCH(request) {
+  const admin = await requireAdmin();
+  if (!admin) {
+    return createAuthErrorResponse('Admin access required', 401);
+  }
   try {
     const { id, logoUrl } = await request.json();
     const companyId = parseInt(id);
