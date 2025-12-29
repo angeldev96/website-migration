@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { apiUrl } from '@/lib/apiUrl';
 import { formatShortDate } from '@/lib/dateUtils';
 
@@ -659,12 +660,13 @@ const EmployerPortal = () => {
                       <p className="mt-2 text-xs text-gray-500">Provide a direct link to your company logo image.</p>
                     </div>
                     {companyData.logoUrl && (
-                      <div className="w-16 h-16 border border-gray-200 rounded-lg overflow-hidden bg-gray-50 flex-shrink-0">
-                        <img 
+                      <div className="w-16 h-16 border border-gray-200 rounded-lg overflow-hidden bg-gray-50 flex-shrink-0 relative">
+                        <Image 
                           src={companyData.logoUrl} 
                           alt="Logo preview" 
-                          className="w-full h-full object-contain"
-                          onError={(e) => e.target.src = 'https://via.placeholder.com/64?text=Error'}
+                          fill
+                          className="object-contain"
+                          unoptimized
                         />
                       </div>
                     )}
@@ -808,7 +810,7 @@ const EmployerPortal = () => {
                   <h4 className="font-semibold text-yellow-900 mb-1">Security Tips</h4>
                   <ul className="text-sm text-yellow-800 space-y-1">
                     <li>• Use a strong, unique password for this account</li>
-                    <li>• Don't share your password with anyone</li>
+                    <li>• Don&apos;t share your password with anyone</li>
                     <li>• Change your password regularly</li>
                     <li>• Avoid using the same password across multiple sites</li>
                   </ul>
