@@ -1,36 +1,33 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
-import jwt from 'jsonwebtoken';
 import prisma from '@/lib/prisma';
-
-// Helper to verify admin user
-async function verifyAdmin() {
-  try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get('token')?.value;
-    
-    if (!token) return null;
-    
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'change-me');
-    const user = await prisma.user.findUnique({
-      where: { id: decoded.userId }
-    });
-    
-    if (!user || user.role !== 'ADMIN') return null;
-    return user;
-  } catch {
-    return null;
-  }
-}
+import { requireAdmin, createAuthErrorResponse, checkRateLimit, getClientIP, logSecurityEvent } from '@/lib/authMiddleware';
 
 export async function POST(request) {
   try {
-    const admin = await verifyAdmin();
-    if (!admin) {
+    // Rate limiting para prevenir abuso de la API de Gemini
+    const ip = getClientIP(request);
+    const rateLimitResult = checkRateLimit(`suggest-title:${ip}`, 10, 60000); // 10 requests por minuto
+    
+    if (!rateLimitResult.allowed) {
+      logSecurityEvent('RATE_LIMIT_EXCEEDED', { 
+        endpoint: '/api/admin/suggest-title', 
+        ip 
+      });
       return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
+        { success: false, error: 'Too many requests. Please try again later.' },
+        { 
+          status: 429,
+          headers: {
+            'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
+            'X-RateLimit-Reset': new Date(rateLimitResult.resetTime).toISOString()
+          }
+        }
       );
+    }
+    
+    const admin = await requireAdmin();
+    if (!admin) {
+      return createAuthErrorResponse('Admin access required', 401);
     }
 
     const { title, content } = await request.json();

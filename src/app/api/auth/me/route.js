@@ -1,11 +1,19 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import jwt from 'jsonwebtoken';
+import { validateJWTSecret } from '@/lib/authMiddleware';
 
 // Force dynamic rendering for Webflow Cloud
 export const dynamic = 'force-dynamic';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'change-me';
+// Validar JWT_SECRET
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET || JWT_SECRET === 'change-me') {
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('CRITICAL SECURITY: JWT_SECRET environment variable must be set in production');
+  }
+  console.error('SECURITY WARNING: Using default JWT_SECRET. Set JWT_SECRET environment variable!');
+}
 
 function parseCookie(cookieHeader) {
   if (!cookieHeader) return null;

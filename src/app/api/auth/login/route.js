@@ -2,11 +2,19 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { checkRateLimit, getClientIP, logSecurityEvent } from '@/lib/authMiddleware';
 
 // Force dynamic rendering for Webflow Cloud
 export const dynamic = 'force-dynamic';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'change-me';
+// Validar que JWT_SECRET esté configurado en producción
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET || JWT_SECRET === 'change-me') {
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('CRITICAL SECURITY: JWT_SECRET environment variable must be set in production');
+  }
+  console.error('SECURITY WARNING: Using default JWT_SECRET. Set JWT_SECRET environment variable!');
+}
 
 function createCookie(token) {
   const secure = process.env.NODE_ENV === 'production';
@@ -18,9 +26,33 @@ function createCookie(token) {
 // POST /api/auth/login
 export async function POST(request) {
   try {
-    const { email, password } = await request.json();
+    const body = await request.json();
+    const { email, password } = body;
+    
     if (!email || !password) {
       return NextResponse.json({ success: false, error: 'Email and password required' }, { status: 400 });
+    }
+    
+    // Rate limiting para prevenir fuerza bruta
+    const ip = getClientIP(request);
+    const rateLimitResult = checkRateLimit(`login:${email}`, 5, 300000); // 5 intentos por 5 minutos por email
+    
+    if (!rateLimitResult.allowed) {
+      logSecurityEvent('LOGIN_RATE_LIMIT_EXCEEDED', { 
+        email, 
+        ip,
+        attempts: 5
+      });
+      return NextResponse.json(
+        { success: false, error: 'Too many login attempts. Please try again later.' },
+        { 
+          status: 429,
+          headers: {
+            'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
+            'X-RateLimit-Reset': new Date(rateLimitResult.resetTime).toISOString()
+          }
+        }
+      );
     }
 
     // Quick runtime checks (helpful for production debugging)
