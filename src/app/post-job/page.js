@@ -5,11 +5,25 @@ import { Mail, ShieldCheck, Zap, Info, MessageSquare, Building2, Linkedin, Arrow
 import { apiUrl } from '@/lib/apiUrl';
 import Link from 'next/link';
 
+// Helper function to get token from cookies
+function getToken() {
+  if (typeof document === 'undefined') return null;
+  const cookies = document.cookie.split(';').map(c => c.trim());
+  const tokenCookie = cookies.find(c => c.startsWith('token='));
+  return tokenCookie ? tokenCookie.replace('token=', '') : null;
+}
+
 export default function PostJobPage() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    fetch(apiUrl('/api/auth/me'))
+    // Only fetch if user has a token
+    const token = getToken();
+    if (!token) return;
+
+    fetch(apiUrl('/api/auth/me'), {
+      credentials: 'include'
+    })
       .then(res => res.json())
       .then(json => {
         if (json.success) setUser(json.data);
