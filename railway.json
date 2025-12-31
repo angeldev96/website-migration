@@ -10,6 +10,17 @@
   "deploy": {
     "startCommand": "next start",
     "healthcheckPath": "/",
-    "restartPolicyType": "ON_FAILURE"
-  }
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+  },
+  "builds": [
+    {
+      "name": "railway",
+      "buildType": "nixpacks",
+      "nixpacksPlan": {
+        "providers": ["nodejs"],
+        "buildDev": ["prisma generate && next build"]
+      }
+    }
+  ]
 }
