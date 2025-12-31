@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { formatShortDate } from '@/lib/dateUtils';
 import { getPublishedBlogs } from '@/lib/blogDb';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Jewish Career Blog | Employment Tips for Brooklyn & Boro Park',
   description: 'Expert advice on finding Jewish jobs in Brooklyn. Read about kosher workplace culture, Yiddish employment trends, and career tips for the Orthodox community.',

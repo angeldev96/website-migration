@@ -6,6 +6,8 @@ import { formatFullDate } from '@/lib/dateUtils';
 import { getPublishedBlogBySlug } from '@/lib/blogDb';
 import { formatBlogContent } from '@/lib/formatBlogContent';
 
+export const dynamic = 'force-dynamic';
+
 async function getBlog(slug) {
   try {
     const blog = await getPublishedBlogBySlug(slug);
