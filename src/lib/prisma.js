@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client/edge';
+import { PrismaClient } from '@prisma/client';
 
 // Use a global variable to reuse the Prisma client in development
 // and avoid exhausting database connections.
