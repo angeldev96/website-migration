@@ -7,7 +7,7 @@ import prisma from '@/lib/prisma';
 export async function getPublishedBlogs(limit = 50, page = 1) {
   try {
     const skip = (page - 1) * limit;
-    
+
     const posts = await prisma.blogPost.findMany({
       where: { published: true },
       skip,
@@ -15,8 +15,12 @@ export async function getPublishedBlogs(limit = 50, page = 1) {
       orderBy: { createdAt: 'desc' }
     });
 
+    // DEBUG: Log para verificar cuántos posts devuelve
+    console.log('[getPublishedBlogs] limit:', limit, 'page:', page, 'skip:', skip, 'returned:', posts.length);
+
     return posts;
   } catch (error) {
+    console.error('[getPublishedBlogs] Error:', error);
     return [];
   }
 }
