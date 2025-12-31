@@ -3,10 +3,39 @@
 import { useState, useEffect } from 'react';
 import { X, Sparkles, Zap, ShieldCheck } from 'lucide-react';
 
+// Detect if device is a dumb phone or very small screen
+function isDumbPhone() {
+  // Check screen width (very small screens < 360px)
+  if (typeof window !== 'undefined' && window.innerWidth < 360) {
+    return true;
+  }
+
+  // Check for feature phone user agents
+  const ua = navigator.userAgent || '';
+  const dumbPhonePatterns = [
+    /nokia/i,
+    /samsung.*browser/i,
+    /lg.*browser/i,
+    /opera mini/i,
+    /ucbrowser/i,
+    /netfront/i,
+    /midp/i,
+    /up\.browser/i,
+    /phone/i,
+  ];
+
+  return dumbPhonePatterns.some(pattern => pattern.test(ua));
+}
+
 export default function WelcomeModal() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
+    // Don't show on dumb phones or very small screens
+    if (isDumbPhone()) {
+      return;
+    }
+
     // Check if the user has already seen the welcome message
     const hasVisited = localStorage.getItem('hasVisitedNewSite');
     if (!hasVisited) {
