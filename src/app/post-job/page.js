@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Mail, ShieldCheck, Zap, Info, MessageSquare, Building2, Linkedin, ArrowRight } from 'lucide-react';
+import { Mail, ShieldCheck, Zap, Info, MessageSquare, Building2, Linkedin, ArrowRight, Copy, Check } from 'lucide-react';
 import { apiUrl } from '@/lib/apiUrl';
 import Link from 'next/link';
 
@@ -11,6 +11,61 @@ function getToken() {
   const cookies = document.cookie.split(';').map(c => c.trim());
   const tokenCookie = cookies.find(c => c.startsWith('token='));
   return tokenCookie ? tokenCookie.replace('token=', '') : null;
+}
+
+// Component for email button with copy functionality
+function EmailButton({ email, customText }) {
+  const [copied, setCopied] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  const buttonText = customText || 'Send Job Email';
+
+  const handleCopy = async () => {
+    try {
+      // Extract just the email address (remove query params if present)
+      const emailOnly = email.split('?')[0];
+      await navigator.clipboard.writeText(emailOnly);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      // Fallback for older browsers
+      const emailOnly = email.split('?')[0];
+      const textArea = document.createElement('textarea');
+      textArea.value = emailOnly;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  return (
+    <div className="relative inline-block w-full sm:w-auto">
+      <a
+        href={`mailto:${email}`}
+        className={`${customText ? 'bg-white text-gray-900 hover:bg-gray-100' : 'bg-white text-blue-600 hover:bg-blue-50'} px-4 py-3 rounded-xl font-bold transition-all text-sm shadow-lg flex items-center justify-center gap-2`}
+        onMouseEnter={() => setShowTooltip(true)}
+        onMouseLeave={() => setShowTooltip(false)}
+        onClick={(e) => {
+          e.preventDefault();
+          handleCopy();
+        }}
+      >
+        {copied ? <Check className="w-4 h-4 text-green-600" /> : <Mail className="w-4 h-4" />}
+        {copied ? 'Copied!' : buttonText}
+      </a>
+
+      {/* Tooltip */}
+      {showTooltip && !copied && (
+        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-gray-900 text-white text-xs rounded-lg whitespace-nowrap shadow-lg z-10">
+          Click to copy email address
+          <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default function PostJobPage() {
@@ -136,13 +191,7 @@ export default function PostJobPage() {
                     <h3 className="text-lg font-bold">Ready to hire?</h3>
                     <p className="text-blue-100 text-sm">Send an email with the job details.</p>
                   </div>
-                  <a 
-                    href="mailto:admin@yiddishjobs.com" 
-                    className="bg-white text-blue-600 px-6 py-2.5 rounded-xl font-bold hover:bg-blue-50 transition-colors flex items-center gap-2 text-sm"
-                  >
-                    <Mail className="w-4 h-4" />
-                    Send Job Email
-                  </a>
+                  <EmailButton email="admin@yiddishjobs.com" />
                 </div>
               </div>
 
@@ -176,7 +225,7 @@ export default function PostJobPage() {
 
                     <div className="mt-auto space-y-3">
                       <p className="text-xs text-blue-200 font-medium mb-2">Request access via:</p>
-                      <a 
+                      <a
                         href="https://www.linkedin.com/in/yossi-rosenfeld-874842289/"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -185,13 +234,7 @@ export default function PostJobPage() {
                         <Linkedin className="w-5 h-5" />
                         LinkedIn Message
                       </a>
-                      <a 
-                        href="mailto:admin@yiddishjobs.com?subject=Corporate Portal Access Request"
-                        className="flex items-center justify-center gap-2 bg-white text-gray-900 hover:bg-gray-100 px-4 py-3 rounded-xl font-bold transition-all text-sm shadow-lg"
-                      >
-                        <Mail className="w-5 h-5 text-blue-600" />
-                        Email Admin
-                      </a>
+                      <EmailButton email="admin@yiddishjobs.com?subject=Corporate Portal Access Request" customText="Email Admin" />
                     </div>
                   </div>
                 </div>
