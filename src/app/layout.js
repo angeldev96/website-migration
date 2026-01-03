@@ -171,6 +171,14 @@ export default function RootLayout({ children }) {
             })(window, document, "clarity", "script", "r8xf71hs7t");
           `}
         </Script>
+        {/* Plausible Analytics */}
+        <Script id="plausible-analytics" strategy="afterInteractive" src="https://plausible.io/js/pa-Ik07XRLIFaqYcyL3huy2Z.js" />
+        <Script id="plausible-init" strategy="afterInteractive">
+          {`
+            window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+            plausible.init()
+          `}
+        </Script>
         <Header />
         <main>{children}</main>
         <Footer />
