@@ -22,6 +22,7 @@ import {
   Megaphone,
   Search
 } from 'lucide-react';
+import AdBanner from '@/components/AdBanner';
 
 const JobsClient = () => {
   const router = useRouter();
@@ -105,6 +106,45 @@ const JobsClient = () => {
     if (typeof window !== 'undefined') window.history.pushState({}, '', '/jobs');
   };
 
+  if (loading && jobs.length === 0) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <div className="bg-white border-b border-gray-200">
+          <div className="container mx-auto px-4 py-4">
+            <div className="h-4 bg-gray-200 rounded w-48 animate-pulse"></div>
+          </div>
+        </div>
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex flex-col xl:flex-row gap-8 justify-center items-start">
+            <div className="w-40 hidden xl:block shrink-0 pt-2">
+              <div className="h-[600px] bg-gray-100 rounded-lg animate-pulse"></div>
+            </div>
+            <div className="flex-1 max-w-4xl w-full">
+              <div className="h-10 bg-gray-200 rounded w-1/2 mb-4 animate-pulse"></div>
+              <div className="h-6 bg-gray-200 rounded w-1/4 mb-10 animate-pulse"></div>
+              <div className="space-y-4">
+                {[...Array(6)].map((_, i) => (
+                  <div key={i} className="bg-white rounded-xl border border-gray-200 p-6 animate-pulse">
+                    <div className="flex gap-4">
+                      <div className="w-16 h-16 bg-gray-200 rounded-lg"></div>
+                      <div className="flex-1">
+                        <div className="h-6 bg-gray-200 rounded w-3/4 mb-2"></div>
+                        <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="w-40 hidden xl:block shrink-0 pt-2">
+              <div className="h-[600px] bg-gray-100 rounded-lg animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Breadcrumb */}
@@ -119,99 +159,108 @@ const JobsClient = () => {
       </div>
 
       <div className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-8">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-              <div>
-                <h1 className="text-4xl font-bold text-gray-900 mb-3">
-                  {selectedCategory ? `${selectedCategory} Jobs` : 
-                   searchQuery ? `Search: ${searchQuery}` : 
-                   selectedLocation ? `Jobs in ${selectedLocation}` : 
-                   'All Jobs'}
-                </h1>
-                <p className="text-lg text-gray-600">Showing {jobs.length} of {totalPages * jobsPerPage} available positions</p>
-              </div>
-              {(selectedCategory || selectedLocation || searchQuery) && (
-                <button 
-                  onClick={clearFilters}
-                  className="text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1 transition-colors"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                  Clear all filters
-                </button>
-              )}
-            </div>
-          </div>
+        <div className="flex flex-col xl:flex-row gap-8 justify-center items-start">
+          {/* Left Ad Sidebar */}
+          <AdBanner position="side" className="w-40 hidden xl:flex shrink-0 mt-2" />
 
-          <div className="space-y-4">
-            {jobs.map((job) => (
-              <Link key={job.id} href={`/jobs/${job.id}`} className="block bg-white rounded-xl border border-gray-200 hover:border-blue-400 hover:shadow-lg transition-all duration-300 group hover:scale-[1.02] active:scale-[0.98]">
-                <div className="p-6">
-                  <div className="flex flex-col md:flex-row items-start justify-between gap-4">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start gap-4">
-                        <div className="shrink-0">
-                          <div className="w-16 h-16 rounded-xl bg-linear-to-br from-blue-50 to-blue-100 flex items-center justify-center text-2xl border border-blue-200 shadow-sm">
-                            {(() => {
-                              const Icon = getCategoryIcon(job.category);
-                              return <Icon className="w-9 h-9 text-blue-700" aria-hidden="true" />;
-                            })()}
-                          </div>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors line-clamp-1">{job.aiTitle || job.jobTitle}</h3>
-                          {job.company && (
-                            <div
-                              onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                router.push(`/companies/${encodeURIComponent(job.company)}`);
-                              }}
-                              className="flex items-center gap-2 mb-3 hover:opacity-75 transition-opacity w-fit cursor-pointer"
-                            >
-                              {job.companyLogo && (
-                                <div className="w-12 h-12 rounded-lg bg-gray-50 border border-gray-200 flex items-center justify-center p-1.5 shrink-0 relative">
-                                  <Image 
-                                    src={job.companyLogo} 
-                                    alt={`${job.company} logo`}
-                                    fill
-                                    className="object-contain p-1.5"
-                                    unoptimized
-                                  />
-                                </div>
-                              )}
-                              <p className="text-base font-medium text-gray-700 hover:text-blue-600 transition-colors">{job.company}</p>
+          {/* Main Content Area */}
+          <div className="flex-1 max-w-4xl w-full">
+            <div className="mb-8">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                  <h1 className="text-4xl font-bold text-gray-900 mb-3">
+                    {selectedCategory ? `${selectedCategory} Jobs` : 
+                     searchQuery ? `Search: ${searchQuery}` : 
+                     selectedLocation ? `Jobs in ${selectedLocation}` : 
+                     'All Jobs'}
+                  </h1>
+                  <p className="text-lg text-gray-600">Showing {jobs.length} of {totalPages * jobsPerPage} available positions</p>
+                </div>
+                {(selectedCategory || selectedLocation || searchQuery) && (
+                  <button 
+                    onClick={clearFilters}
+                    className="text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1 transition-colors"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    Clear all filters
+                  </button>
+                )}
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              {jobs.map((job) => (
+                <Link key={job.id} href={`/jobs/${job.id}`} className="block bg-white rounded-xl border border-gray-200 hover:border-blue-400 hover:shadow-lg transition-all duration-300 group hover:scale-[1.02] active:scale-[0.98]">
+                  <div className="p-6">
+                    <div className="flex flex-col md:flex-row items-start justify-between gap-4">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start gap-4">
+                          <div className="shrink-0">
+                            <div className="w-16 h-16 rounded-xl bg-linear-to-br from-blue-50 to-blue-100 flex items-center justify-center text-2xl border border-blue-200 shadow-sm">
+                              {(() => {
+                                const Icon = getCategoryIcon(job.category);
+                                return <Icon className="w-9 h-9 text-blue-700" aria-hidden="true" />;
+                              })()}
                             </div>
-                          )}
-                          <p className="text-gray-600 mb-4 line-clamp-2 text-sm leading-relaxed">{truncateText(job.aiDescription || job.description, 150)}</p>
-                          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
-                            <div className="flex items-center gap-1.5"><svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg><span>{extractLocation(job.description)}</span></div>
-                            <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">{job.category}</div>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors line-clamp-1">{job.aiTitle || job.jobTitle}</h3>
+                            {job.company && (
+                              <div
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  router.push(`/companies/${encodeURIComponent(job.company)}`);
+                                }}
+                                className="flex items-center gap-2 mb-3 hover:opacity-75 transition-opacity w-fit cursor-pointer"
+                              >
+                                {job.companyLogo && (
+                                  <div className="w-12 h-12 rounded-lg bg-gray-50 border border-gray-200 flex items-center justify-center p-1.5 shrink-0 relative">
+                                    <Image 
+                                      src={job.companyLogo} 
+                                      alt={`${job.company} logo`}
+                                      fill
+                                      className="object-contain p-1.5"
+                                      unoptimized
+                                    />
+                                  </div>
+                                )}
+                                <p className="text-base font-medium text-gray-700 hover:text-blue-600 transition-colors">{job.company}</p>
+                              </div>
+                            )}
+                            <p className="text-gray-600 mb-4 line-clamp-2 text-sm leading-relaxed">{truncateText(job.aiDescription || job.description, 150)}</p>
+                            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
+                              <div className="flex items-center gap-1.5"><svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg><span>{extractLocation(job.description)}</span></div>
+                              <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">{job.category}</div>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="mt-4 md:mt-0 flex items-center md:flex-col md:items-end justify-between shrink-0 ml-0 md:ml-4 gap-3 w-full md:w-auto">
-                      <div className="text-sm text-gray-500 mb-0 md:mb-3">{formatRelativeDate(job.jobDate)}</div>
-                      <button className="w-full md:w-auto px-4 py-2.5 md:px-6 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap text-center">View Details</button>
+                      <div className="mt-4 md:mt-0 flex items-center md:flex-col md:items-end justify-between shrink-0 ml-0 md:ml-4 gap-3 w-full md:w-auto">
+                        <div className="text-sm text-gray-500 mb-0 md:mb-3">{formatRelativeDate(job.jobDate)}</div>
+                        <button className="w-full md:w-auto px-4 py-2.5 md:px-6 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap text-center">View Details</button>
+                      </div>
                     </div>
                   </div>
+                </Link>
+              ))}
+            </div>
+
+            {jobs.length === 0 && !loading && (
+              <div className="text-center py-12 bg-white rounded-xl border border-gray-200">
+                <div className="mb-4 flex justify-center text-gray-500">
+                  <Search className="w-14 h-14" aria-hidden="true" />
                 </div>
-              </Link>
-            ))}
+                <h3 className="text-2xl font-bold text-gray-800 mb-2">No jobs found</h3>
+                <p className="text-gray-600 mb-6">Try adjusting your filters or check back later for new opportunities!</p>
+              </div>
+            )}
           </div>
 
-          {jobs.length === 0 && !loading && (
-            <div className="text-center py-12 bg-white rounded-xl border border-gray-200">
-              <div className="mb-4 flex justify-center text-gray-500">
-                <Search className="w-14 h-14" aria-hidden="true" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-2">No jobs found</h3>
-              <p className="text-gray-600 mb-6">Try adjusting your filters or check back later for new opportunities!</p>
-            </div>
-          )}
+          {/* Right Ad Sidebar */}
+          <AdBanner position="side" className="w-40 hidden xl:flex shrink-0 mt-2" />
         </div>
       </div>
     </div>

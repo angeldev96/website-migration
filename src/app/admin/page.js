@@ -222,6 +222,245 @@ const CompanyLogosTab = ({ onMessage }) => {
   );
 };
 
+const AdsManagementTab = ({ onMessage }) => {
+  const [ads, setAds] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [editingId, setEditingId] = useState(null);
+  const [formData, setFormData] = useState({
+    imageUrl: '',
+    linkUrl: '',
+    title: '',
+    position: 'side',
+    order: 0,
+    active: true
+  });
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    fetchAds();
+  }, []);
+
+  const fetchAds = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch(apiUrl('/api/admin/ads'));
+      const json = await res.json();
+      if (json.success) {
+        setAds(json.data);
+      }
+    } catch (err) {
+      console.error('Error fetching ads:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEdit = (ad) => {
+    setEditingId(ad.id);
+    setFormData({
+      imageUrl: ad.imageUrl || '',
+      linkUrl: ad.linkUrl || '',
+      title: ad.title || '',
+      position: ad.position || 'side',
+      order: ad.order || 0,
+      active: ad.active
+    });
+  };
+
+  const handleCancel = () => {
+    setEditingId(null);
+    setFormData({ imageUrl: '', linkUrl: '', title: '', position: 'side', order: 0, active: true });
+  };
+
+  const handleSave = async (id = null) => {
+    try {
+      setSaving(true);
+      const url = id ? apiUrl(`/api/admin/ads/${id}`) : apiUrl('/api/admin/ads');
+      const method = id ? 'PATCH' : 'POST';
+      
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      const json = await res.json();
+      
+      if (json.success) {
+        onMessage(id ? 'Ad updated successfully' : 'Ad created successfully');
+        fetchAds();
+        handleCancel();
+      } else {
+        alert(json.error || 'Error saving ad');
+      }
+    } catch (err) {
+      console.error('Error saving ad:', err);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!confirm('Are you sure you want to delete this ad?')) return;
+    try {
+      const res = await fetch(apiUrl(`/api/admin/ads/${id}`), { method: 'DELETE' });
+      const json = await res.json();
+      if (json.success) {
+        onMessage('Ad deleted successfully');
+        fetchAds();
+      }
+    } catch (err) {
+      console.error('Error deleting ad:', err);
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-bold text-gray-900">Advertisement Management</h2>
+        {editingId === null && (
+          <button 
+            onClick={() => setEditingId('new')}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+          >
+            Add New Ad
+          </button>
+        )}
+      </div>
+
+      {(editingId === 'new' || (typeof editingId === 'number' && editingId > 0)) && (
+        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-4 text-black">
+          <h3 className="font-bold text-lg">{editingId === 'new' ? 'Add New Ad' : 'Edit Ad'}</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
+              <input
+                type="text"
+                value={formData.imageUrl}
+                onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                placeholder="https://..."
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Link URL</label>
+              <input
+                type="text"
+                value={formData.linkUrl}
+                onChange={(e) => setFormData({ ...formData, linkUrl: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                placeholder="https://..."
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+              <input
+                type="text"
+                value={formData.title}
+                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Position</label>
+              <select
+                value={formData.position}
+                onChange={(e) => setFormData({ ...formData, position: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+              >
+                <option value="side">Sidebar</option>
+                <option value="horizontal">Horizontal (Banner)</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Order</label>
+              <input
+                type="number"
+                value={formData.order}
+                onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) || 0 })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+              />
+            </div>
+            <div className="flex items-center gap-2 pt-6">
+              <input
+                type="checkbox"
+                id="active"
+                checked={formData.active}
+                onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
+                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              />
+              <label htmlFor="active" className="text-sm font-medium text-gray-700">Active</label>
+            </div>
+          </div>
+          <div className="flex justify-end gap-3 mt-6">
+            <button
+              onClick={handleCancel}
+              className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={() => handleSave(editingId === 'new' ? null : editingId)}
+              disabled={saving}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+            >
+              {saving ? 'Saving...' : 'Save Ad'}
+            </button>
+          </div>
+        </div>
+      )}
+
+      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden text-black">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-gray-50 border-b border-gray-200">
+                <th className="px-6 py-4 text-sm font-bold text-gray-600 uppercase tracking-wider">Preview</th>
+                <th className="px-6 py-4 text-sm font-bold text-gray-600 uppercase tracking-wider">Details</th>
+                <th className="px-6 py-4 text-sm font-bold text-gray-600 uppercase tracking-wider">Status</th>
+                <th className="px-6 py-4 text-sm font-bold text-gray-600 uppercase tracking-wider text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {loading ? (
+                <tr><td colSpan="4" className="px-6 py-4 text-center">Loading...</td></tr>
+              ) : ads.length === 0 ? (
+                <tr><td colSpan="4" className="px-6 py-12 text-center text-gray-500">No ads found</td></tr>
+              ) : ads.map(ad => (
+                <tr key={ad.id} className="hover:bg-gray-50 transition-colors">
+                  <td className="px-6 py-4">
+                    <div className="w-20 h-20 bg-gray-50 rounded-lg overflow-hidden flex items-center justify-center border border-gray-200">
+                      <img src={ad.imageUrl} alt="" className="max-w-full max-h-full object-contain p-1" />
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <p className="font-bold text-gray-900 text-base">{ad.title || <span className="text-gray-400 italic font-normal">Untitled Ad</span>}</p>
+                    <p className="text-xs text-gray-500 truncate max-w-xs">{ad.imageUrl}</p>
+                    <div className="flex items-center gap-2 mt-2">
+                       <span className="text-xs font-semibold px-2 py-0.5 bg-blue-50 text-blue-700 rounded border border-blue-100 uppercase">{ad.position}</span>
+                       <span className="text-xs text-gray-400">Order: {ad.order}</span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${ad.active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                      {ad.active ? 'Active' : 'Inactive'}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <div className="flex items-center justify-end gap-3">
+                      <button onClick={() => handleEdit(ad)} className="text-blue-600 hover:text-blue-700 font-medium">Edit</button>
+                      <button onClick={() => handleDelete(ad.id)} className="text-red-600 hover:text-red-700 font-medium">Delete</button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const JobsManagementTab = ({ onMessage }) => {
   const [idInput, setIdInput] = useState('');
   const [job, setJob] = useState(null);
@@ -1219,6 +1458,7 @@ const AdminPage = () => {
     { id: 'dashboard', label: 'Dashboard', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
     { id: 'jobs', label: 'Jobs', icon: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
     { id: 'blogs', label: 'Blogs', icon: 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z' },
+    { id: 'ads', label: 'Advertisements', icon: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z' },
     { id: 'companies', label: 'Company Logos', icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4' },
     { id: 'users', label: 'Users', icon: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z' }
   ];
@@ -1296,6 +1536,7 @@ const AdminPage = () => {
             {activeTab === 'dashboard' && <DashboardTab stats={stats} />}
             {activeTab === 'jobs' && <JobsManagementTab onMessage={showMessage} />}
             {activeTab === 'blogs' && <BlogManagementTab onMessage={showMessage} onRefreshStats={fetchStats} />}
+            {activeTab === 'ads' && <AdsManagementTab onMessage={showMessage} />}
             {activeTab === 'companies' && <CompanyLogosTab onMessage={showMessage} />}
             {activeTab === 'users' && <UsersManagementTab onMessage={showMessage} />}
           </main>

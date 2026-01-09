@@ -5,6 +5,7 @@ import Stats from '@/components/Stats';
 import PopularCategories from '@/components/PopularCategories';
 import FeaturedJobs from '@/components/FeaturedJobs';
 import NewsletterSection from '@/components/NewsletterSection';
+import AdBanner from '@/components/AdBanner';
 
 export const metadata = {
   title: "Yiddish Jobs - Jewish Jobs in Boro Park | Find Yiddish Employment Today",
@@ -106,6 +107,13 @@ const HomePage = () => {
 
       {/* Popular Categories Section */}
       <PopularCategories />
+
+      {/* Horizontal Ad Banner */}
+      <div className="bg-gray-50 pb-8">
+        <div className="container mx-auto px-4 flex justify-center">
+          <AdBanner position="horizontal" />
+        </div>
+      </div>
 
       {/* Featured Jobs Section */}
       <FeaturedJobs />

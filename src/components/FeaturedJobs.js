@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { apiUrl } from '@/lib/apiUrl';
 import { formatRelativeDate } from '@/lib/dateUtils';
 import { formatGenderCategory } from '@/lib/jobUtils';
+import AdBanner from '@/components/AdBanner';
 import {
   BarChart3,
   Monitor,
@@ -121,17 +122,31 @@ const FeaturedJobs = () => {
     return (
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">Latest Job Listings</h2>
-            <p className="text-gray-600 text-lg">Loading opportunities...</p>
-          </div>
-          <div className="grid grid-cols-1 gap-4 max-w-6xl mx-auto">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="bg-gray-100 rounded-lg p-6 animate-pulse">
-                <div className="h-6 bg-gray-200 rounded w-3/4 mb-4"></div>
-                <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+          <div className="flex flex-col xl:flex-row gap-8 justify-center">
+            {/* Left Placeholder */}
+            <div className="w-40 hidden xl:block shrink-0 pt-2">
+              <div className="h-[600px] bg-gray-100 rounded-lg animate-pulse"></div>
+            </div>
+
+            <div className="flex-1 max-w-4xl">
+              <div className="text-center mb-12">
+                <h2 className="text-4xl font-bold text-gray-800 mb-4">Latest Job Listings</h2>
+                <p className="text-gray-600 text-lg">Loading opportunities...</p>
               </div>
-            ))}
+              <div className="grid grid-cols-1 gap-4">
+                {[...Array(6)].map((_, i) => (
+                  <div key={i} className="bg-gray-100 rounded-lg p-6 animate-pulse">
+                    <div className="h-6 bg-gray-200 rounded w-3/4 mb-4"></div>
+                    <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Placeholder */}
+            <div className="w-40 hidden xl:block shrink-0 pt-2">
+              <div className="h-[600px] bg-gray-100 rounded-lg animate-pulse"></div>
+            </div>
           </div>
         </div>
       </section>
@@ -141,8 +156,14 @@ const FeaturedJobs = () => {
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8 max-w-6xl mx-auto">
+        <div className="flex flex-col xl:flex-row gap-8 justify-center items-start">
+          {/* Left Ad Sidebar */}
+          <AdBanner position="side" className="w-40 hidden xl:flex shrink-0 mt-2" />
+
+          {/* Main Content Area */}
+          <div className="flex-1 max-w-4xl w-full">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
           <div>
             <h2 className="text-3xl font-bold text-gray-900 mb-2">Latest Jobs</h2>
             <p className="text-gray-600">
@@ -333,16 +354,21 @@ const FeaturedJobs = () => {
           </div>
         )}
 
-        {/* No jobs message */}
-        {jobs.length === 0 && !loading && (
-          <div className="text-center py-12">
-            <div className="mb-4 flex justify-center text-gray-500">
-              <Search className="w-14 h-14" aria-hidden="true" />
-            </div>
-            <h3 className="text-2xl font-bold text-gray-800 mb-2">No jobs found</h3>
-            <p className="text-gray-600">Check back soon for new opportunities!</p>
+            {/* No jobs message */}
+            {jobs.length === 0 && !loading && (
+              <div className="text-center py-12">
+                <div className="mb-4 flex justify-center text-gray-500">
+                  <Search className="w-14 h-14" aria-hidden="true" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-2">No jobs found</h3>
+                <p className="text-gray-600">Check back soon for new opportunities!</p>
+              </div>
+            )}
           </div>
-        )}
+
+          {/* Right Ad Sidebar */}
+          <AdBanner position="side" className="w-40 hidden xl:flex shrink-0 mt-2" />
+        </div>
       </div>
     </section>
   );
