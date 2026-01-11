@@ -230,7 +230,7 @@ const AdsManagementTab = ({ onMessage }) => {
     imageUrl: '',
     linkUrl: '',
     title: '',
-    position: 'side',
+    position: 'left-side',
     order: 0,
     active: true
   });
@@ -261,7 +261,7 @@ const AdsManagementTab = ({ onMessage }) => {
       imageUrl: ad.imageUrl || '',
       linkUrl: ad.linkUrl || '',
       title: ad.title || '',
-      position: ad.position || 'side',
+      position: ad.position || 'left-side',
       order: ad.order || 0,
       active: ad.active
     });
@@ -269,7 +269,7 @@ const AdsManagementTab = ({ onMessage }) => {
 
   const handleCancel = () => {
     setEditingId(null);
-    setFormData({ imageUrl: '', linkUrl: '', title: '', position: 'side', order: 0, active: true });
+    setFormData({ imageUrl: '', linkUrl: '', title: '', position: 'left-side', order: 0, active: true });
   };
 
   const handleSave = async (id = null) => {
@@ -367,7 +367,9 @@ const AdsManagementTab = ({ onMessage }) => {
                 onChange={(e) => setFormData({ ...formData, position: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
               >
-                <option value="side">Sidebar</option>
+                <option value="left-side">Left Sidebar</option>
+                <option value="right-side">Right Sidebar</option>
+                <option value="side">Legacy Side (auto-split)</option>
                 <option value="horizontal">Horizontal (Banner)</option>
               </select>
             </div>

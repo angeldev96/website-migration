@@ -158,7 +158,7 @@ const FeaturedJobs = () => {
       <div className="container mx-auto px-4">
         <div className="flex flex-col xl:flex-row gap-8 justify-center items-start">
           {/* Left Ad Sidebar */}
-          <AdBanner position="side" className="w-40 hidden xl:flex shrink-0 mt-2" />
+          <AdBanner position="left-side" className="w-60 hidden xl:flex shrink-0 mt-2" />
 
           {/* Main Content Area */}
           <div className="flex-1 max-w-4xl w-full">
@@ -367,7 +367,7 @@ const FeaturedJobs = () => {
           </div>
 
           {/* Right Ad Sidebar */}
-          <AdBanner position="side" className="w-40 hidden xl:flex shrink-0 mt-2" />
+          <AdBanner position="right-side" className="w-60 hidden xl:flex shrink-0 mt-2" />
         </div>
       </div>
     </section>

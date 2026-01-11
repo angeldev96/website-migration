@@ -1,18 +1,23 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
+import React, { useState, useEffect, useMemo } from 'react';
 import { apiUrl } from '@/lib/apiUrl';
 
-const AdBanner = ({ position = 'side', className = '' }) => {
+const AdBanner = ({ position = 'left-side', className = '' }) => {
   const [ads, setAds] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const isSide = position === 'left-side' || position === 'right-side' || position === 'side';
+  const limit = useMemo(() => (isSide ? 12 : 1), [isSide]);
+
+  // Keep side banners uniform.
+  const sideBoxClass = 'w-60 h-[600px]';
 
   useEffect(() => {
     const fetchAds = async () => {
       try {
         setLoading(true);
-        const response = await fetch(apiUrl(`/api/ads?position=${position}`));
+        const response = await fetch(apiUrl(`/api/ads?position=${position}&limit=${limit}`));
         const data = await response.json();
         if (data.success) {
           setAds(data.data);
@@ -25,14 +30,14 @@ const AdBanner = ({ position = 'side', className = '' }) => {
     };
 
     fetchAds();
-  }, [position]);
+  }, [position, limit]);
 
   if (loading && ads.length === 0) {
-    if (position === 'side') {
+    if (isSide) {
       return (
-        <div className={`hidden xl:flex flex-col gap-4 sticky top-24 ${className}`}>
-          {[1, 2].map(i => (
-            <div key={i} className="w-40 h-[400px] bg-gray-100 rounded-lg animate-pulse border border-gray-200"></div>
+        <div className={`hidden xl:flex flex-col gap-4 ${className}`}>
+          {Array.from({ length: 3 }).map((_, index) => (
+            <div key={index} className={`${sideBoxClass} bg-gray-100 rounded-lg animate-pulse border border-gray-200`}></div>
           ))}
         </div>
       );
@@ -44,28 +49,33 @@ const AdBanner = ({ position = 'side', className = '' }) => {
     );
   }
 
-  if (position === 'side') {
+  if (isSide) {
+    const displayAds = ads.slice(0, limit);
     return (
-      <div className={`hidden xl:flex flex-col gap-4 sticky top-24 h-fit ${className}`}>
-        {ads.map(ad => (
+      <div className={`hidden xl:flex flex-col gap-4 ${className}`}>
+        {displayAds.map(ad => (
           <a 
             key={ad.id} 
             href={ad.linkUrl || '#'} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="block rounded-lg overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-shadow bg-white"
+            className={`block ${sideBoxClass} rounded-lg overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-shadow bg-white`}
           >
             <img 
               src={ad.imageUrl} 
               alt={ad.title || 'Advertisement'}
-              className="w-full h-auto object-cover"
+              className="w-full h-full object-cover"
               loading="lazy"
             />
           </a>
         ))}
         {ads.length === 0 && !loading && (
-          <div className="w-40 h-[600px] bg-gray-50 rounded-lg border-2 border-dashed border-gray-200 flex items-center justify-center p-4 text-center">
-            <span className="text-gray-400 text-xs font-medium italic">Your Ad Here</span>
+          <div className="flex flex-col gap-4">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <div key={index} className={`${sideBoxClass} bg-gray-50 rounded-lg border-2 border-dashed border-gray-200 flex items-center justify-center p-4 text-center`}>
+                <span className="text-gray-400 text-xs font-medium italic">Your Ad Here</span>
+              </div>
+            ))}
           </div>
         )}
       </div>

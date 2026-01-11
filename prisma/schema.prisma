@@ -227,7 +227,7 @@ model Advertisement {
   title     String?
   imageUrl  String   @map("image_url")
   linkUrl   String?  @map("link_url")
-  position  String   @default("side") // "side" or "horizontal"
+  position  String   @default("left-side") // "left-side", "right-side", "horizontal" (legacy: "side")
   active    Boolean  @default(true)
   order     Int      @default(0)
   createdAt DateTime @default(now()) @map("created_at")
